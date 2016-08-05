@@ -1,0 +1,28 @@
+PODS:
+  - HappyDNS (0.3.9)
+  - pili-librtmp (1.0.3.1)
+  - PLMediaStreamingKit (2.0.0):
+    - HappyDNS (~> 0.3.0)
+    - pili-librtmp (= 1.0.3.1)
+    - PLMediaStreamingKit/PLCameraStreamingKit (= 2.0.0)
+    - PLMediaStreamingKit/PLStreamingKit (= 2.0.0)
+  - PLMediaStreamingKit/PLCameraStreamingKit (2.0.0):
+    - HappyDNS (~> 0.3.0)
+    - pili-librtmp (= 1.0.3.1)
+  - PLMediaStreamingKit/PLStreamingKit (2.0.0):
+    - HappyDNS (~> 0.3.0)
+    - pili-librtmp (= 1.0.3.1)
+
+DEPENDENCIES:
+  - PLMediaStreamingKit (from `../`)
+
+EXTERNAL SOURCES:
+  PLMediaStreamingKit:
+    :path: ../
+
+SPEC CHECKSUMS:
+  HappyDNS: 17be04178df2dd09f0ee6ac33628589b7f9910e8
+  pili-librtmp: 0adf2516f4b5958b3cb079a4c3d4f6a4a9f49ce9
+  PLMediaStreamingKit: f4b42bf5baeac328f1991a6024841fa789ebbb4e
+
+COCOAPODS: 0.39.0
