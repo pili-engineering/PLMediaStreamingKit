@@ -77,11 +77,6 @@ PLStreamingSendingBufferDelegate
     self.internetReachability = [Reachability reachabilityForInternetConnection];
     [self.internetReachability startNotifier];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleInterruption:)
-                                                 name:AVAudioSessionInterruptionNotification
-                                               object:[AVAudioSession sharedInstance]];
-    
     void (^permissionBlock)(void) = ^{
         dispatch_async(self.sessionQueue, ^{
             PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
@@ -163,21 +158,6 @@ PLStreamingSendingBufferDelegate
     NSString *log = [NSString stringWithFormat:@"Networkt Status: %s", networkStatus[status]];
     NSLog(@"%@", log);
     self.textView.text = [NSString stringWithFormat:@"%@\%@", self.textView.text, log];
-}
-
-- (void)handleInterruption:(NSNotification *)notification {
-    if ([notification.name isEqualToString:AVAudioSessionInterruptionNotification]) {
-        NSLog(@"Interruption notification");
-        
-        if ([[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] isEqualToNumber:[NSNumber numberWithInt:AVAudioSessionInterruptionTypeBegan]]) {
-            NSLog(@"InterruptionTypeBegan");
-        } else {
-            // the facetime iOS 9 has a bug: 1 does not send interrupt end 2 you can use application become active, and repeat set audio session acitve until success.  ref http://blog.corywiles.com/broken-facetime-audio-interruptions-in-ios-9
-            NSLog(@"InterruptionTypeEnded");
-            AVAudioSession *session = [AVAudioSession sharedInstance];
-            [session setActive:YES error:nil];
-        }
-    }
 }
 
 #pragma mark - <PLStreamingSendingBufferDelegate>
