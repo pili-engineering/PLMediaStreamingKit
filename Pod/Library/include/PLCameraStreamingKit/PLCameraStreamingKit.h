@@ -1,17 +1,14 @@
 //
 //  PLCameraStreamingKit.h
-//  PLCameraStreamingKit
+//  PLMediaStreamingKit
 //
-//  Created by WangSiyu on 5/5/16.
+//  Created by WangSiyu on 8/7/16.
 //  Copyright © 2016 Pili Engineering, Qiniu Inc. All rights reserved.
 //
 
 #ifndef PLCameraStreamingKit_h
 #define PLCameraStreamingKit_h
 
-#import "PLStreamingKit.h"
 #import "PLCameraStreamingSession.h"
-#import "PLVideoCaptureConfiguration.h"
-#import "PLAudioCaptureConfiguration.h"
 
 #endif /* PLCameraStreamingKit_h */

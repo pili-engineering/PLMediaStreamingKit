@@ -8,15 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-
-#import "PLMacroDefines.h"
-#import "PLTypeDefines.h"
+#import "PLCommon.h"
 
 @class PLStreamingSession;
-@class PLVideoStreamingConfiguration;
-@class PLAudioStreamingConfiguration;
-@class PLStream;
-@class PLStreamStatus;
 @class QNDnsManager;
 
 @protocol PLStreamingSendingBufferDelegate;
@@ -154,7 +148,7 @@
 
     @since      v1.0.0
  */
-@property (nonatomic, PL_STRONG) PLStream   *stream;
+@property (nonatomic, strong) PLStream   *stream;
 
 @property (nonatomic, copy) NSURL *pushURL;
 
@@ -170,7 +164,7 @@
 
     @since      v1.0.0
  */
-@property (nonatomic, PL_WEAK) id<PLStreamingSessionDelegate> delegate;
+@property (nonatomic, weak) id<PLStreamingSessionDelegate> delegate;
 
 /*!
     @property   delegateQueue
@@ -184,7 +178,7 @@
 
     @since      v1.2.0
  */
-@property (nonatomic, PL_STRONG) dispatch_queue_t   delegateQueue;
+@property (nonatomic, strong) dispatch_queue_t   delegateQueue;
 
 /*!
     @property   streamState
@@ -630,6 +624,14 @@
 
 #pragma mark - Category (Network)
 
+///-------------------------------
+/// @name   网络操作相关的参数与操作
+///-------------------------------
+
+typedef BOOL(^ConnectionChangeActionCallback)(PLNetworkStateTransition transition);
+
+typedef BOOL(^ConnectionInterruptionHandler)(NSError *error);
+
 /*!
     @category   PLStreamingSession (Network)
     @abstract   PLStreamingSession 网络操作相关的参数与操作
@@ -694,7 +696,7 @@
 
      @since      v1.0.0
  */
-@property (nonatomic, PL_WEAK) id<PLStreamingSendingBufferDelegate> bufferDelegate;
+@property (nonatomic, weak) id<PLStreamingSendingBufferDelegate> bufferDelegate;
 
 /*!
     @property   threshold

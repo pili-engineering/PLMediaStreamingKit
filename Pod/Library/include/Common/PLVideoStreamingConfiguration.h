@@ -10,7 +10,6 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "PLTypeDefines.h"
-#import "PLMacroDefines.h"
 
 /*!
     @class      PLVideoStreamingConfiguration

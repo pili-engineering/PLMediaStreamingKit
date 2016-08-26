@@ -237,15 +237,18 @@ static NSArray *records2Ips(NSArray *records) {
 }
 
 static QNGetAddrInfoCallback getAddrInfoCallback = nil;
-static qn_ips_ret *dns_callback(const char *host) {
+static qn_ips_ret *dns_callback_internal(const char *host) {
     if (getAddrInfoCallback == nil) {
-        //only for compatible
-        qn_ips_ret *ret = calloc(sizeof(char *), 2);
-        ret->ips[0] = strdup(host);
-        return ret;
+        return NULL;
     }
     NSString *s = [[NSString alloc] initWithUTF8String:host];
+    if (s == nil) {
+        return NULL;
+    }
     NSArray *ips = getAddrInfoCallback(s);
+    if (ips == nil) {
+        return NULL;
+    }
     qn_ips_ret *ret = calloc(sizeof(char *), ips.count + 1);
     for (int i = 0; i < ips.count; i++) {
         NSString *ip = ips[i];
@@ -253,6 +256,27 @@ static qn_ips_ret *dns_callback(const char *host) {
         ret->ips[i] = ip2;
     }
     return ret;
+}
+static qn_ips_ret *dns_callback(const char *host) {
+    qn_ips_ret *ret = dns_callback_internal(host);
+    if (ret == NULL) {
+        //only for compatible
+        qn_ips_ret *ret = calloc(sizeof(char *), 2);
+        ret->ips[0] = strdup(host);
+    }
+    return ret;
+}
+
+static QNIpStatusCallback ipStatusCallback = nil;
+static void ip_status_callback(const char *ip, int code, int time_ms) {
+    if (ipStatusCallback == nil) {
+        return;
+    }
+    NSString *s = [[NSString alloc] initWithUTF8String:ip];
+    if (s == nil) {
+        return;
+    }
+    ipStatusCallback(s, code, time_ms);
 }
 
 + (void)setGetAddrInfoBlock:(QNGetAddrInfoCallback)block {
@@ -262,4 +286,20 @@ static qn_ips_ret *dns_callback(const char *host) {
     }
 }
 
++ (void)setDnsManagerForGetAddrInfo:(QNDnsManager *)dns {
+    [QNDnsManager setGetAddrInfoBlock:^NSArray *(NSString *host) {
+        return [dns query:host];
+    }];
+}
+
++ (void)setIpStatusCallback:(QNIpStatusCallback)block {
+    ipStatusCallback = block;
+    qn_set_ip_report_callback(ip_status_callback);
+}
+
++ (BOOL)needHttpDns {
+    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+    NSString *tzName = [timeZone name];
+    return [tzName isEqual:@"Asia/Shanghai"] || [tzName isEqual:@"Asia/Chongqing"] || [tzName isEqual:@"Asia/Harbin"] || [tzName isEqual:@"Asia/Urumqi"];
+}
 @end

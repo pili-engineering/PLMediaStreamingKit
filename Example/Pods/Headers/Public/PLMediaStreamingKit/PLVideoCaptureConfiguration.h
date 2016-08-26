@@ -1,1 +1,1 @@
-../../../../../Pod/Library/include/PLCameraStreamingKit/PLVideoCaptureConfiguration.h
+../../../../../Pod/Library/include/Common/PLVideoCaptureConfiguration.h

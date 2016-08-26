@@ -1,6 +1,6 @@
 {
   "name": "PLMediaStreamingKit",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "summary": "Pili iOS media streaming framework via RTMP.",
   "homepage": "https://github.com/pili-engineering/PLMediaStreamingKit",
   "license": "Apache License, Version 2.0",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/pili-engineering/PLMediaStreamingKit.git",
-    "tag": "v2.0.0"
+    "tag": "v2.1.0"
   },
   "platforms": {
     "ios": "7.0"
@@ -17,7 +17,7 @@
   "requires_arc": true,
   "dependencies": {
     "pili-librtmp": [
-      "1.0.3.1"
+      "1.0.4"
     ],
     "HappyDNS": [
       "~> 0.3.0"
@@ -34,9 +34,13 @@
   ],
   "libraries": [
     "z",
-    "c++"
+    "c++",
+    "icucore",
+    "sqlite3"
   ],
   "vendored_libraries": "Pod/Library/*.a",
+  "public_header_files": "Pod/Library/include/*.h",
+  "source_files": "Pod/Library/include/*.h",
   "subspecs": [
     {
       "name": "PLCameraStreamingKit",
@@ -47,6 +51,11 @@
       "name": "PLStreamingKit",
       "public_header_files": "Pod/Library/include/PLStreamingKit/*.h",
       "source_files": "Pod/Library/include/PLStreamingKit/*.h"
+    },
+    {
+      "name": "Common",
+      "public_header_files": "Pod/Library/include/Common/*.h",
+      "source_files": "Pod/Library/include/Common/*.h"
     }
   ]
 }
