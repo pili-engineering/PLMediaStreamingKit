@@ -50,6 +50,7 @@ PLStreamingSendingBufferDelegate
 @property (nonatomic, strong) NSArray<PLVideoStreamingConfiguration *>   *videoStreamingConfigurations;
 @property (nonatomic, strong) NSDate    *keyTime;
 @property (nonatomic, strong) NSURL *streamURL;
+@property (nonatomic, assign) BOOL audioEffectOn;
 
 @end
 
@@ -272,6 +273,7 @@ PLStreamingSendingBufferDelegate
     self.actionButton.enabled = NO;
     dispatch_async(self.sessionQueue, ^{
         // 在开始直播之前请确保已经从业务服务器获取到了 streamURL，streamURL 的格式为 "rtmp://"
+        self.streamURL = [NSURL URLWithString:@"rtmp://pili-publish.pilitest.qiniucdn.com/pilitest/demo_test?key=6eeee8a82246636e"];
         [self.session startWithPushURL:self.streamURL feedback:^(PLStreamStartStateFeedback feedback) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.actionButton.enabled = YES;
@@ -306,6 +308,25 @@ PLStreamingSendingBufferDelegate
     dispatch_async(self.sessionQueue, ^{
         self.session.torchOn = !self.session.isTorchOn;
     });
+}
+
+- (IBAction)playbackButtonPressed:(id)sender
+{
+    self.session.playback = !self.session.playback;
+}
+
+- (IBAction)audioEffectButtonPressed:(id)sender
+{
+    NSArray<PLAudioEffectConfiguration *> *effects;
+    
+    if (self.audioEffectOn) {
+        effects = @[];
+    } else {
+        PLAudioEffectConfiguration *configuration = [PLAudioEffectModeConfiguration reverbHeightLevelModeConfiguration];
+        effects = @[configuration];
+    }
+    self.audioEffectOn = !self.audioEffectOn;
+    self.session.audioEffectConfigurations = effects;
 }
 
 @end
