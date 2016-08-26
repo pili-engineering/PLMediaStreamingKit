@@ -14,9 +14,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *toggleCameraButton;
 @property (weak, nonatomic) IBOutlet UIButton *torchButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteButton;
+@property (weak, nonatomic) IBOutlet UIButton *playbackButton;
+@property (weak, nonatomic) IBOutlet UIButton *audioEffectButton;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UISlider *zoomSlider;
 
 - (IBAction)zoomSliderValueDidChange:(id)sender;
+- (IBAction)playbackButtonPressed:(id)sender;
+- (IBAction)audioEffectButtonPressed:(id)sender;
 
 @end
