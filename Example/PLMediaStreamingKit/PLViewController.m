@@ -9,7 +9,7 @@
 #import "PLViewController.h"
 #import "Reachability.h"
 #import <asl.h>
-#import <PLCameraStreamingKit.h>
+#import "PLMediaStreamingKit.h"
 
 const char *stateNames[] = {
     "Unknow",

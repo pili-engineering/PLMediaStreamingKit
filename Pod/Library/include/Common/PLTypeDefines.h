@@ -9,7 +9,11 @@
 #ifndef PLCameraStreamingKit_PLTypeDefines_h
 #define PLCameraStreamingKit_PLTypeDefines_h
 
+#import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
+
 #pragma mark - Stream State
+
 
 /*!
     @typedef    PLStreamState
@@ -74,6 +78,29 @@ typedef NS_ENUM(NSUInteger, PLStreamStartStateFeedback) {
     PLStreamStartStateSessionConnectStreamError
 };
 
+#pragma mark - Log
+
+/*!
+ @typedef    PLStreamLogLevel
+ @abstract   推流日志级别。
+ @since      v2.1.0
+ */
+typedef NS_ENUM(NSUInteger, PLStreamLogLevel){
+    // No logs
+    PLStreamLogLevelOff       = 0,
+    // Error logs only
+    PLStreamLogLevelError,
+    // Error and warning logs
+    PLStreamLogLevelWarning,
+    // Error, warning and info logs
+    PLStreamLogLevelInfo,
+    // Error, warning, info and debug logs
+    PLStreamLogLevelDebug,
+    // Error, warning, info, debug and verbose logs
+    PLStreamLogLevelVerbose,
+};
+
+
 #pragma mark - Error
 
 /*!
@@ -133,6 +160,25 @@ typedef enum {
     
     // reconnect error
     PLStreamErrorReconnectFailed = -1400,
+    
+    /**
+     @brief 正在采集的时候被音频事件打断但重启失败
+     */
+    PLCameraErroRestartAudioFailed = -1500,
+    /**
+     @brief 正在采集的时候音频服务重启尝试重连但是没有成功
+     */
+    PLCameraErroTryReconnectFailed = -1501,
+    
+    PLRTCStreamingErrorUnknown = -1,
+    PLRTCStreamingErrorInitEngineFailed = -3000,
+    PLRTCStreamingErrorRoomAuthFailed = -3001,
+    PLRTCStreamingErrorJoinRoomFailed = -3002,
+    PLRTCStreamingErrorOpenMicrophoneFailed = -3003,
+    PLRTCStreamingErrorSubscribeFailed = -3004,
+    PLRTCStreamingErrorPublishCameraFailed = -3005,
+    PLRTCStreamingErrorConnectRoomFailed = -3006,
+    PLRTCStreamingErrorSetVideoBitrateFailed = -3007
 } PLStreamError;
 
 #pragma mark - Video Streaming Quality
@@ -259,6 +305,15 @@ extern NSString *kPLAudioStreamingQualityHigh2;
  */
 extern NSString *kPLAudioStreamingQualityHigh3;
 
+// post with userinfo @{@"state": @(state)}. always posted via MainQueue.
+extern NSString *PLStreamStateDidChangeNotification;
+extern NSString *PLCameraAuthorizationStatusDidGetNotificaiton;
+extern NSString *PLMicrophoneAuthorizationStatusDidGetNotificaiton;
+
+extern NSString *PLCameraDidStartRunningNotificaiton;
+extern NSString *PLMicrophoneDidStartRunningNotificaiton;
+extern NSString *PLAudioComponentFailedToCreateNotification;
+
 #pragma mark - Audio SampleRate
 
 /*!
@@ -296,5 +351,101 @@ typedef enum {
     PLStreamingAudioBitRate_96Kbps = 96000,
     PLStreamingAudioBitRate_128Kbps = 128000,
 } PLStreamingAudioBitRate;
+
+#pragma mark - RTC Video Size
+
+/*!
+ @typedef    PLRTCVideoSizePreset
+ @abstract   定义连麦时的视频大小。
+ */
+typedef NS_ENUM(NSUInteger, PLRTCVideoSizePreset) {
+    PLRTCVideoSizePresetUnknown = 0,
+    PLRTCVideoSizePreset180x320 = 1,    //16:9
+    PLRTCVideoSizePreset240x320,        //4:3
+    PLRTCVideoSizePreset240x424,        //16:9
+    PLRTCVideoSizePreset384x640,        //16:9
+    PLRTCVideoSizePreset480x640,        //4:3
+    PLRTCVideoSizePreset540x720,        //4:3
+    PLRTCVideoSizePreset540x960,        //16:9
+    PLRTCVideoSizePreset720x960,        //4:3
+    PLRTCVideoSizePreset720x1280        //16:9
+};
+
+/// 断线后是否自动重新加入房间，默认为 YES
+extern const NSString *kPLRTCAutoRejoinKey;
+
+/// 断线后自动重新加入房间的重试次数，默认为 3 次；
+extern const NSString *kPLRTCRejoinTimesKey;
+
+/// 连接的超时时间，单位是 ms，默认为 5000 ms，最小为 3000 ms
+extern const NSString *kPLRTCConnetTimeoutKey;
+
+///连麦状态
+typedef NS_ENUM(NSUInteger, PLRTCState) {
+    /// 未知状态，只会作为 init 时的初始状态
+    PLRTCStateUnknown = 0,
+    /// 已加入房间的状态
+    PLRTCStateConnected,
+    /// 已进入到连麦的状态
+    PLRTCStateConferenceStarted,
+    /// 连麦已结束的状态
+    PLRTCStateConferenceStopped
+};
+
+/// 设备授权状态
+typedef NS_ENUM(NSUInteger, PLAuthorizationStatus) {
+    /// 还没有确定是否授权
+    PLAuthorizationStatusNotDetermined = 0,
+    /// 设备受限，一般在家长模式下设备会受限
+    PLAuthorizationStatusRestricted,
+    /// 拒绝授权
+    PLAuthorizationStatusDenied,
+    /// 已授权
+    PLAuthorizationStatusAuthorized
+};
+
+typedef enum {
+    /**
+     @brief Stretch to fill the full view, which may distort the image outside of its normal aspect ratio
+     */
+    PLVideoFillModeStretch,
+    
+    /**
+     @brief Maintains the aspect ratio of the source image, adding bars of the specified background color
+     */
+    PLVideoFillModePreserveAspectRatio,
+    
+    /**
+     @brief Maintains the aspect ratio of the source image, zooming in on its center to fill the view
+     */
+    PLVideoFillModePreserveAspectRatioAndFill
+} PLVideoFillModeType;
+
+typedef enum {
+    /**
+     @brief 由 PLCameraStreamingKit 提供的预设的音效配置
+     */
+    PLAudioEffectConfigurationType_Preset = 1,
+    /**
+     @brief 用户自定义音效配置
+     */
+    PLAudioEffectConfigurationType_Custom = 2
+} PLAudioEffectConfigurationType;
+
+typedef enum {
+    PLAudioPlayerFileError_FileNotExist,
+    PLAudioPlayerFileError_FileOpenFail,
+    PLAudioPlayerFileError_FileReadingFail
+} PLAudioPlayerFileError;
+
+/**
+ @brief 对音频数据进行处理的回调
+ */
+typedef void (^PLAudioEffectCustomConfigurationBlock)(void *inRefCon,
+                                                      AudioUnitRenderActionFlags *ioActionFlags,
+                                                      const AudioTimeStamp *inTimeStamp,
+                                                      UInt32 inBusNumber,
+                                                      UInt32 inNumberFrames,
+                                                      AudioBufferList *ioData);
 
 #endif

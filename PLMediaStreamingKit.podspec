@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "PLMediaStreamingKit"
-  s.version          = "2.0.0"
+  s.version          = "2.1.0"
   s.summary          = "Pili iOS media streaming framework via RTMP."
   s.homepage         = "https://github.com/pili-engineering/PLMediaStreamingKit"
   s.license          = 'Apache License, Version 2.0'
@@ -21,11 +21,13 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true  
  
-  s.dependency 'pili-librtmp', '1.0.3.1'
+  s.dependency 'pili-librtmp', '1.0.4'
   s.dependency 'HappyDNS', '~> 0.3.0'
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']
-  s.libraries = 'z', 'c++'
+  s.libraries = 'z', 'c++', 'icucore', 'sqlite3'
   s.vendored_libraries = 'Pod/Library/*.a'
+  s.public_header_files = 'Pod/Library/include/*.h'
+  s.source_files = 'Pod/Library/include/*.h'
 
   s.subspec "PLCameraStreamingKit" do |ss1|
     ss1.public_header_files = 'Pod/Library/include/PLCameraStreamingKit/*.h'
@@ -35,5 +37,10 @@ Pod::Spec.new do |s|
   s.subspec "PLStreamingKit" do |ss2|
     ss2.public_header_files = 'Pod/Library/include/PLStreamingKit/*.h'
     ss2.source_files = 'Pod/Library/include/PLStreamingKit/*.h'
+  end
+
+  s.subspec "Common" do |ss3|
+    ss3.public_header_files = 'Pod/Library/include/Common/*.h'
+    ss3.source_files = 'Pod/Library/include/Common/*.h'
   end
 end

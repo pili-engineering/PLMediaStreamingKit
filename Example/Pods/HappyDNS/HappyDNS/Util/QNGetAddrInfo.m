@@ -9,6 +9,7 @@
 #include "string.h"
 #include "netdb.h"
 #include "stdlib.h"
+#import <arpa/inet.h>
 
 #include "QNGetAddrInfo.h"
 
@@ -29,10 +30,10 @@ static int isIp(const char* domain) {
 
 static struct addrinfo* addrinfo_clone(struct addrinfo* addr) {
     struct addrinfo* ai;
-    ai = calloc(sizeof(struct addrinfo) + addr->ai_addrlen, 1);
+    ai = (struct addrinfo*)calloc(sizeof(struct addrinfo) + addr->ai_addrlen, 1);
     if (ai) {
         memcpy(ai, addr, sizeof(struct addrinfo));
-        ai->ai_addr = (void*)(ai + 1);
+        ai->ai_addr = (struct sockaddr*)(ai + 1);
         memcpy(ai->ai_addr, addr->ai_addr, addr->ai_addrlen);
         if (addr->ai_canonname) {
             ai->ai_canonname = strdup(addr->ai_canonname);
@@ -121,4 +122,26 @@ void qn_freeaddrinfo(struct addrinfo* ai) {
 
 void qn_set_dns_callback(qn_dns_callback cb) {
     dns_callback = cb;
+}
+
+static qn_ip_report_callback ip_report_cb = NULL;
+void qn_set_ip_report_callback(qn_ip_report_callback cb) {
+    ip_report_cb = cb;
+}
+
+void qn_ip_report(const struct addrinfo* info, int code, int time_ms) {
+    if (ip_report_cb == NULL || info == NULL) {
+        return;
+    }
+    char ip_str_buf[32] = {0};
+    const char* c_ip;
+    if (info->ai_family == AF_INET6) {
+        c_ip = inet_ntop(info->ai_family, &((struct sockaddr_in6*)(info->ai_addr))->sin6_addr, ip_str_buf, sizeof(ip_str_buf));
+    } else {
+        c_ip = inet_ntop(info->ai_family, &((struct sockaddr_in*)(info->ai_addr))->sin_addr, ip_str_buf, sizeof(ip_str_buf));
+    }
+    if (c_ip == NULL) {
+        c_ip = "";
+    }
+    ip_report_cb(c_ip, code, time_ms);
 }

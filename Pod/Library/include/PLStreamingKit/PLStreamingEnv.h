@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "PLTypeDefines.h"
 
 @interface PLStreamingEnv : NSObject
 
@@ -38,5 +38,22 @@
  @param flag 开启为 YES，否则为 NO
  */
 +(void)enableSpeedMeasure:(BOOL)flag;
+
+/*!
+ @method     enableFileLogging
+ @abstract   开启SDK内部写文件日志功能，以方便SDK支持团队定位您所遇到的问题。
+ 
+ @note       日志文件存放位置为 App Container/Library/Caches/Pili/Logs
+ */
++ (void)enableFileLogging;
+
+/*!
+ @method     setLogLevel:
+ @abstract   设置SDK内部输出日志的级别，默认为PLStreamLogLevelWarning级别。
+             该方法设置的输出级别会分别同步到控制台与文件日志中。
+ 
+ @warning    请确保不要在线上产品开启PLStreamLogLevelVerbose级别输出，这将影响产品性能。
+ */
++ (void)setLogLevel:(PLStreamLogLevel)logLevel;
 
 @end

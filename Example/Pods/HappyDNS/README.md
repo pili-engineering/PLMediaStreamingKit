@@ -67,7 +67,22 @@ $ xctool -workspace HappyDNS.xcworkspace -scheme "HappyDNS_Mac" -sdk macosx -con
 ## 常见问题
 
 - 如果碰到其他编译错误，请参考 CocoaPods 的 [troubleshooting](http://guides.cocoapods.org/using/troubleshooting.html)
-- httpdns 在ios8 时不支持 nat64 模式下 IP 直接访问url，原因是 NSUrlConnection 不支持。无论是用http://119.29.29.29/d 还是http://[64:ff9b::771d:1d1d]/d 都不行，此时可以使用localdns方式。
+- httpdns 在**ios8** 时不支持 nat64 模式下 IP 直接访问url，原因是 NSUrlConnection 不支持。无论是用http://119.29.29.29/d 还是http://[64:ff9b::771d:1d1d]/d 都不行，此时可以使用localdns方式。
+- 如果软件有国外的使用情况时，建议初始化程序采取这样的方式
+```Objective-C
+QNDnsManager *dns;
+if([QNDnsManager needHttpDns]){
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:[[QNResolver alloc] initWithAddress:@"119.29.29.29"]];
+    [array addObject:[QNResolver systemResolver]];
+    dns = [[QNDnsManager alloc] init:array networkInfo:[QNNetworkInfo normal]];
+}else{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:[QNResolver systemResolver]];
+    [array addObject:[[QNResolver alloc] initWithAddress:@"8.8.8.8"]];
+    dns = [[QNDnsManager alloc] init:array networkInfo:[QNNetworkInfo normal]];
+}
+```
 
 ## 代码贡献
 
