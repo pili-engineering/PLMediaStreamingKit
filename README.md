@@ -40,14 +40,41 @@ PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，可高度
 - [x] 支持自定义音视频处理
 - [x] 提供两种层次的 API，灵活选择，高可定制性与简单两不误
 
-## PLMediaStreamingKit Wiki
-
-请参考 Wiki 文档：[PLMediaStreamingKit 开发指南](https://github.com/pili-engineering/PLMediaStreamingKit/wiki)
-
 ## 系统要求
 
 - iOS Target : >= iOS 7
 - iOS Device : >= iPhone 4s
+
+## 安装方法
+
+[CocoaPods](https://cocoapods.org/) 是针对 Objective-C 的依赖管理工具，它能够将使用类似 PLMediaStreamingKit 的第三方库的安装过程变得非常简单和自动化，你能够用下面的命令来安装它：
+
+```bash
+$ sudo gem install cocoapods
+```
+
+>构建 PLMediaStreamingKit 2.0.0+ 需要使用 CocoaPods 0.39.0+
+
+### Podfile
+
+为了使用 CoacoaPods 集成 PLMediaStreamingKit 到你的 Xcode 工程当中，你需要编写你的 `Podfile`
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+target 'TargetName' do
+pod 'PLMediaStreamingKit'
+end
+```
+
+然后，运行如下的命令：
+
+```bash
+$ pod install
+```
+
+## PLMediaStreamingKit Wiki
+
+请参考 Wiki 文档：[PLMediaStreamingKit 开发指南](https://github.com/pili-engineering/PLMediaStreamingKit/wiki)
 
 ## 反馈及意见
 
