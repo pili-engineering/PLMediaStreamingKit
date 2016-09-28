@@ -26,8 +26,6 @@ Pod::Spec.new do |s|
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']
   s.libraries = 'z', 'c++', 'icucore', 'sqlite3'
   s.vendored_libraries = 'Pod/Library/*.a'
-  s.public_header_files = 'Pod/Library/include/*.h'
-  s.source_files = 'Pod/Library/include/*.h'
 
   s.subspec "PLCameraStreamingKit" do |ss1|
     ss1.public_header_files = 'Pod/Library/include/PLCameraStreamingKit/*.h'
