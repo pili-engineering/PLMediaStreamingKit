@@ -16,7 +16,7 @@ NSCopying
 >
 
 /**
- @brief 采集的视频数据的帧率，默认为 30
+ @brief 采集的视频数据的帧率，默认为 24
  */
 @property (nonatomic, assign) NSUInteger videoFrameRate;
 

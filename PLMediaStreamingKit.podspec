@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "PLMediaStreamingKit"
-  s.version          = "2.1.1"
+  s.version          = "2.1.2"
   s.summary          = "Pili iOS media streaming framework via RTMP."
   s.homepage         = "https://github.com/pili-engineering/PLMediaStreamingKit"
   s.license          = 'Apache License, Version 2.0'
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true  
  
-  s.dependency 'pili-librtmp', '1.0.4'
+  s.dependency 'pili-librtmp', '1.0.5'
   s.dependency 'HappyDNS', '~> 0.3.0'
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']
   s.libraries = 'z', 'c++', 'icucore', 'sqlite3'
@@ -39,8 +39,18 @@ Pod::Spec.new do |s|
     ss2.source_files = 'Pod/Library/include/PLStreamingKit/*.h'
   end
 
-  s.subspec "Common" do |ss3|
-    ss3.public_header_files = 'Pod/Library/include/Common/*.h'
-    ss3.source_files = 'Pod/Library/include/Common/*.h'
+  s.subspec "PLRTCStreamingKit" do |ss3|
+    ss3.public_header_files = 'Pod/Library/include/PLRTCStreamingKit/*.h'
+    ss3.source_files = 'Pod/Library/include/PLRTCStreamingKit/*.h'
+  end
+
+  s.subspec "PLMediaStreamingKit" do |ss4|
+    ss4.public_header_files = 'Pod/Library/include/PLMediaStreamingKit/*.h'
+    ss4.source_files = 'Pod/Library/include/PLMediaStreamingKit/*.h'
+  end
+
+  s.subspec "Common" do |ss5|
+    ss5.public_header_files = 'Pod/Library/include/Common/*.h'
+    ss5.source_files = 'Pod/Library/include/Common/*.h'
   end
 end

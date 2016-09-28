@@ -1,1 +1,1 @@
-../../../../../Pod/Library/include/PLMediaStreamingKit.h
+../../../../../Pod/Library/include/PLMediaStreamingKit/PLMediaStreamingKit.h

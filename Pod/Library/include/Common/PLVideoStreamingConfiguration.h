@@ -81,7 +81,7 @@
     
     @discussion 该方法每次都会生成一个新的配置，这不是单例方法。默认情况下，对应的参数为分辨率 (320, 480), video quality PLStreamingQualityMedium1
     
-    @see        configurationWithVideoSize:videoQuality:
+    @see        configurationWithVideoQuality:
     @see        initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:
  
     @since      v1.0.0
@@ -89,21 +89,18 @@
 + (instancetype)defaultConfiguration;
 
 /*!
-    @method     configurationWithVideoSize:videoQuality:
+    @method     configurationWithVideoQuality:
     @abstract   指定自定义分辨率和推流质量生成一个配置。
 
-    @param      videoSize 编码分辨率
     @param      quality 编码质量
  
     @discussion 该方法每次都会生成一个新的配置，这不是单例方法。
 
-    @see        configurationWithVideoSize:videoQuality:
     @see        initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:
 
     @since      v1.0.0
  */
-+ (instancetype)configurationWithVideoSize:(CGSize)videoSize
-                              videoQuality:(NSString *)quality;
++ (instancetype)configurationWithVideoQuality:(NSString *)quality;
 
 /*!
     @method     initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:

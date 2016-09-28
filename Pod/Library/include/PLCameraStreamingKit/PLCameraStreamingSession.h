@@ -141,14 +141,106 @@
 /// 默认为 3s，可设置范围为 [1..30] 秒
 @property (nonatomic, assign) NSTimeInterval    statusUpdateInterval;
 
-@property (nonatomic, weak) id<PLStreamingSendingBufferDelegate> bufferDelegate;
-
 /// [0..1], 不可超出这个范围, 默认为 0.5
 @property (nonatomic, assign) CGFloat threshold;
+
+/*!
+ @property   receiveTimeout
+ @abstract   网络连接和接收数据超时。
+ 
+ @discussion 以秒作为单位。默认为 15s, 设定最小数值不得低于 3s，否则不变更。
+ 
+ @see        sendTimeout
+ 
+ @since      v2.1.2
+ */
+@property (nonatomic, assign) int   receiveTimeout;
+
+/*!
+ @property   sendTimeout
+ @abstract   网络发送数据超时。
+ 
+ @discussion 以秒作为单位。默认为 3s, 设定最小数值不得低于 3s，否则不变更。
+ 
+ @see        receiveTimeout
+ 
+ @since      v2.1.2
+ */
+@property (nonatomic, assign) int   sendTimeout;
 
 /// Buffer 最多可包含的包数，默认为 300
 @property (nonatomic, assign) NSUInteger    maxCount;
 @property (nonatomic, assign, readonly) NSUInteger    currentCount;
+
+/*!
+ @property   dynamicFrameEnable
+ @abstract   开启动态帧率功能，自动调整的最大帧率不超过 videoStreamingConfiguration.expectedSourceVideoFrameRate。该功能默认为关闭状态。
+ */
+@property (nonatomic,assign, getter=isDynamicFrameEnable) BOOL dynamicFrameEnable;
+
+@property (nonatomic, assign, getter=isMonitorNetworkStateEnable) BOOL monitorNetworkStateEnable;
+
+/*!
+ @property   autoReconnectEnable
+ @abstract   自动断线重连开关，默认关闭。
+ 
+ @discussion 该方法在推流SDK内部实现断线自动重连。若开启此机制，则当推流因异常导致中断时，-streamingSession:didDisconnectWithError:回调不会马上被触发，推流将进行最多三次自动重连，每次重连的等待时间会由初次的0~2s递增至最大10s。等待重连期间，推流状态 streamState 会变为 PLStreamStateAutoReconnecting。一旦三次自动重连仍无法成功连接，则放弃治疗，-streamingSession:didDisconnectWithError:回调将被触发。
+ 该机制默认关闭，用户可在 -streamingSession:didDisconnectWithError: 方法中自定义添加断线重连处理逻辑。
+ @see        connectionInterruptionHandler
+ */
+@property (nonatomic, assign, getter=isAutoReconnectEnable) BOOL autoReconnectEnable;
+
+/*!
+ @method     enableAdaptiveBitrateControlWithMinVideoBitRate:
+ @abstract   开启自适应码率调节功能
+ 
+ @param      minVideoBitRate 最小平均码率
+ 
+ @discussion 该方法在推流SDK内部实现动态码率调节。开启该机制时，需设置允许调节的最低码率，以便使自动调整后的码率不会低于该范围。该机制根据网络吞吐量来调节推流的码率，在网络带宽变小导致发送缓冲区数据持续增长时，SDK内部将适当降低推流码率，若情况得不到改善，则会重复该过程直至平均码率降至用户设置的最低值；反之，当一段时间内网络带宽充裕，SDK将适当增加推流码率，直至达到预设的推流码率。
+ 自适应码率机制默认关闭，用户可利用 -streamingSession:streamStatusDidUpdate 回调数据实现自定义版本的码率调节功能。
+ */
+- (void)enableAdaptiveBitrateControlWithMinVideoBitRate:(NSUInteger)minVideoBitRate;
+
+/*!
+ @method     disableAdaptiveBitrateControl
+ @abstract   关闭自适应码率调节功能，默认即为关闭状态
+ */
+- (void)disableAdaptiveBitrateControl;
+
+/*!
+ @property    adaptiveQualityMode
+ @abstract    自适应质量(码率/帧率)控制模式
+ 
+ @discussion  提供码率调整优先、帧率调整优先以及混合调整三种模式，只有在同时打开自适应码率开关 (enableAdaptiveBitrateControlWithMinVideoBitRate:) 以及动态帧率开关 (dynamicFrameEnable) 时，该模式才起到控制作用。默认为混合调整模式，即弱网时同时调节帧率跟码率。
+ @see         PLStreamAdaptiveQualityMode
+ */
+@property (nonatomic, assign) PLStreamAdaptiveQualityMode adaptiveQualityMode;
+
+/*!
+ @property   connectionInterruptionHandler
+ @abstract   推流断开用户回调
+ 
+ @discussion 该回调函数传入参数为推流断开产生的错误信息 error。返回值为布尔值，YES表示在该错误状态下允许推流自动重连，NO则代表不允许自动重连。本回调函数与 autoReconnectEnable 开关配合作用，只有在该开关开启时，本回调会在自动重连之前被调用，并通过返回值判断是否继续自动重连。若用户未设置该回调方法，则按默认策略最多进行三次自动重连。
+ 
+ @warning    该回调会在主线程中执行
+ 
+ @see        autoReconnectEnable
+ */
+@property (nonatomic, copy) _Nullable ConnectionInterruptionHandler connectionInterruptionHandler;
+
+/*!
+ @property   connectionChangeActionCallback
+ @abstract   网络切换用户回调
+ 
+ @discussion 该回调函数传入参数为当前网络的切换状态 PLNetworkStateTransition。 返回值为布尔值，YES表示在某种切换状态下允许推流自动重启，NO则代表该状态下不应自动重启。该回调自动重连回调 connectionInterruptionHandler 的区别在于，当推流网络从WWAN切换到WiFi时，推流不会被断开而继续使用WWAN，此时自动重连机制不会被触发，SDK内部会调用 connectionChangeActionCallback 来判断是否需要重启推流以使用优先级更高的网络。
+ 值得注意的是，在开启自动重连开关 autoReconnectEnable，并实现了本回调的情况下，推流时网络从WiFi切换到WWAN，SDK将优先执行本回调函数判断是否主动重启推流。如果用户选择在此情况下不主动重启，则等推流连接超时后将自动重连决定权交予 connectionInterruptionHandler 判断。如果两个回调均未被实现，则该情况下会默认断开推流以防止用户流量消耗。
+ 
+ @warning    该回调会在主线程中执行
+ 
+ @see        autoReconnectEnable
+ @see        connectionInterruptionHandler
+ */
+@property (nonatomic, copy) _Nullable ConnectionChangeActionCallback connectionChangeActionCallback;
 
 /*!
  @method     startWithCompleted:
@@ -426,6 +518,19 @@
  *  移除水印
  */
 -(void)clearWaterMark;
+
+/**
+ *  @brief 视频截图
+ *
+ *  @param handler 类型为 PLStreamScreenshotHandler 的 block
+ *
+ *  @discussion 截图操作为异步，完成后将通过 handler 回调返回 UIImage 类型图片数据，
+ *              请在Handler里自行指定您所需要操作 UIImage 的队列。
+ *
+ *  @since v2.2.0
+ *
+ */
+- (void)getScreenshotWithCompletionHandler:(nullable PLStreamScreenshotHandler)handler;
 
 @end
 
