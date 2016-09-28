@@ -2,4 +2,9 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'PLMediaStreamingKitDemo' do
   pod "PLMediaStreamingKit", :path => "../"
+  pod 'Fabric'
+  pod 'Crashlytics'
+  pod 'Masonry'
+  pod 'BlocksKit'
+  pod 'WeiboSDK'
 end

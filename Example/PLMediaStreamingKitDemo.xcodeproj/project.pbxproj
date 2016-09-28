@@ -7,23 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10C37C5C2F38F3794787067F /* libPods-PLMediaStreamingKitDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 003EE6824F2DFFAA7D2E7CF6 /* libPods-PLMediaStreamingKitDemo.a */; };
+		1CB31FA1A509BFCE50E56392 /* libPods-PLMediaStreamingKitDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D38E0519CDFBF6954B8389D /* libPods-PLMediaStreamingKitDemo.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769750EC1A6329DC0079423B /* VideoToolbox.framework */; };
-		B62E2CD11D543AB2006E19E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CD01D543AB2006E19E6 /* main.m */; };
-		B62E2CD71D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */; };
-		B62E2CDA1D543AF8006E19E6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD81D543AF8006E19E6 /* InfoPlist.strings */; };
-		B62E2CE11D543B2C006E19E6 /* PLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CDC1D543B2C006E19E6 /* PLAppDelegate.m */; };
-		B62E2CE21D543B2C006E19E6 /* PLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CDE1D543B2C006E19E6 /* PLViewController.m */; };
-		B62E2CE31D543B2C006E19E6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CE01D543B2C006E19E6 /* Reachability.m */; };
-		B62E2CE51D543B48006E19E6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CE41D543B48006E19E6 /* Images.xcassets */; };
-		B62E2CE71D543B51006E19E6 /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CE61D543B51006E19E6 /* qiniu.png */; };
-		B6DB787F1D543E0F00BE8DC8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6DB787B1D543E0F00BE8DC8 /* Launch Screen.storyboard */; };
-		B6DB78801D543E0F00BE8DC8 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6DB787D1D543E0F00BE8DC8 /* Main_iPhone.storyboard */; };
+		B651FF9C1D93DA1F00D1C578 /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF941D93DA1F00D1C578 /* qiniu.png */; };
+		B651FF9D1D93DA1F00D1C578 /* TestMusic1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */; };
+		B651FF9E1D93DA1F00D1C578 /* TestMusic2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B651FF961D93DA1F00D1C578 /* TestMusic2.wav */; };
+		B651FF9F1D93DA1F00D1C578 /* TestMusic3.wav in Resources */ = {isa = PBXBuildFile; fileRef = B651FF971D93DA1F00D1C578 /* TestMusic3.wav */; };
+		B651FFA01D93DA1F00D1C578 /* TestMusic4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B651FF981D93DA1F00D1C578 /* TestMusic4.mp3 */; };
+		B651FFA11D93DA1F00D1C578 /* TestMusic5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B651FF991D93DA1F00D1C578 /* TestMusic5.mp3 */; };
+		B651FFA21D93DA1F00D1C578 /* xiaoqi1.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF9A1D93DA1F00D1C578 /* xiaoqi1.png */; };
+		B651FFA31D93DA1F00D1C578 /* xiaoqi2.png in Resources */ = {isa = PBXBuildFile; fileRef = B651FF9B1D93DA1F00D1C578 /* xiaoqi2.png */; };
+		B6FC33981D93C301004EEE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6FC33901D93C301004EEE29 /* Images.xcassets */; };
+		B6FC33991D93C301004EEE29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33931D93C301004EEE29 /* main.m */; };
+		B6FC33AB1D93C398004EEE29 /* PLMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC339C1D93C398004EEE29 /* PLMainViewController.m */; };
+		B6FC33AC1D93C398004EEE29 /* PLModelPanelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC339E1D93C398004EEE29 /* PLModelPanelGenerator.m */; };
+		B6FC33AD1D93C398004EEE29 /* PLPanelDelegateGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33A01D93C398004EEE29 /* PLPanelDelegateGenerator.m */; };
+		B6FC33AE1D93C398004EEE29 /* PLPermissionRequestor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33A21D93C398004EEE29 /* PLPermissionRequestor.m */; };
+		B6FC33AF1D93C398004EEE29 /* PLStreamingSessionConstructor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33A41D93C398004EEE29 /* PLStreamingSessionConstructor.m */; };
+		B6FC33B01D93C398004EEE29 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6FC33A61D93C398004EEE29 /* libWeChatSDK.a */; };
+		B6FC33B11D93C398004EEE29 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = B6FC33A71D93C398004EEE29 /* README.txt */; };
+		B6FC33B41D93C470004EEE29 /* PLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */; };
+		B6FC33B61D93C603004EEE29 /* PLMediaStreamingKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */; };
+		B6FC33CC1D93C970004EEE29 /* PLAlertSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33BE1D93C970004EEE29 /* PLAlertSpinner.m */; };
+		B6FC33CD1D93C970004EEE29 /* PLAttributeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C01D93C970004EEE29 /* PLAttributeModel.m */; };
+		B6FC33CE1D93C970004EEE29 /* PLDelgateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C21D93C970004EEE29 /* PLDelgateHelper.m */; };
+		B6FC33CF1D93C970004EEE29 /* PLLogDisplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C41D93C970004EEE29 /* PLLogDisplayer.m */; };
+		B6FC33D01D93C970004EEE29 /* PLMainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C61D93C970004EEE29 /* PLMainTabBarController.m */; };
+		B6FC33D11D93C970004EEE29 /* PLPanelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33C81D93C970004EEE29 /* PLPanelModel.m */; };
+		B6FC33D21D93C970004EEE29 /* PLTitleValueConf.m in Sources */ = {isa = PBXBuildFile; fileRef = B6FC33CB1D93C970004EEE29 /* PLTitleValueConf.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,30 +53,61 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		003EE6824F2DFFAA7D2E7CF6 /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A00C185990B5B2258CC077E /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		4F98AE028C608D79D2D842E9 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.release.xcconfig"; sourceTree = "<group>"; };
+		09EF86FE485DC921D9EC2C00 /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		0C618BE754D25865CFB92AE2 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* PLMediaStreamingKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLMediaStreamingKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AE195388D20070C39A /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D38E0519CDFBF6954B8389D /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		769750EC1A6329DC0079423B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		B62E2CD01D543AB2006E19E6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PLMediaStreamingKit/main.m; sourceTree = SOURCE_ROOT; };
-		B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PLMediaStreamingKitDemo-Info.plist"; path = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Info.plist"; sourceTree = SOURCE_ROOT; };
-		B62E2CD61D543AE3006E19E6 /* PLMediaStreamingKitDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PLMediaStreamingKitDemo-Prefix.pch"; path = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		B62E2CD91D543AF8006E19E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = PLMediaStreamingKit/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		B62E2CDB1D543B2C006E19E6 /* PLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PLAppDelegate.h; path = PLMediaStreamingKit/PLAppDelegate.h; sourceTree = SOURCE_ROOT; };
-		B62E2CDC1D543B2C006E19E6 /* PLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLAppDelegate.m; path = PLMediaStreamingKit/PLAppDelegate.m; sourceTree = SOURCE_ROOT; };
-		B62E2CDD1D543B2C006E19E6 /* PLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PLViewController.h; path = PLMediaStreamingKit/PLViewController.h; sourceTree = SOURCE_ROOT; };
-		B62E2CDE1D543B2C006E19E6 /* PLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLViewController.m; path = PLMediaStreamingKit/PLViewController.m; sourceTree = SOURCE_ROOT; };
-		B62E2CDF1D543B2C006E19E6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = PLMediaStreamingKit/Reachability.h; sourceTree = SOURCE_ROOT; };
-		B62E2CE01D543B2C006E19E6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = PLMediaStreamingKit/Reachability.m; sourceTree = SOURCE_ROOT; };
-		B62E2CE41D543B48006E19E6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PLMediaStreamingKit/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		B62E2CE61D543B51006E19E6 /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = qiniu.png; path = PLMediaStreamingKit/qiniu.png; sourceTree = SOURCE_ROOT; };
-		B6DB787C1D543E0F00BE8DC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PLMediaStreamingKit/Base.lproj/Launch Screen.storyboard"; sourceTree = SOURCE_ROOT; };
-		B6DB787E1D543E0F00BE8DC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = PLMediaStreamingKit/Base.lproj/Main_iPhone.storyboard; sourceTree = SOURCE_ROOT; };
-		E2622A10FF45B73B64ACC349 /* libPods-PLCameraStreamingKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLCameraStreamingKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B651FF941D93DA1F00D1C578 /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu.png; sourceTree = "<group>"; };
+		B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic1.mp3; sourceTree = "<group>"; };
+		B651FF961D93DA1F00D1C578 /* TestMusic2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic2.wav; sourceTree = "<group>"; };
+		B651FF971D93DA1F00D1C578 /* TestMusic3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TestMusic3.wav; sourceTree = "<group>"; };
+		B651FF981D93DA1F00D1C578 /* TestMusic4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic4.mp3; sourceTree = "<group>"; };
+		B651FF991D93DA1F00D1C578 /* TestMusic5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestMusic5.mp3; sourceTree = "<group>"; };
+		B651FF9A1D93DA1F00D1C578 /* xiaoqi1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoqi1.png; sourceTree = "<group>"; };
+		B651FF9B1D93DA1F00D1C578 /* xiaoqi2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoqi2.png; sourceTree = "<group>"; };
+		B6FC338D1D93C301004EEE29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		B6FC338F1D93C301004EEE29 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B6FC33901D93C301004EEE29 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B6FC33931D93C301004EEE29 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B6FC33941D93C301004EEE29 /* PLMediaStreamingKitDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PLMediaStreamingKitDemo-Info.plist"; sourceTree = "<group>"; };
+		B6FC339B1D93C398004EEE29 /* PLMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLMainViewController.h; sourceTree = "<group>"; };
+		B6FC339C1D93C398004EEE29 /* PLMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLMainViewController.m; sourceTree = "<group>"; };
+		B6FC339D1D93C398004EEE29 /* PLModelPanelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLModelPanelGenerator.h; sourceTree = "<group>"; };
+		B6FC339E1D93C398004EEE29 /* PLModelPanelGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLModelPanelGenerator.m; sourceTree = "<group>"; };
+		B6FC339F1D93C398004EEE29 /* PLPanelDelegateGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPanelDelegateGenerator.h; sourceTree = "<group>"; };
+		B6FC33A01D93C398004EEE29 /* PLPanelDelegateGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPanelDelegateGenerator.m; sourceTree = "<group>"; };
+		B6FC33A11D93C398004EEE29 /* PLPermissionRequestor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPermissionRequestor.h; sourceTree = "<group>"; };
+		B6FC33A21D93C398004EEE29 /* PLPermissionRequestor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPermissionRequestor.m; sourceTree = "<group>"; };
+		B6FC33A31D93C398004EEE29 /* PLStreamingSessionConstructor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingSessionConstructor.h; sourceTree = "<group>"; };
+		B6FC33A41D93C398004EEE29 /* PLStreamingSessionConstructor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLStreamingSessionConstructor.m; sourceTree = "<group>"; };
+		B6FC33A61D93C398004EEE29 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		B6FC33A71D93C398004EEE29 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		B6FC33A81D93C398004EEE29 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		B6FC33A91D93C398004EEE29 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		B6FC33AA1D93C398004EEE29 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		B6FC33B21D93C470004EEE29 /* PLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAppDelegate.h; sourceTree = "<group>"; };
+		B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAppDelegate.m; sourceTree = "<group>"; };
+		B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PLMediaStreamingKit.podspec; path = ../PLMediaStreamingKit.podspec; sourceTree = "<group>"; };
+		B6FC33BD1D93C970004EEE29 /* PLAlertSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAlertSpinner.h; sourceTree = "<group>"; };
+		B6FC33BE1D93C970004EEE29 /* PLAlertSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAlertSpinner.m; sourceTree = "<group>"; };
+		B6FC33BF1D93C970004EEE29 /* PLAttributeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAttributeModel.h; sourceTree = "<group>"; };
+		B6FC33C01D93C970004EEE29 /* PLAttributeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAttributeModel.m; sourceTree = "<group>"; };
+		B6FC33C11D93C970004EEE29 /* PLDelgateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDelgateHelper.h; sourceTree = "<group>"; };
+		B6FC33C21D93C970004EEE29 /* PLDelgateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDelgateHelper.m; sourceTree = "<group>"; };
+		B6FC33C31D93C970004EEE29 /* PLLogDisplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLogDisplayer.h; sourceTree = "<group>"; };
+		B6FC33C41D93C970004EEE29 /* PLLogDisplayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLLogDisplayer.m; sourceTree = "<group>"; };
+		B6FC33C51D93C970004EEE29 /* PLMainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLMainTabBarController.h; sourceTree = "<group>"; };
+		B6FC33C61D93C970004EEE29 /* PLMainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLMainTabBarController.m; sourceTree = "<group>"; };
+		B6FC33C71D93C970004EEE29 /* PLPanelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPanelModel.h; sourceTree = "<group>"; };
+		B6FC33C81D93C970004EEE29 /* PLPanelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPanelModel.m; sourceTree = "<group>"; };
+		B6FC33C91D93C970004EEE29 /* PLStreamingKitDemoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingKitDemoUtils.h; sourceTree = "<group>"; };
+		B6FC33CA1D93C970004EEE29 /* PLTitleValueConf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLTitleValueConf.h; sourceTree = "<group>"; };
+		B6FC33CB1D93C970004EEE29 /* PLTitleValueConf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLTitleValueConf.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,9 +117,10 @@
 			files = (
 				769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
+				B6FC33B01D93C398004EEE29 /* libWeChatSDK.a in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				10C37C5C2F38F3794787067F /* libPods-PLMediaStreamingKitDemo.a in Frameworks */,
+				1CB31FA1A509BFCE50E56392 /* libPods-PLMediaStreamingKitDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,22 +136,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4F77CA2A6A64EB99E6CE2261 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0A00C185990B5B2258CC077E /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */,
-				4F98AE028C608D79D2D842E9 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				6003F593195388D20070C39A /* PLMediaStreamingKit */,
+				B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */,
+				B6FC338B1D93C301004EEE29 /* PLMediaStreamingKitDemo */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
-				4F77CA2A6A64EB99E6CE2261 /* Pods */,
+				F80803209498A6D014ADF6AC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,40 +163,102 @@
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
-				E2622A10FF45B73B64ACC349 /* libPods-PLCameraStreamingKit.a */,
-				003EE6824F2DFFAA7D2E7CF6 /* libPods-PLMediaStreamingKitDemo.a */,
+				6D38E0519CDFBF6954B8389D /* libPods-PLMediaStreamingKitDemo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6003F593195388D20070C39A /* PLMediaStreamingKit */ = {
+		B6FC338B1D93C301004EEE29 /* PLMediaStreamingKitDemo */ = {
 			isa = PBXGroup;
 			children = (
-				B62E2CDB1D543B2C006E19E6 /* PLAppDelegate.h */,
-				B62E2CDC1D543B2C006E19E6 /* PLAppDelegate.m */,
-				B62E2CDD1D543B2C006E19E6 /* PLViewController.h */,
-				B62E2CDE1D543B2C006E19E6 /* PLViewController.m */,
-				B62E2CDF1D543B2C006E19E6 /* Reachability.h */,
-				B62E2CE01D543B2C006E19E6 /* Reachability.m */,
-				B62E2CE61D543B51006E19E6 /* qiniu.png */,
-				B6DB787B1D543E0F00BE8DC8 /* Launch Screen.storyboard */,
-				B6DB787D1D543E0F00BE8DC8 /* Main_iPhone.storyboard */,
-				B62E2CE41D543B48006E19E6 /* Images.xcassets */,
-				6003F594195388D20070C39A /* Supporting Files */,
+				B6FC33A51D93C398004EEE29 /* Weixin */,
+				B6FC33BC1D93C970004EEE29 /* PLStreamingKitDemoUtils */,
+				B6FC33B21D93C470004EEE29 /* PLAppDelegate.h */,
+				B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */,
+				B6FC339B1D93C398004EEE29 /* PLMainViewController.h */,
+				B6FC339C1D93C398004EEE29 /* PLMainViewController.m */,
+				B6FC339D1D93C398004EEE29 /* PLModelPanelGenerator.h */,
+				B6FC339E1D93C398004EEE29 /* PLModelPanelGenerator.m */,
+				B6FC339F1D93C398004EEE29 /* PLPanelDelegateGenerator.h */,
+				B6FC33A01D93C398004EEE29 /* PLPanelDelegateGenerator.m */,
+				B6FC33A11D93C398004EEE29 /* PLPermissionRequestor.h */,
+				B6FC33A21D93C398004EEE29 /* PLPermissionRequestor.m */,
+				B6FC33A31D93C398004EEE29 /* PLStreamingSessionConstructor.h */,
+				B6FC33A41D93C398004EEE29 /* PLStreamingSessionConstructor.m */,
+				B6FC338C1D93C301004EEE29 /* Launch Screen.storyboard */,
+				B6FC338E1D93C301004EEE29 /* InfoPlist.strings */,
+				B6FC33901D93C301004EEE29 /* Images.xcassets */,
+				B6FC33911D93C301004EEE29 /* Resource */,
+				B6FC33921D93C301004EEE29 /* Supporting Files */,
 			);
-			name = PLMediaStreamingKit;
-			path = PLCameraStreamingKit;
+			path = PLMediaStreamingKitDemo;
 			sourceTree = "<group>";
 		};
-		6003F594195388D20070C39A /* Supporting Files */ = {
+		B6FC33911D93C301004EEE29 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				B62E2CD81D543AF8006E19E6 /* InfoPlist.strings */,
-				B62E2CD01D543AB2006E19E6 /* main.m */,
-				B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */,
-				B62E2CD61D543AE3006E19E6 /* PLMediaStreamingKitDemo-Prefix.pch */,
+				B651FF941D93DA1F00D1C578 /* qiniu.png */,
+				B651FF951D93DA1F00D1C578 /* TestMusic1.mp3 */,
+				B651FF961D93DA1F00D1C578 /* TestMusic2.wav */,
+				B651FF971D93DA1F00D1C578 /* TestMusic3.wav */,
+				B651FF981D93DA1F00D1C578 /* TestMusic4.mp3 */,
+				B651FF991D93DA1F00D1C578 /* TestMusic5.mp3 */,
+				B651FF9A1D93DA1F00D1C578 /* xiaoqi1.png */,
+				B651FF9B1D93DA1F00D1C578 /* xiaoqi2.png */,
 			);
-			name = "Supporting Files";
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		B6FC33921D93C301004EEE29 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6FC33931D93C301004EEE29 /* main.m */,
+				B6FC33941D93C301004EEE29 /* PLMediaStreamingKitDemo-Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6FC33A51D93C398004EEE29 /* Weixin */ = {
+			isa = PBXGroup;
+			children = (
+				B6FC33A61D93C398004EEE29 /* libWeChatSDK.a */,
+				B6FC33A71D93C398004EEE29 /* README.txt */,
+				B6FC33A81D93C398004EEE29 /* WechatAuthSDK.h */,
+				B6FC33A91D93C398004EEE29 /* WXApi.h */,
+				B6FC33AA1D93C398004EEE29 /* WXApiObject.h */,
+			);
+			path = Weixin;
+			sourceTree = "<group>";
+		};
+		B6FC33BC1D93C970004EEE29 /* PLStreamingKitDemoUtils */ = {
+			isa = PBXGroup;
+			children = (
+				B6FC33BD1D93C970004EEE29 /* PLAlertSpinner.h */,
+				B6FC33BE1D93C970004EEE29 /* PLAlertSpinner.m */,
+				B6FC33BF1D93C970004EEE29 /* PLAttributeModel.h */,
+				B6FC33C01D93C970004EEE29 /* PLAttributeModel.m */,
+				B6FC33C11D93C970004EEE29 /* PLDelgateHelper.h */,
+				B6FC33C21D93C970004EEE29 /* PLDelgateHelper.m */,
+				B6FC33C31D93C970004EEE29 /* PLLogDisplayer.h */,
+				B6FC33C41D93C970004EEE29 /* PLLogDisplayer.m */,
+				B6FC33C51D93C970004EEE29 /* PLMainTabBarController.h */,
+				B6FC33C61D93C970004EEE29 /* PLMainTabBarController.m */,
+				B6FC33C71D93C970004EEE29 /* PLPanelModel.h */,
+				B6FC33C81D93C970004EEE29 /* PLPanelModel.m */,
+				B6FC33C91D93C970004EEE29 /* PLStreamingKitDemoUtils.h */,
+				B6FC33CA1D93C970004EEE29 /* PLTitleValueConf.h */,
+				B6FC33CB1D93C970004EEE29 /* PLTitleValueConf.m */,
+			);
+			path = PLStreamingKitDemoUtils;
+			sourceTree = "<group>";
+		};
+		F80803209498A6D014ADF6AC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				09EF86FE485DC921D9EC2C00 /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */,
+				0C618BE754D25865CFB92AE2 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,12 +268,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "PLMediaStreamingKitDemo" */;
 			buildPhases = (
-				C51714D8DEB9761E7234291C /* Check Pods Manifest.lock */,
+				A1E7FB20C839273AD4B3F024 /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				242E578144051AE68FD56541 /* Embed Pods Frameworks */,
-				F3D1081D5D4970A9F31EE1BD /* Copy Pods Resources */,
+				C4A42BD82CFC393B83A372D1 /* [CP] Embed Pods Frameworks */,
+				C6C5D69A86D831E788799F09 /* [CP] Copy Pods Resources */,
+				B651FF8E1D93D99B00D1C578 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -247,12 +350,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B62E2CDA1D543AF8006E19E6 /* InfoPlist.strings in Resources */,
-				B62E2CE51D543B48006E19E6 /* Images.xcassets in Resources */,
-				B6DB78801D543E0F00BE8DC8 /* Main_iPhone.storyboard in Resources */,
-				B62E2CE71D543B51006E19E6 /* qiniu.png in Resources */,
-				B6DB787F1D543E0F00BE8DC8 /* Launch Screen.storyboard in Resources */,
-				B62E2CD71D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist in Resources */,
+				B6FC33981D93C301004EEE29 /* Images.xcassets in Resources */,
+				B651FFA01D93DA1F00D1C578 /* TestMusic4.mp3 in Resources */,
+				B651FF9E1D93DA1F00D1C578 /* TestMusic2.wav in Resources */,
+				B6FC33B61D93C603004EEE29 /* PLMediaStreamingKit.podspec in Resources */,
+				B651FFA31D93DA1F00D1C578 /* xiaoqi2.png in Resources */,
+				B651FF9C1D93DA1F00D1C578 /* qiniu.png in Resources */,
+				B651FF9D1D93DA1F00D1C578 /* TestMusic1.mp3 in Resources */,
+				B651FFA11D93DA1F00D1C578 /* TestMusic5.mp3 in Resources */,
+				B6FC33B11D93C398004EEE29 /* README.txt in Resources */,
+				B651FFA21D93DA1F00D1C578 /* xiaoqi1.png in Resources */,
+				B651FF9F1D93DA1F00D1C578 /* TestMusic3.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,14 +374,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		242E578144051AE68FD56541 /* Embed Pods Frameworks */ = {
+		A1E7FB20C839273AD4B3F024 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B651FF8E1D93D99B00D1C578 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 356922ded861e8764b53656f328bf3e7610fb59b 4e8f96a6c525321b1833e0fdb19f396702d2cb0b6e581fdf80efde45b2a3bfc1";
+		};
+		C4A42BD82CFC393B83A372D1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,29 +417,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C51714D8DEB9761E7234291C /* Check Pods Manifest.lock */ = {
+		C6C5D69A86D831E788799F09 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F3D1081D5D4970A9F31EE1BD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,10 +439,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B62E2CD11D543AB2006E19E6 /* main.m in Sources */,
-				B62E2CE11D543B2C006E19E6 /* PLAppDelegate.m in Sources */,
-				B62E2CE31D543B2C006E19E6 /* Reachability.m in Sources */,
-				B62E2CE21D543B2C006E19E6 /* PLViewController.m in Sources */,
+				B6FC33D11D93C970004EEE29 /* PLPanelModel.m in Sources */,
+				B6FC33CD1D93C970004EEE29 /* PLAttributeModel.m in Sources */,
+				B6FC33991D93C301004EEE29 /* main.m in Sources */,
+				B6FC33AB1D93C398004EEE29 /* PLMainViewController.m in Sources */,
+				B6FC33D21D93C970004EEE29 /* PLTitleValueConf.m in Sources */,
+				B6FC33AE1D93C398004EEE29 /* PLPermissionRequestor.m in Sources */,
+				B6FC33D01D93C970004EEE29 /* PLMainTabBarController.m in Sources */,
+				B6FC33CE1D93C970004EEE29 /* PLDelgateHelper.m in Sources */,
+				B6FC33AC1D93C398004EEE29 /* PLModelPanelGenerator.m in Sources */,
+				B6FC33B41D93C470004EEE29 /* PLAppDelegate.m in Sources */,
+				B6FC33CF1D93C970004EEE29 /* PLLogDisplayer.m in Sources */,
+				B6FC33AF1D93C398004EEE29 /* PLStreamingSessionConstructor.m in Sources */,
+				B6FC33CC1D93C970004EEE29 /* PLAlertSpinner.m in Sources */,
+				B6FC33AD1D93C398004EEE29 /* PLPanelDelegateGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,28 +474,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B62E2CD81D543AF8006E19E6 /* InfoPlist.strings */ = {
+		B6FC338C1D93C301004EEE29 /* Launch Screen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B62E2CD91D543AF8006E19E6 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		B6DB787B1D543E0F00BE8DC8 /* Launch Screen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B6DB787C1D543E0F00BE8DC8 /* Base */,
+				B6FC338D1D93C301004EEE29 /* Base */,
 			);
 			name = "Launch Screen.storyboard";
 			sourceTree = "<group>";
 		};
-		B6DB787D1D543E0F00BE8DC8 /* Main_iPhone.storyboard */ = {
+		B6FC338E1D93C301004EEE29 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B6DB787E1D543E0F00BE8DC8 /* Base */,
+				B6FC338F1D93C301004EEE29 /* en */,
 			);
-			name = Main_iPhone.storyboard;
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -447,15 +570,19 @@
 		};
 		6003F5C0195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A00C185990B5B2258CC077E /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */;
+			baseConfigurationReference = 09EF86FE485DC921D9EC2C00 /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKit/PLMediaStreamingKitDemo-Info.plist";
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
+				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit";
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
@@ -466,15 +593,19 @@
 		};
 		6003F5C1195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F98AE028C608D79D2D842E9 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */;
+			baseConfigurationReference = 0C618BE754D25865CFB92AE2 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKit/PLMediaStreamingKitDemo-Info.plist";
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit";

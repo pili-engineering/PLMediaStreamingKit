@@ -61,6 +61,19 @@ typedef NS_ENUM(NSUInteger, PLNetworkStateTransition) {
 };
 
 /*!
+ @typedef    PLStreamAdaptiveQualityMode
+ @abstract   自适应流质量调整模式
+ */
+typedef NS_ENUM(NSUInteger, PLStreamAdaptiveQualityMode) {
+    /// PLStreamAdaptiveQualityModeBitratePriorAdjust  优先调整码率
+    PLStreamAdaptiveQualityModeBitratePriorAdjust,
+    /// PLStreamAdaptiveQualityModeFrameratePriorAdjust 优先调整帧率
+    PLStreamAdaptiveQualityModeFrameratePriorAdjust,
+    /// PLStreamAdaptiveQualityModeHybridAdjust 混合调整
+    PLStreamAdaptiveQualityModeHybridAdjust,
+};
+
+/*!
  @typedef    PLStreamStartState
  @abstract   反馈推流操作开始的状态。
  @since      v2.0.0
@@ -170,15 +183,19 @@ typedef enum {
      */
     PLCameraErroTryReconnectFailed = -1501,
     
-    PLRTCStreamingErrorUnknown = -1,
-    PLRTCStreamingErrorInitEngineFailed = -3000,
-    PLRTCStreamingErrorRoomAuthFailed = -3001,
-    PLRTCStreamingErrorJoinRoomFailed = -3002,
-    PLRTCStreamingErrorOpenMicrophoneFailed = -3003,
-    PLRTCStreamingErrorSubscribeFailed = -3004,
-    PLRTCStreamingErrorPublishCameraFailed = -3005,
-    PLRTCStreamingErrorConnectRoomFailed = -3006,
-    PLRTCStreamingErrorSetVideoBitrateFailed = -3007
+    PLRTCStreamingErrorUnknown = -3000,
+    PLRTCStreamingErrorStillRunning = -3001,
+    PLRTCStreamingErrorInvalidParameter = -3002,
+    PLRTCStreamingErrorInitEngineFailed = -3003,
+    PLRTCStreamingErrorRoomAuthFailed = -3004,
+    PLRTCStreamingErrorJoinRoomFailed = -3005,
+    PLRTCStreamingErrorOpenMicrophoneFailed = -3006,
+    PLRTCStreamingErrorSubscribeFailed = -3007,
+    PLRTCStreamingErrorPublishCameraFailed = -3008,
+    PLRTCStreamingErrorConnectRoomFailed = -3009,
+    PLRTCStreamingErrorSetVideoBitrateFailed = -3010,
+    PLRTCStreamingErrorSystemVersionNotSupported = -3011,
+    PLRTCStreamingErrorRTCLibraryNotFound = -3012
 } PLStreamError;
 
 #pragma mark - Video Streaming Quality
@@ -187,7 +204,7 @@ typedef enum {
     @constant   kPLVideoStreamingQualityLow1
     @abstract   视频编码推流质量 low 1。
 
-    @discussion 具体参数 fps: 12, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 150Kbps。
+    @discussion 具体参数 videoSize: 272x480, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 128Kbps。
  
     @since      v1.0.0
  */
@@ -197,7 +214,7 @@ extern NSString *kPLVideoStreamingQualityLow1;
     @constant   kPLVideoStreamingQualityLow1
     @abstract   视频编码推流质量 low 2。
 
-    @discussion 具体参数 fps: 15, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 264Kbps。
+    @discussion 具体参数 videoSize: 272x480, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 256Kbps。
  
     @since      v1.0.0
  */
@@ -207,7 +224,7 @@ extern NSString *kPLVideoStreamingQualityLow2;
     @constant   kPLVideoStreamingQualityLow3
     @abstract   视频编码推流质量 low 3。
 
-    @discussion 具体参数 fps: 15, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 350Kbps。
+    @discussion 具体参数 videoSize: 272x480, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264HighAutoLevel, video bitrate: 512Kbps
  
     @since      v1.0.0
  */
@@ -217,7 +234,7 @@ extern NSString *kPLVideoStreamingQualityLow3;
     @constant   kPLVideoStreamingQualityMedium1
     @abstract   视频编码推流质量 medium 1。
  
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 512Kbps。
+    @discussion 具体参数 videoSize: 368x640, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264HighAutoLevel, video bitrate: 512Kbps
  
     @since      v1.0.0
  */
@@ -227,7 +244,7 @@ extern NSString *kPLVideoStreamingQualityMedium1;
     @constant   kPLVideoStreamingQualityMedium2
     @abstract   视频编码推流质量 medium 2。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 800Kbps。
+    @discussion 具体参数 videoSize: 368x640, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 768Kbps
  
     @since      v1.0.0
  */
@@ -237,7 +254,7 @@ extern NSString *kPLVideoStreamingQualityMedium2;
     @constant   kPLVideoStreamingQualityMedium3
     @abstract   视频编码推流质量 medium 3。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 1000Kbps。
+ @discussion 具体参数 videoSize: 368x640, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 1Mbps
  
     @since      v1.0.0
  */
@@ -247,7 +264,7 @@ extern NSString *kPLVideoStreamingQualityMedium3;
     @constant   kPLVideoStreamingQualityHigh1
     @abstract   视频编码推流质量 high 1。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 1200Kbps。
+ @discussion 具体参数 videoSize: 720x1280, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 1Mbps
  
     @since      v1.0.0
  */
@@ -257,7 +274,7 @@ extern NSString *kPLVideoStreamingQualityHigh1;
     @constant   kPLVideoStreamingQualityHigh2
     @abstract   视频编码推流质量 high 2。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 1500Kbps。
+ @discussion 具体参数 videoSize: 720x1280, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 1.25Mbps
  
     @since      v1.0.0
  */
@@ -267,7 +284,7 @@ extern NSString *kPLVideoStreamingQualityHigh2;
     @constant   kPLVideoStreamingQualityHigh3
     @abstract   视频编码推流质量 high 3。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 2000Kbps。
+ @discussion 具体参数 videoSize: 720x1280, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 1.5Mbps
  
     @since      v1.0.0
  */
@@ -359,14 +376,14 @@ typedef enum {
  @abstract   定义连麦时的视频大小。
  */
 typedef NS_ENUM(NSUInteger, PLRTCVideoSizePreset) {
-    PLRTCVideoSizePresetUnknown = 0,
-    PLRTCVideoSizePreset180x320 = 1,    //16:9
+    PLRTCVideoSizePresetDefault = 0,
+    PLRTCVideoSizePreset176x320 = 1,    //16:9
     PLRTCVideoSizePreset240x320,        //4:3
-    PLRTCVideoSizePreset240x424,        //16:9
-    PLRTCVideoSizePreset384x640,        //16:9
+    PLRTCVideoSizePreset240x432,        //16:9
+    PLRTCVideoSizePreset352x640,        //16:9
     PLRTCVideoSizePreset480x640,        //4:3
-    PLRTCVideoSizePreset540x720,        //4:3
-    PLRTCVideoSizePreset540x960,        //16:9
+    PLRTCVideoSizePreset544x720,        //4:3
+    PLRTCVideoSizePreset544x960,        //16:9
     PLRTCVideoSizePreset720x960,        //4:3
     PLRTCVideoSizePreset720x1280        //16:9
 };
@@ -384,8 +401,6 @@ extern const NSString *kPLRTCConnetTimeoutKey;
 typedef NS_ENUM(NSUInteger, PLRTCState) {
     /// 未知状态，只会作为 init 时的初始状态
     PLRTCStateUnknown = 0,
-    /// 已加入房间的状态
-    PLRTCStateConnected,
     /// 已进入到连麦的状态
     PLRTCStateConferenceStarted,
     /// 连麦已结束的状态
@@ -421,6 +436,10 @@ typedef enum {
     PLVideoFillModePreserveAspectRatioAndFill
 } PLVideoFillModeType;
 
+typedef BOOL(^ConnectionChangeActionCallback)(PLNetworkStateTransition transition);
+
+typedef BOOL(^ConnectionInterruptionHandler)(NSError *error);
+
 typedef enum {
     /**
      @brief 由 PLCameraStreamingKit 提供的预设的音效配置
@@ -448,4 +467,14 @@ typedef void (^PLAudioEffectCustomConfigurationBlock)(void *inRefCon,
                                                       UInt32 inNumberFrames,
                                                       AudioBufferList *ioData);
 
+/**
+ @brief 对截图数据进行处理的回调
+ 
+ @since v2.2.0
+ */
+
+typedef void (^PLStreamScreenshotHandler)(UIImage * _Nullable image);
+
 #endif
+
+
