@@ -46,6 +46,12 @@
 /// @abstract 被 userID 从房间踢出
 - (void)RTCStreamingSession:(PLRTCStreamingSession *)session didKickoutByUserID:(NSString *)userID;
 
+/// @abstract  userID 加入房间
+- (void)RTCStreamingSession:(PLRTCStreamingSession *)session didJoinConferenceOfUserID:(NSString *)userID;
+
+/// @abstract userID 离开房间
+- (void)RTCStreamingSession:(PLRTCStreamingSession *)session didLeaveConferenceOfUserID:(NSString *)userID;
+
 @end
 
 @interface PLRTCStreamingSession : NSObject
@@ -247,6 +253,15 @@
 
 @property (nonatomic, assign, getter=isMonitorNetworkStateEnable) BOOL monitorNetworkStateEnable;
 
+/**
+ *  人工报障
+ *
+ *  @discussion 在出现特别卡顿的时候，可以调用此方法，上报故障。
+ *
+ */
+- (void)postDiagnosisWithCompletionHandler:(nullable PLStreamDiagnosisResultHandler)handle;
+
+
 @end
 
 /*!
@@ -345,6 +360,22 @@
 
  */
 @property (nonatomic, assign, readonly) PLRTCState   rtcState;
+
+/**
+ @abstract 连麦房间中的 userID 列表（不包含自己），只读
+ 
+ @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
+ 
+ */
+@property (nonatomic, strong, readonly) NSArray *rtcParticipants;
+
+/**
+ @abstract 连麦房间中的人数（不包含自己），只读
+ 
+ @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
+ 
+ */
+@property (nonatomic, assign, readonly) NSUInteger rtcParticipantsCount;
 
 /**
  @abstract 配置合流后连麦的窗口在主窗口中的位置和大小，里面存放 NSValue 封装的 CGRect。注意，该位置是指连麦的窗口在推出来流的画面中的位置，并非在本地预览的位置

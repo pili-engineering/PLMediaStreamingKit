@@ -19,9 +19,13 @@ NSCopying
  由于主播涉及到画面合成和推流，可不设置或者设置较大 size，其它连麦者可以设置较小 size。
  */
 @property (nonatomic, assign) PLRTCVideoSizePreset videoSize;
+@property (nonatomic, assign) PLRTCConferenceType conferenceType;
 
 + (instancetype)defaultConfiguration;
 
 -(instancetype)initWithVideoSize:(PLRTCVideoSizePreset)videoSize;
+
+-(instancetype)initWithVideoSize:(PLRTCVideoSizePreset)videoSize
+                  conferenceType:(PLRTCConferenceType)conferenceType;
 
 @end
