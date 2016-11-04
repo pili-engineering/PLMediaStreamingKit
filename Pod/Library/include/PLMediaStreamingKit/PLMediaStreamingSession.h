@@ -57,6 +57,12 @@
 /// @abstract 被 userID 从房间踢出
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session didKickoutByUserID:(NSString *)userID;
 
+/// @abstract  userID 加入房间
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session didJoinConferenceOfUserID:(NSString *)userID;
+
+/// @abstract userID 离开房间
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session didLeaveConferenceOfUserID:(NSString *)userID;
+
 @end
 
 #pragma mark - basic
@@ -185,14 +191,21 @@
  */
 @property (nonatomic,assign, getter=isDynamicFrameEnable) BOOL dynamicFrameEnable;
 
+/*!
+ @property   monitorNetworkStateEnable
+ @abstract   开启网络切换监测，默认处于关闭状态
+ 
+ @discussion 打开该开关后，需实现回调函数 connectionChangeActionCallback，以完成在某种网络切换状态下对推流连接的处理判断。
+ @see        connectionChangeActionCallback
+ */
 @property (nonatomic, assign, getter=isMonitorNetworkStateEnable) BOOL monitorNetworkStateEnable;
 
 /*!
  @property   autoReconnectEnable
  @abstract   自动断线重连开关，默认关闭。
  
- @discussion 该方法在推流SDK内部实现断线自动重连。若开启此机制，则当推流因异常导致中断时，-streamingSession:didDisconnectWithError:回调不会马上被触发，推流将进行最多三次自动重连，每次重连的等待时间会由初次的0~2s递增至最大10s。等待重连期间，推流状态 streamState 会变为 PLStreamStateAutoReconnecting。一旦三次自动重连仍无法成功连接，则放弃治疗，-streamingSession:didDisconnectWithError:回调将被触发。
- 该机制默认关闭，用户可在 -streamingSession:didDisconnectWithError: 方法中自定义添加断线重连处理逻辑。
+ @discussion 该方法在推流 SDK 内部实现断线自动重连。若开启此机制，则当推流因异常导致中断时，-mediaStreamingSession:didDisconnectWithError:回调不会马上被触发，推流将进行最多三次自动重连，每次重连的等待时间会由初次的 0~2s 递增至最大 10s。等待重连期间，推流状态 streamState 会变为 PLStreamStateAutoReconnecting。一旦三次自动重连仍无法成功连接，则放弃治疗，-mediaStreamingSession:didDisconnectWithError:回调将被触发。
+ 该机制默认关闭，用户可在 -mediaStreamingSession:didDisconnectWithError: 方法中自定义添加断线重连处理逻辑。
  @see        connectionInterruptionHandler
  */
 @property (nonatomic, assign, getter=isAutoReconnectEnable) BOOL autoReconnectEnable;
@@ -203,8 +216,8 @@
  
  @param      minVideoBitRate 最小平均码率
  
- @discussion 该方法在推流SDK内部实现动态码率调节。开启该机制时，需设置允许调节的最低码率，以便使自动调整后的码率不会低于该范围。该机制根据网络吞吐量来调节推流的码率，在网络带宽变小导致发送缓冲区数据持续增长时，SDK内部将适当降低推流码率，若情况得不到改善，则会重复该过程直至平均码率降至用户设置的最低值；反之，当一段时间内网络带宽充裕，SDK将适当增加推流码率，直至达到预设的推流码率。
- 自适应码率机制默认关闭，用户可利用 -streamingSession:streamStatusDidUpdate 回调数据实现自定义版本的码率调节功能。
+ @discussion 该方法在推流 SDK 内部实现动态码率调节。开启该机制时，需设置允许调节的最低码率，以便使自动调整后的码率不会低于该范围。该机制根据网络吞吐量来调节推流的码率，在网络带宽变小导致发送缓冲区数据持续增长时，SDK 内部将适当降低推流码率，若情况得不到改善，则会重复该过程直至平均码率降至用户设置的最低值；反之，当一段时间内网络带宽充裕，SDK 将适当增加推流码率，直至达到预设的推流码率。
+ 自适应码率机制默认关闭，用户可利用 -mediaStreamingSession:streamStatusDidUpdate 回调数据实现自定义版本的码率调节功能。
  */
 - (void)enableAdaptiveBitrateControlWithMinVideoBitRate:(NSUInteger)minVideoBitRate;
 
@@ -218,7 +231,7 @@
  @property   connectionInterruptionHandler
  @abstract   推流断开用户回调
  
- @discussion 该回调函数传入参数为推流断开产生的错误信息 error。返回值为布尔值，YES表示在该错误状态下允许推流自动重连，NO则代表不允许自动重连。本回调函数与 autoReconnectEnable 开关配合作用，只有在该开关开启时，本回调会在自动重连之前被调用，并通过返回值判断是否继续自动重连。若用户未设置该回调方法，则按默认策略最多进行三次自动重连。
+ @discussion 该回调函数传入参数为推流断开产生的错误信息 error。返回值为布尔值，YES 表示在该错误状态下允许推流自动重连，NO 则代表不允许自动重连。本回调函数与 autoReconnectEnable 开关配合作用，只有在该开关开启时，本回调会在自动重连之前被调用，并通过返回值判断是否继续自动重连。若用户未设置该回调方法，则按默认策略最多进行三次自动重连。
  
  @warning    该回调会在主线程中执行
  
@@ -230,12 +243,11 @@
  @property   connectionChangeActionCallback
  @abstract   网络切换用户回调
  
- @discussion 该回调函数传入参数为当前网络的切换状态 PLNetworkStateTransition。 返回值为布尔值，YES表示在某种切换状态下允许推流自动重启，NO则代表该状态下不应自动重启。该回调自动重连回调 connectionInterruptionHandler 的区别在于，当推流网络从WWAN切换到WiFi时，推流不会被断开而继续使用WWAN，此时自动重连机制不会被触发，SDK内部会调用 connectionChangeActionCallback 来判断是否需要重启推流以使用优先级更高的网络。
- 值得注意的是，在开启自动重连开关 autoReconnectEnable，并实现了本回调的情况下，推流时网络从WiFi切换到WWAN，SDK将优先执行本回调函数判断是否主动重启推流。如果用户选择在此情况下不主动重启，则等推流连接超时后将自动重连决定权交予 connectionInterruptionHandler 判断。如果两个回调均未被实现，则该情况下会默认断开推流以防止用户流量消耗。
+ @discussion 该回调函数与 monitorNetworkStateEnable 开关配合作用，只有将该开关开启时，该回调才会执行。该回调函数传入参数为当前网络的切换状态 PLNetworkStateTransition。返回值为布尔值，YES 表示在某种切换状态下允许推流自动重启，NO 则代表该状态下不应自动重启。该回调与自动重连回调 connectionInterruptionHandler 的区别在于，当推流网络从 WWAN 切换到 WiFi 时，推流不会被断开而继续使用 WWAN，此时自动重连机制不会被触发，SDK 内部会调用 connectionChangeActionCallback 来判断是否需要重启推流以使用优先级更高的网络。值得注意的是，在开启自动重连开关 autoReconnectEnable，并实现了本回调的情况下，推流时网络从 WiFi 切换到 WWAN，SDK 将优先执行本回调函数判断是否主动重启推流。如果用户选择在此情况下不主动重启，则等推流连接超时后将自动重连决定权交予 connectionInterruptionHandler 判断。如果两个回调均未被实现，则该情况下会默认断开推流以防止用户流量消耗。
  
  @warning    该回调会在主线程中执行
  
- @see        autoReconnectEnable
+ @see        monitorNetworkStateEnable
  @see        connectionInterruptionHandler
  */
 @property (nonatomic, copy) ConnectionChangeActionCallback connectionChangeActionCallback;
@@ -334,6 +346,14 @@
  */
 - (void)reloadVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration;
 
+/**
+ *  人工报障
+ *
+ *  @discussion 在出现特别卡顿的时候，可以调用此方法，上报故障。
+ *
+ */
+- (void)postDiagnosisWithCompletionHandler:(nullable PLStreamDiagnosisResultHandler)handle;
+
 @end
 
 #pragma mark - Category (CameraSource)
@@ -356,13 +376,22 @@
 /// default as NO.
 @property (nonatomic, assign, getter=isTorchOn) BOOL    torchOn;
 
-/// default as YES.
+/*!
+ @property  continuousAutofocusEnable
+ @abstract  连续自动对焦。该属性默认开启。
+ */
 @property (nonatomic, assign, getter=isContinuousAutofocusEnable) BOOL  continuousAutofocusEnable;
 
-/// default as YES.
+/*!
+ @property  touchToFocusEnable
+ @abstract  手动点击屏幕进行对焦。该属性默认开启。
+ */
 @property (nonatomic, assign, getter=isTouchToFocusEnable) BOOL touchToFocusEnable;
 
-/// default as YES.
+/*!
+ @property  smoothAutoFocusEnabled
+ @abstract  该属性适用于视频拍摄过程中用来减缓因自动对焦产生的镜头伸缩，使画面不因快速的对焦而产生抖动感。该属性默认开启。
+ */
 @property (nonatomic, assign, getter=isSmoothAutoFocusEnabled) BOOL  smoothAutoFocusEnabled;
 
 /// default as (0.5, 0.5), (0,0) is top-left, (1,1) is bottom-right.
@@ -588,6 +617,22 @@
  
  */
 @property (nonatomic, assign, readonly) PLRTCState   rtcState;
+
+/**
+ @abstract 连麦房间中的 userID 列表（不包含自己），只读
+ 
+ @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
+ 
+ */
+@property (nonatomic, strong, readonly) NSArray *rtcParticipants;
+
+/**
+ @abstract 连麦房间中的人数（不包含自己），只读
+ 
+ @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
+ 
+ */
+@property (nonatomic, assign, readonly) NSUInteger rtcParticipantsCount;
 
 /**
  @abstract 配置合流后连麦的窗口在主窗口中的位置和大小，里面存放 NSValue 封装的 CGRect。注意，该位置是指连麦的窗口在推出来流的画面中的位置，并非在本地预览的位置
