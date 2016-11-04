@@ -23,6 +23,7 @@ Pod::Spec.new do |s|
  
   s.dependency 'pili-librtmp', '1.0.5'
   s.dependency 'HappyDNS', '~> 0.3.0'
+  s.dependency 'QNNetDiag'
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']
   s.libraries = 'z', 'c++', 'icucore', 'sqlite3'
   s.vendored_libraries = 'Pod/Library/*.a'
