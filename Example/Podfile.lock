@@ -20,29 +20,36 @@ PODS:
   - HappyDNS (0.3.10)
   - Masonry (1.0.2)
   - pili-librtmp (1.0.5)
-  - PLMediaStreamingKit (2.1.2):
+  - PLMediaStreamingKit (2.1.3):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
-    - PLMediaStreamingKit/Common (= 2.1.2)
-    - PLMediaStreamingKit/PLCameraStreamingKit (= 2.1.2)
-    - PLMediaStreamingKit/PLMediaStreamingKit (= 2.1.2)
-    - PLMediaStreamingKit/PLRTCStreamingKit (= 2.1.2)
-    - PLMediaStreamingKit/PLStreamingKit (= 2.1.2)
-  - PLMediaStreamingKit/Common (2.1.2):
+    - PLMediaStreamingKit/Common (= 2.1.3)
+    - PLMediaStreamingKit/PLCameraStreamingKit (= 2.1.3)
+    - PLMediaStreamingKit/PLMediaStreamingKit (= 2.1.3)
+    - PLMediaStreamingKit/PLRTCStreamingKit (= 2.1.3)
+    - PLMediaStreamingKit/PLStreamingKit (= 2.1.3)
+    - QNNetDiag
+  - PLMediaStreamingKit/Common (2.1.3):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
-  - PLMediaStreamingKit/PLCameraStreamingKit (2.1.2):
+    - QNNetDiag
+  - PLMediaStreamingKit/PLCameraStreamingKit (2.1.3):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
-  - PLMediaStreamingKit/PLMediaStreamingKit (2.1.2):
+    - QNNetDiag
+  - PLMediaStreamingKit/PLMediaStreamingKit (2.1.3):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
-  - PLMediaStreamingKit/PLRTCStreamingKit (2.1.2):
+    - QNNetDiag
+  - PLMediaStreamingKit/PLRTCStreamingKit (2.1.3):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
-  - PLMediaStreamingKit/PLStreamingKit (2.1.2):
+    - QNNetDiag
+  - PLMediaStreamingKit/PLStreamingKit (2.1.3):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
+    - QNNetDiag
+  - QNNetDiag (0.0.3)
   - WeiboSDK (3.1.3)
 
 DEPENDENCIES:
@@ -64,7 +71,8 @@ SPEC CHECKSUMS:
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   pili-librtmp: 65a6e10f7c314bd1f407ba24bd074c57cba79d0c
-  PLMediaStreamingKit: 2c0f2bf19e85c56b28758d3498753bc657011660
+  PLMediaStreamingKit: 63c7a3c6b698ad31f9ce6eb96a2ff318b4cd04ec
+  QNNetDiag: 90727185d3cdd4f62f92b7f9b7d586451cf745d1
   WeiboSDK: acb067053668102cf07d01aa7604350162c2e466
 
 PODFILE CHECKSUM: 14de6849e20310a5c3ccffc657a1f50423c45303
