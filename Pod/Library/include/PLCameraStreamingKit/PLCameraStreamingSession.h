@@ -566,6 +566,22 @@
 
 @property (nonatomic, assign, getter=isMuted)   BOOL    muted;                   // default as NO.
 
+/*!
+ @brief 是否允许在后台与其他 App 的音频混音而不被打断，默认关闭
+ */
+@property (nonatomic, assign) BOOL allowAudioMixWithOthers;
+
+/*!
+ @brief 音频被其他 app 中断开始时会回调该函数，注意回调不在主线程进行。
+ */
+@property (nonatomic, copy) PLAudioSessionDidBeginInterruptionCallback _Nullable audioSessionBeginInterruptionCallback;
+
+/*!
+ @brief 音频中断结束时回调，即其他 app 结束打断音频操作时会回调该函数，注意回调不在主线程进行。
+ */
+@property (nonatomic, copy) PLAudioSessionDidEndInterruptionCallback _Nullable audioSessionEndInterruptionCallback;
+
+
 /**
  @brief 麦克风采集的音量，设置范围为 0~1，各种机型默认值不同。
  

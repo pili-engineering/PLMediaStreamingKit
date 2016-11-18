@@ -14,38 +14,38 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Crashlytics (3.8.2):
+  - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.9)
+  - Fabric (1.6.11)
   - HappyDNS (0.3.10)
   - Masonry (1.0.2)
   - pili-librtmp (1.0.5)
-  - PLMediaStreamingKit (2.1.3):
+  - PLMediaStreamingKit (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
-    - PLMediaStreamingKit/Common (= 2.1.3)
-    - PLMediaStreamingKit/PLCameraStreamingKit (= 2.1.3)
-    - PLMediaStreamingKit/PLMediaStreamingKit (= 2.1.3)
-    - PLMediaStreamingKit/PLRTCStreamingKit (= 2.1.3)
-    - PLMediaStreamingKit/PLStreamingKit (= 2.1.3)
+    - PLMediaStreamingKit/Common (= 2.1.5)
+    - PLMediaStreamingKit/PLCameraStreamingKit (= 2.1.5)
+    - PLMediaStreamingKit/PLMediaStreamingKit (= 2.1.5)
+    - PLMediaStreamingKit/PLRTCStreamingKit (= 2.1.5)
+    - PLMediaStreamingKit/PLStreamingKit (= 2.1.5)
     - QNNetDiag
-  - PLMediaStreamingKit/Common (2.1.3):
-    - HappyDNS (~> 0.3.0)
-    - pili-librtmp (= 1.0.5)
-    - QNNetDiag
-  - PLMediaStreamingKit/PLCameraStreamingKit (2.1.3):
+  - PLMediaStreamingKit/Common (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
     - QNNetDiag
-  - PLMediaStreamingKit/PLMediaStreamingKit (2.1.3):
+  - PLMediaStreamingKit/PLCameraStreamingKit (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
     - QNNetDiag
-  - PLMediaStreamingKit/PLRTCStreamingKit (2.1.3):
+  - PLMediaStreamingKit/PLMediaStreamingKit (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
     - QNNetDiag
-  - PLMediaStreamingKit/PLStreamingKit (2.1.3):
+  - PLMediaStreamingKit/PLRTCStreamingKit (2.1.5):
+    - HappyDNS (~> 0.3.0)
+    - pili-librtmp (= 1.0.5)
+    - QNNetDiag
+  - PLMediaStreamingKit/PLStreamingKit (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
     - QNNetDiag
@@ -66,15 +66,15 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
-  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   pili-librtmp: 65a6e10f7c314bd1f407ba24bd074c57cba79d0c
-  PLMediaStreamingKit: 63c7a3c6b698ad31f9ce6eb96a2ff318b4cd04ec
+  PLMediaStreamingKit: 622fe5c5b8b9ab9dbfdd8a931d20fd57b1c1ff7b
   QNNetDiag: 90727185d3cdd4f62f92b7f9b7d586451cf745d1
   WeiboSDK: acb067053668102cf07d01aa7604350162c2e466
 
 PODFILE CHECKSUM: 14de6849e20310a5c3ccffc657a1f50423c45303
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.1.1
