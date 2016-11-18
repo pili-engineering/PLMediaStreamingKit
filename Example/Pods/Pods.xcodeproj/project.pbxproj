@@ -45,6 +45,7 @@
 		397B373FA00B655FF1DD50F9C64E5C49 /* QNResolvUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D374552365DC4D81D164205E390CB3 /* QNResolvUtil.m */; };
 		3ADD0967301BC6574E7B73450DDD3898 /* QNResolverDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE41BC15862D848611ADC8AD8B67A1B /* QNResolverDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3AE74CB181C660957492551E080FB7B8 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 12E98C1ADCD721AD207824F0B0173F6E /* log.c */; };
+		3B53B4C206789EE6404FF3874E8AEC6A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85CC5E1646199280661E0767C5F13247 /* Foundation.framework */; };
 		3CF5DE3EC202C9678B0120CB3CC93FE3 /* NSIndexSet+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C5D50ECDA8101B1B9446AAD91B031049 /* NSIndexSet+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D21E64FE48AEB1FE7DE5329924BC61F /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E5FCA604F72D0EAA8C4DD123851E0F /* QNHex.m */; };
 		3DF2307D736F5A334CC5392A06B142C0 /* NSMutableIndexSet+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0DBBBFCE27FC757B6EF9CA4DEDAC4D49 /* NSMutableIndexSet+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,20 +63,20 @@
 		544109A51CDD64A6F8AC7820D0383707 /* QNResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = 541B9861293B60DA98BF7ECFB51789D4 /* QNResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5457FCC2699281B5A4203BA1559F593F /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D85CA4718DD3174CA71D7AF08AB60C64 /* NSArray+MASAdditions.m */; };
 		5467BA80FE76E5928DBC92FCA8F319DD /* UIAlertView+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF5FBE8BE12D6D370D67AC69B9F2E70 /* UIAlertView+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		570156557E9619465C2A7AF4C514B3EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4C26A72D50DB44D17501848286B727 /* Foundation.framework */; };
 		58F4C1C349633CE28F242E5FC8518636 /* NSTimer+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 467326DE8C72B517CBF93569E28B65D7 /* NSTimer+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61898DE2259DB9ECC1F23C538FCE7BBB /* UIImagePickerController+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = FD947CB9E733D2B6A6109E15A3BC9847 /* UIImagePickerController+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6317A1CC3817A2A91DA4B37545B4CD3E /* bytes.h in Headers */ = {isa = PBXBuildFile; fileRef = 77E8BC169A508C7C5A60F3E6EEB96119 /* bytes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63621F73F9AC48F03C25BB3EC391F576 /* Pods-PLMediaStreamingKitDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B9690908335F7A38D9D32F4D754A1C /* Pods-PLMediaStreamingKitDemo-dummy.m */; };
-		6A242E93B8569A42628B0F8B369273CA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B899A0B12DE8854651E7B38551B012 /* MessageUI.framework */; };
 		6DB0679652CDB744FD4670AE73F0EA32 /* HappyDNS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 393CEF4B965592335C9954D7C14A980D /* HappyDNS-dummy.m */; };
 		6DCBF5A3569BA772FBAB3379A00464D2 /* UIBarButtonItem+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2317F1B3920195B5EE3891F3F6BA50 /* UIBarButtonItem+BlocksKit.m */; };
 		6F2746610AB8BBFA162997F6AED950F7 /* NSTimer+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D5640FA55EED3205AC24490763AA0188 /* NSTimer+BlocksKit.m */; };
 		6F6DD1FA269EB37E6CC9722C59AFBA5B /* NSArray+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B86280FE757FE1409AE78D2F8393100 /* NSArray+BlocksKit.m */; };
 		6FE51449ABAA54EF33F44CE810BAD905 /* UITextField+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A2875D9F3F259E69EAA4537C4A19B28A /* UITextField+BlocksKit.m */; };
 		703080050561A77F07DAFB8B6D697BF7 /* QNAssessment.h in Headers */ = {isa = PBXBuildFile; fileRef = 19197F34C3E662F7F391797B8C1F39C7 /* QNAssessment.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7138752F99297B7D685F4976D318E0BF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85CC5E1646199280661E0767C5F13247 /* Foundation.framework */; };
 		7170340F2347D4905D4892FEBF1C4DB2 /* QNNProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = B495EA389C5F73FF65377DA9ECBAE5C9 /* QNNProtocols.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7350D7C8A66419BFE87DF3F6B7B721F7 /* QNHex.h in Headers */ = {isa = PBXBuildFile; fileRef = F57E8D6DAEEAE90DA0CDFF167FF36242 /* QNHex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		760A4C8C2538E864EA1D6D83AC17A8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85CC5E1646199280661E0767C5F13247 /* Foundation.framework */; };
 		7703A62C6D665561893D2B0E121956BF /* QNNRtmp.h in Headers */ = {isa = PBXBuildFile; fileRef = 538FE98B8A426D1DA4B22563CE0B94FD /* QNNRtmp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		77515111C9AFE11AB1287761150614F5 /* UITextField+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D27A7AD8FCEE64E479F3CE99FD7F072 /* UITextField+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79588DF8F673302C22F3C81278A0B98E /* NSObject+A2BlockDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3906E8B17CC22F74527BF3174EA9B568 /* NSObject+A2BlockDelegate.m */; };
@@ -93,6 +94,7 @@
 		94417E5D630F0DD170158FEC0C4ECBDA /* QNLruCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 4528A7DDCCB6750EA3B3C23DCF5EC720 /* QNLruCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		976CE25D7F45DCAD10BCF1FB63807124 /* QNNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6E2FA0EB5A602A6A125C8A3A6A6427 /* QNNetworkInfo.m */; };
 		97F7770FEDADFDBFA6ACD9D57A8033B5 /* QNHijackingDetectWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = DBAAD13DA055C114E97750B972A20447 /* QNHijackingDetectWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		983502F55AA50DFD0B9F4A0DA418DD77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85CC5E1646199280661E0767C5F13247 /* Foundation.framework */; };
 		992944F68F8CC38008B2C611A0107FDE /* UIView+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D199F88FFD33D8959FBCFD3FCCCCAC /* UIView+BlocksKit.m */; };
 		993FE475C073DAC4A4262E023A463BA9 /* QNLruCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F12F6C7BEA86CD06744022039B2BF3 /* QNLruCache.m */; };
 		99D8C610BC84BE231C5D3D280F3B12AF /* MASCompositeConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 402FEE9BD9DCA122A84E9DF270229D13 /* MASCompositeConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -112,12 +114,10 @@
 		A97C2E0AF987237179F2E2DA76CFF703 /* HappyDNS.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE82560A44A5F680E20AF17C1F7CE1B /* HappyDNS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE68F5B94540BDEB3EF3D7DD6275747D /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = EB62E21BD0292C31D23AF55CE88306E3 /* log.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AF19688BF991B094DAEB7AF8B699B7E5 /* QNIpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A2C309D627CEDE9AAF90F4FBF422C6D /* QNIpModel.m */; };
-		AF4E7187E09A5AF3A0758991203153DC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42A9844F76F9E28FEEC5A0F0037FF76 /* UIKit.framework */; };
 		AF62B956405F7734F5A9B8F3FD4B1B96 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E10D01173049803C91FC5BA37150FBB0 /* ViewController+MASAdditions.m */; };
 		B21CABC1B051A64AABE1ABAE7EA51F44 /* QNNUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 077F85D4D2D8BE62517D470DE3C51D27 /* QNNUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B25F8085B440D68735024862A5F6AD9F /* UIGestureRecognizer+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CE66AACE866A26D476EF3B4E29D67D74 /* UIGestureRecognizer+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B2B7C90BA9C4DBD9851C75AC801B0E8E /* MASConstraint+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F04D970EE0416539970CA46B56598250 /* MASConstraint+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B2E75DD6D19E902E3E5C238352CB3F02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4C26A72D50DB44D17501848286B727 /* Foundation.framework */; };
 		B593E1A528707667F3DF13F57FD205BD /* QNTxtResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D5E5C52F306F84B69E63294DE915B0 /* QNTxtResolver.m */; };
 		B64C317EC08F1BC8A80F64558ABE4556 /* QNGetAddrInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D7BBB016864FF4EFEE6EB600542AEC0 /* QNGetAddrInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6947A884743188A3E6C81EA172D4DCE /* NSInvocation+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C69539F896B91E172B83AAC27F451B /* NSInvocation+BlocksKit.m */; };
@@ -125,6 +125,7 @@
 		B7D12F38DC421417662E0EE9B20E63B7 /* QNDes.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E88FD0FD77CF5AEA391D5A84C878E0D /* QNDes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAC99C13CBBACBCC766E39B7415A938A /* QNNExternalIp.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FC3C5F6DAA7AF8D0E6885CF80991EA /* QNNExternalIp.m */; };
 		BAF063853C3911CF05DAE988E13FF071 /* QNNTraceRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E37DDDE8BD165A9C48A8AFF3ED1B6 /* QNNTraceRoute.m */; };
+		BB0C5999D6277BC34C74EF00875A497F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85CC5E1646199280661E0767C5F13247 /* Foundation.framework */; };
 		BB3FBE145CC2953B7A1E5F505C491D4D /* QNRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F1B87FA22794B74B73EB88CBB21F3 /* QNRecord.m */; };
 		BC54578C581E41FD246DE75D82049C7D /* QNAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F01DCC999DE84F6ABC787007C2611A0 /* QNAssessment.m */; };
 		BCD4B362C6194513150915437754E2D4 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 63359AE27DD849F4B8924639DE5144DB /* MASCompositeConstraint.m */; };
@@ -132,8 +133,6 @@
 		BE024118D329F8F566BD1811A1DC16CB /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6B4368595AB67AC2E16AEB1D03252 /* MASConstraint.m */; };
 		BE2BE12ECE566C14238DD7845DEDD84B /* BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = BB02496BEAD5BCDDED90B177F38F2709 /* BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C237814AF824CAE9A479AD0F4DB151AA /* NSCache+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 030606508956B6E6557E2413147D3F6A /* NSCache+BlocksKit.m */; };
-		C2874BD5AC24AB6CF628418E5C251A22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4C26A72D50DB44D17501848286B727 /* Foundation.framework */; };
-		C28AC268809EAB46597CB7F9CB99794A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4C26A72D50DB44D17501848286B727 /* Foundation.framework */; };
 		C2BFF405BE0AEE5C66C90E6FD8B10415 /* BlocksKit+UIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3902BE05CF855F5E1462C9383ECD7C /* BlocksKit+UIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D11032B3CDC7E274CCB4112C8EC2BA /* pili-librtmp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FC313785A225C84714C420380DB7F3B8 /* pili-librtmp-dummy.m */; };
 		C3580AFBA56D1C7E895407E492829CBC /* QNIP.h in Headers */ = {isa = PBXBuildFile; fileRef = A975E69442F9A8709ACDC0651C724E65 /* QNIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -143,9 +142,9 @@
 		C7E0B31A7916AABF23A79CB06E1F5272 /* NSObject+BKBlockObservation.h in Headers */ = {isa = PBXBuildFile; fileRef = D905E42A2DA2F655889AA39F6F3D08C4 /* NSObject+BKBlockObservation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C91AD7EE8919EA39C0AD7F1ED2B27D51 /* rtmp_sys.h in Headers */ = {isa = PBXBuildFile; fileRef = 6671C97CB30B87593120643463CA4CA7 /* rtmp_sys.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9B6328F023FF633ABA6879D50FC90DE /* NSInvocation+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FA0E0603939890F836230CCEC01494B /* NSInvocation+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CAD918F4CCB97DAED96DF01A35C4F267 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4C26A72D50DB44D17501848286B727 /* Foundation.framework */; };
 		CB21742066F67241062931F6F568D071 /* UIImagePickerController+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C5157EF07091DCC36B4658B8D5D64D9 /* UIImagePickerController+BlocksKit.m */; };
 		CC7E36A547AEE6456442AF7F5C60E2F9 /* NSMutableOrderedSet+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B53B52D48D7FE0FEC8A389782DAB3D21 /* NSMutableOrderedSet+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CF8ABEFCCCA223DE15BF6B45CC7E3F82 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F492D78EB0EAC7E3FCE5CAACCE3F80E /* UIKit.framework */; };
 		D09D10AB5788A1DA9FA85CEDFB4013CC /* QNDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE59FCCC832E4029330BF6C337B1773 /* QNDomain.m */; };
 		D263E50EA6C45E96A5448FEAF7F3682C /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E61B6AF6CD28B3451C7A3AE836411C9 /* parseurl.c */; };
 		D3621F94B485CBC1B03E2114BB296ED1 /* QNNHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CB7AAFB56AAE57FE9A5FAB5D271E50 /* QNNHttp.m */; };
@@ -161,7 +160,6 @@
 		DAE9CB5C71C264DA759155E2A33D9C7F /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = 04966F67DF9352C325B309E3CD58402A /* error.c */; };
 		DB21A546C83305719CD699E00E36AA3F /* BlocksKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AB484AA6130DC4E5D6ABC1898F4BA83 /* BlocksKit-dummy.m */; };
 		DD1F717B0527C71229B3339324E35E55 /* View+MASAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = E01B7EEF1341979B2381F61998F12356 /* View+MASAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DE31B168D9197213CEB7B90E3ADEB4CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4C26A72D50DB44D17501848286B727 /* Foundation.framework */; };
 		E09FAE444FA9AAC6F1F0295F5092A2FC /* UIWebView+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = E642DF71D2185F8E890466EBD231256D /* UIWebView+BlocksKit.m */; };
 		E32DDF26286A2F7F77F8B90754373696 /* UIActionSheet+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B151D107E5A149F334896FF8FE792514 /* UIActionSheet+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E54AB1E489E881382316DEB3FD193B9B /* QNNHttp.h in Headers */ = {isa = PBXBuildFile; fileRef = BD7C1BBF42F0E1D676A7C51ACD9B06B1 /* QNNHttp.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -179,6 +177,7 @@
 		F60CAF477B4F4573C02F675C42DFFD2D /* UIView+BlocksKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 31082BCA49350BD855CE8A3B9EE5AE49 /* UIView+BlocksKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6516207095BAB4A00C52187CFAD097B /* NSObject+BKBlockExecution.h in Headers */ = {isa = PBXBuildFile; fileRef = CD034C033B160FE233D8EB466EE91C77 /* NSObject+BKBlockExecution.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F67325523D6DDBF4AF0C19A02ED3FDBD /* NSIndexSet+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 386ABFDA29E54DC413067829E3CE92B3 /* NSIndexSet+BlocksKit.m */; };
+		F67504B4CC5FCED85C3EDB543183D8EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85CC5E1646199280661E0767C5F13247 /* Foundation.framework */; };
 		F91423909334D78E1F5D8041005529BA /* QNIpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 32598BD79F1BAD02F8D366503C48DDF9 /* QNIpModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F91B722347FA22F828C6FBE3AEAE2357 /* hashswf.c in Sources */ = {isa = PBXBuildFile; fileRef = 6D0B55DAE99793B1D4C03C3149505F81 /* hashswf.c */; };
 		F9A157697BEA0FB38078B18B9DFF5C61 /* QNHosts.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BDC40DF2B9F66BE24DCBE27ED32CE72 /* QNHosts.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -187,6 +186,7 @@
 		FD39EBE3398E1A99965AC003B273450D /* NSArray+MASAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 258D94DA2003841A91FD7E1EA29817BF /* NSArray+MASAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FEDC8D3DA112A51615ED1B2BECACB5B9 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CF187BC691B7543EBE82B33AFBF41A6F /* QNNNslookup.m */; };
 		FF240B5CD9A346663F0C02B3FB6D3A23 /* dhgroups.h in Headers */ = {isa = PBXBuildFile; fileRef = 32F911515FF84711A1C036D1B7F9552D /* dhgroups.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF4A1A141ED368B6735643B927ADC185 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F32A44C64AD9BADC7C56C71C0751F3E /* MessageUI.framework */; };
 		FF682E8B083BAEBBDF38C52D89D45E37 /* MASUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = CAB05FC9E5161741E5E2329F3D52AB60 /* MASUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -251,6 +251,7 @@
 		0DE9117C45094A8A4CDEEEDFE70E10ED /* error.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = error.h; path = "Pod/Classes/pili-librtmp/error.h"; sourceTree = "<group>"; };
 		0F01DCC999DE84F6ABC787007C2611A0 /* QNAssessment.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNAssessment.m; path = HappyDNS/Assessment/QNAssessment.m; sourceTree = "<group>"; };
 		0F1033B9E505D5D49C08211C975D53EC /* UIControl+BlocksKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIControl+BlocksKit.h"; path = "BlocksKit/UIKit/UIControl+BlocksKit.h"; sourceTree = "<group>"; };
+		0F32A44C64AD9BADC7C56C71C0751F3E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
 		110FA5472A94E2A3667F7A7EBB92D5F5 /* PLAudioPlayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PLAudioPlayer.h; sourceTree = "<group>"; };
 		12E98C1ADCD721AD207824F0B0173F6E /* log.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = log.c; path = "Pod/Classes/pili-librtmp/log.c"; sourceTree = "<group>"; };
 		1426E62890B520CCE33EA2620CDAEA93 /* QNDes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNDes.m; path = HappyDNS/Util/QNDes.m; sourceTree = "<group>"; };
@@ -307,6 +308,7 @@
 		488F0C68672354B4AEC800726CAB19BD /* NSObject+A2DynamicDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+A2DynamicDelegate.m"; path = "BlocksKit/DynamicDelegate/NSObject+A2DynamicDelegate.m"; sourceTree = "<group>"; };
 		4B6805E0E99A875E9EDBA68EE623A896 /* NSMutableSet+BlocksKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMutableSet+BlocksKit.m"; path = "BlocksKit/Core/NSMutableSet+BlocksKit.m"; sourceTree = "<group>"; };
 		4C20DBA454F21FF5751555BEDA0A1A84 /* rtmp.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = rtmp.c; path = "Pod/Classes/pili-librtmp/rtmp.c"; sourceTree = "<group>"; };
+		4F492D78EB0EAC7E3FCE5CAACCE3F80E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		538FE98B8A426D1DA4B22563CE0B94FD /* QNNRtmp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNRtmp.h; path = NetDiag/QNNRtmp.h; sourceTree = "<group>"; };
 		53B04AE2EE88C357297AFBB46CA5A142 /* NSMutableDictionary+BlocksKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMutableDictionary+BlocksKit.m"; path = "BlocksKit/Core/NSMutableDictionary+BlocksKit.m"; sourceTree = "<group>"; };
 		541B9861293B60DA98BF7ECFB51789D4 /* QNResolver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNResolver.h; path = HappyDNS/Local/QNResolver.h; sourceTree = "<group>"; };
@@ -353,12 +355,12 @@
 		7EEF3CF8B8FD31158BD85C5DF7BFD792 /* WBSDKBasicButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WBSDKBasicButton.h; path = libWeiboSDK/WBSDKBasicButton.h; sourceTree = "<group>"; };
 		7FE59FCCC832E4029330BF6C337B1773 /* QNDomain.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNDomain.m; path = HappyDNS/Common/QNDomain.m; sourceTree = "<group>"; };
 		84D374552365DC4D81D164205E390CB3 /* QNResolvUtil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNResolvUtil.m; path = HappyDNS/Local/QNResolvUtil.m; sourceTree = "<group>"; };
+		85CC5E1646199280661E0767C5F13247 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		87C55401EC850F6EBE54C34B988E3168 /* PLTypeDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PLTypeDefines.h; sourceTree = "<group>"; };
 		8806343D11E290D583B40A30F874DDBF /* PLStreamingKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PLStreamingKit.h; sourceTree = "<group>"; };
 		894B2E9F4AA3D15F35B1CFC80105E4F3 /* NSOrderedSet+BlocksKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSOrderedSet+BlocksKit.m"; path = "BlocksKit/Core/NSOrderedSet+BlocksKit.m"; sourceTree = "<group>"; };
 		8B30CA3C8C90033B739C88BF929926D0 /* QNRefresher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNRefresher.m; path = HappyDNS/QNRefresher.m; sourceTree = "<group>"; };
 		8C5157EF07091DCC36B4658B8D5D64D9 /* UIImagePickerController+BlocksKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImagePickerController+BlocksKit.m"; path = "BlocksKit/UIKit/UIImagePickerController+BlocksKit.m"; sourceTree = "<group>"; };
-		8E4C26A72D50DB44D17501848286B727 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		8E88FD0FD77CF5AEA391D5A84C878E0D /* QNDes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNDes.h; path = HappyDNS/Util/QNDes.h; sourceTree = "<group>"; };
 		9075312A338E40FCB4E42575292ABA7D /* QNIP.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNIP.m; path = HappyDNS/Util/QNIP.m; sourceTree = "<group>"; };
 		9218F75ABB3D58E6EF9221E942AB2BA2 /* MASViewAttribute.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewAttribute.h; path = Masonry/MASViewAttribute.h; sourceTree = "<group>"; };
@@ -388,7 +390,6 @@
 		B151D107E5A149F334896FF8FE792514 /* UIActionSheet+BlocksKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIActionSheet+BlocksKit.h"; path = "BlocksKit/UIKit/UIActionSheet+BlocksKit.h"; sourceTree = "<group>"; };
 		B2F1D54581925FD1D95A6736DE702A51 /* QNHijackingDetectWrapper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNHijackingDetectWrapper.m; path = HappyDNS/Local/QNHijackingDetectWrapper.m; sourceTree = "<group>"; };
 		B33694CD4F3E3FE5A9BBB0478A9CE54C /* QNRecord.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNRecord.h; path = HappyDNS/Common/QNRecord.h; sourceTree = "<group>"; };
-		B3B899A0B12DE8854651E7B38551B012 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
 		B3F8D92B236CF1EF598ECC27050F4E11 /* WBSDKCommentButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WBSDKCommentButton.h; path = libWeiboSDK/WBSDKCommentButton.h; sourceTree = "<group>"; };
 		B47A43B734AC21D641CA53EDD3958291 /* NSObject+A2DynamicDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+A2DynamicDelegate.h"; path = "BlocksKit/DynamicDelegate/NSObject+A2DynamicDelegate.h"; sourceTree = "<group>"; };
 		B495EA389C5F73FF65377DA9ECBAE5C9 /* QNNProtocols.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNProtocols.h; path = NetDiag/QNNProtocols.h; sourceTree = "<group>"; };
@@ -437,7 +438,6 @@
 		E0CD9F7BE20FE58F08713459F0C10D3C /* Masonry-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Masonry-dummy.m"; sourceTree = "<group>"; };
 		E10D01173049803C91FC5BA37150FBB0 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ViewController+MASAdditions.m"; path = "Masonry/ViewController+MASAdditions.m"; sourceTree = "<group>"; };
 		E2EE8CFD166D2ABD639CBA242529762E /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "View+MASShorthandAdditions.h"; path = "Masonry/View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
-		E42A9844F76F9E28FEEC5A0F0037FF76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		E49905BF05126D0E51E406C7E1B33601 /* NSMutableArray+BlocksKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+BlocksKit.h"; path = "BlocksKit/Core/NSMutableArray+BlocksKit.h"; sourceTree = "<group>"; };
 		E4A49DBA26718885C319E83CA9577B90 /* PLStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PLStream.h; sourceTree = "<group>"; };
 		E5B7C414CD5C70576BB57BBF965A0B6A /* libWeiboSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeiboSDK.a; path = libWeiboSDK/libWeiboSDK.a; sourceTree = "<group>"; };
@@ -482,7 +482,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				570156557E9619465C2A7AF4C514B3EF /* Foundation.framework in Frameworks */,
+				760A4C8C2538E864EA1D6D83AC17A8E5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,8 +490,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2874BD5AC24AB6CF628418E5C251A22 /* Foundation.framework in Frameworks */,
-				6A242E93B8569A42628B0F8B369273CA /* MessageUI.framework in Frameworks */,
+				7138752F99297B7D685F4976D318E0BF /* Foundation.framework in Frameworks */,
+				FF4A1A141ED368B6735643B927ADC185 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,7 +499,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAD918F4CCB97DAED96DF01A35C4F267 /* Foundation.framework in Frameworks */,
+				F67504B4CC5FCED85C3EDB543183D8EC /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,7 +507,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C28AC268809EAB46597CB7F9CB99794A /* Foundation.framework in Frameworks */,
+				983502F55AA50DFD0B9F4A0DA418DD77 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,7 +515,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2E75DD6D19E902E3E5C238352CB3F02 /* Foundation.framework in Frameworks */,
+				BB0C5999D6277BC34C74EF00875A497F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,8 +523,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE31B168D9197213CEB7B90E3ADEB4CC /* Foundation.framework in Frameworks */,
-				AF4E7187E09A5AF3A0758991203153DC /* UIKit.framework in Frameworks */,
+				3B53B4C206789EE6404FF3874E8AEC6A /* Foundation.framework in Frameworks */,
+				CF8ABEFCCCA223DE15BF6B45CC7E3F82 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,7 +576,7 @@
 		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8A50A9293DF7E0690673BA8E7D29ABB4 /* iOS */,
+				F53B36DCDAFFC7068CADF6A2093A997E /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -877,16 +877,6 @@
 				9F57F9509043FDD1BB7CAF232D6198D0 /* Pod */,
 			);
 			name = PLCameraStreamingKit;
-			sourceTree = "<group>";
-		};
-		8A50A9293DF7E0690673BA8E7D29ABB4 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				8E4C26A72D50DB44D17501848286B727 /* Foundation.framework */,
-				B3B899A0B12DE8854651E7B38551B012 /* MessageUI.framework */,
-				E42A9844F76F9E28FEEC5A0F0037FF76 /* UIKit.framework */,
-			);
-			name = iOS;
 			sourceTree = "<group>";
 		};
 		8F01D75DF93C0810702C79A78F7344A3 /* Development Pods */ = {
@@ -1212,6 +1202,16 @@
 				C2DA1BABAA5269CFDBEE565BF9D8B4B2 /* PLStreamingSession.h */,
 			);
 			path = PLStreamingKit;
+			sourceTree = "<group>";
+		};
+		F53B36DCDAFFC7068CADF6A2093A997E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				85CC5E1646199280661E0767C5F13247 /* Foundation.framework */,
+				0F32A44C64AD9BADC7C56C71C0751F3E /* MessageUI.framework */,
+				4F492D78EB0EAC7E3FCE5CAACCE3F80E /* UIKit.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		F921AE00921FFFC072BAC77C93165780 /* Frameworks */ = {
