@@ -532,6 +532,21 @@
 
 @property (nonatomic, assign, getter=isMuted)   BOOL    muted;                   // default as NO.
 
+/*!
+   @brief 是否允许在后台与其他 App 的音频混音而不被打断，默认关闭。
+ */
+@property (nonatomic, assign) BOOL allowAudioMixWithOthers;
+
+/*!
+   @brief 音频被其他 app 中断开始时会回调该函数，注意回调不在主线程进行。
+ */
+@property (nonatomic, copy) PLAudioSessionDidBeginInterruptionCallback _Nullable audioSessionBeginInterruptionCallback;
+
+/*!
+   @brief 音频中断结束时回调，即其他 app 结束打断音频操作时会回调该函数，注意回调不在主线程进行。
+ */
+@property (nonatomic, copy) PLAudioSessionDidEndInterruptionCallback _Nullable audioSessionEndInterruptionCallback;
+
 /**
  @brief 麦克风采集的音量，设置范围为 0~1，各种机型默认值不同。
  
@@ -609,6 +624,13 @@
  @brief PLMediaStreamingKit(RTC) 集合了 RTC 相关的一系列接口，要调用此分类的接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该分类的接口会导致程序抛 exception
  */
 @interface PLMediaStreamingSession (RTC)
+
+/**
+ @abstract 此属性表示连麦是否处于运行的状态
+ 
+ @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit（RTC）.a，如果没有引入该静态库，调用该接口会导致程序抛 exception
+ */
+@property (nonatomic, assign, readonly) BOOL    isRtcRunning;
 
 /**
  @abstract 连麦的状态，只读属性

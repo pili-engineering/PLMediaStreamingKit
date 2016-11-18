@@ -526,6 +526,11 @@ typedef void (^PLAudioEffectCustomConfigurationBlock)(void *inRefCon,
                                                       UInt32 inNumberFrames,
                                                       AudioBufferList *ioData);
 
+
+typedef void (^PLAudioSessionDidBeginInterruptionCallback)();
+
+typedef void (^PLAudioSessionDidEndInterruptionCallback)();
+
 /**
  @brief 对截图数据进行处理的回调
  
