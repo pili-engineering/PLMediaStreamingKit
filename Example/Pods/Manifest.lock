@@ -36,18 +36,23 @@ PODS:
   - PLMediaStreamingKit/PLCameraStreamingKit (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
+    - PLMediaStreamingKit/PLStreamingKit
     - QNNetDiag
   - PLMediaStreamingKit/PLMediaStreamingKit (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
+    - PLMediaStreamingKit/PLCameraStreamingKit
+    - PLMediaStreamingKit/PLRTCStreamingKit
     - QNNetDiag
   - PLMediaStreamingKit/PLRTCStreamingKit (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
+    - PLMediaStreamingKit/PLStreamingKit
     - QNNetDiag
   - PLMediaStreamingKit/PLStreamingKit (2.1.5):
     - HappyDNS (~> 0.3.0)
     - pili-librtmp (= 1.0.5)
+    - PLMediaStreamingKit/Common
     - QNNetDiag
   - QNNetDiag (0.0.3)
   - WeiboSDK (3.1.3)
@@ -71,10 +76,10 @@ SPEC CHECKSUMS:
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   pili-librtmp: 65a6e10f7c314bd1f407ba24bd074c57cba79d0c
-  PLMediaStreamingKit: 622fe5c5b8b9ab9dbfdd8a931d20fd57b1c1ff7b
+  PLMediaStreamingKit: 9a07505e4e995c77cb0b73c377d8ec48364e05af
   QNNetDiag: 90727185d3cdd4f62f92b7f9b7d586451cf745d1
   WeiboSDK: acb067053668102cf07d01aa7604350162c2e466
 
 PODFILE CHECKSUM: 14de6849e20310a5c3ccffc657a1f50423c45303
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.1.0
