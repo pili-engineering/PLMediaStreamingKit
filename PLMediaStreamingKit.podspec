@@ -31,21 +31,26 @@ Pod::Spec.new do |s|
   s.subspec "PLCameraStreamingKit" do |ss1|
     ss1.public_header_files = 'Pod/Library/include/PLCameraStreamingKit/*.h'
     ss1.source_files = 'Pod/Library/include/PLCameraStreamingKit/*.h'
+    ss1.dependency 'PLMediaStreamingKit/PLStreamingKit'
   end
 
   s.subspec "PLStreamingKit" do |ss2|
     ss2.public_header_files = 'Pod/Library/include/PLStreamingKit/*.h'
     ss2.source_files = 'Pod/Library/include/PLStreamingKit/*.h'
-  end
+    ss2.dependency 'PLMediaStreamingKit/Common'
+   end
 
   s.subspec "PLRTCStreamingKit" do |ss3|
     ss3.public_header_files = 'Pod/Library/include/PLRTCStreamingKit/*.h'
     ss3.source_files = 'Pod/Library/include/PLRTCStreamingKit/*.h'
+    ss3.dependency 'PLMediaStreamingKit/PLStreamingKit'
   end
 
   s.subspec "PLMediaStreamingKit" do |ss4|
     ss4.public_header_files = 'Pod/Library/include/PLMediaStreamingKit/*.h'
     ss4.source_files = 'Pod/Library/include/PLMediaStreamingKit/*.h'
+    ss4.dependency 'PLMediaStreamingKit/PLCameraStreamingKit'
+    ss4.dependency 'PLMediaStreamingKit/PLRTCStreamingKit'
   end
 
   s.subspec "Common" do |ss5|

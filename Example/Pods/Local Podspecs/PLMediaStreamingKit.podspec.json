@@ -46,22 +46,45 @@
     {
       "name": "PLCameraStreamingKit",
       "public_header_files": "Pod/Library/include/PLCameraStreamingKit/*.h",
-      "source_files": "Pod/Library/include/PLCameraStreamingKit/*.h"
+      "source_files": "Pod/Library/include/PLCameraStreamingKit/*.h",
+      "dependencies": {
+        "PLMediaStreamingKit/PLStreamingKit": [
+
+        ]
+      }
     },
     {
       "name": "PLStreamingKit",
       "public_header_files": "Pod/Library/include/PLStreamingKit/*.h",
-      "source_files": "Pod/Library/include/PLStreamingKit/*.h"
+      "source_files": "Pod/Library/include/PLStreamingKit/*.h",
+      "dependencies": {
+        "PLMediaStreamingKit/Common": [
+
+        ]
+      }
     },
     {
       "name": "PLRTCStreamingKit",
       "public_header_files": "Pod/Library/include/PLRTCStreamingKit/*.h",
-      "source_files": "Pod/Library/include/PLRTCStreamingKit/*.h"
+      "source_files": "Pod/Library/include/PLRTCStreamingKit/*.h",
+      "dependencies": {
+        "PLMediaStreamingKit/PLStreamingKit": [
+
+        ]
+      }
     },
     {
       "name": "PLMediaStreamingKit",
       "public_header_files": "Pod/Library/include/PLMediaStreamingKit/*.h",
-      "source_files": "Pod/Library/include/PLMediaStreamingKit/*.h"
+      "source_files": "Pod/Library/include/PLMediaStreamingKit/*.h",
+      "dependencies": {
+        "PLMediaStreamingKit/PLCameraStreamingKit": [
+
+        ],
+        "PLMediaStreamingKit/PLRTCStreamingKit": [
+
+        ]
+      }
     },
     {
       "name": "Common",
