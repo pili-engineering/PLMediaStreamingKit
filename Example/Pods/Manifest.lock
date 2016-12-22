@@ -19,41 +19,41 @@ PODS:
   - Fabric (1.6.11)
   - HappyDNS (0.3.10)
   - Masonry (1.0.2)
-  - pili-librtmp (1.0.5)
-  - PLMediaStreamingKit (2.1.5):
-    - HappyDNS (~> 0.3.0)
-    - pili-librtmp (= 1.0.5)
-    - PLMediaStreamingKit/Common (= 2.1.5)
-    - PLMediaStreamingKit/PLCameraStreamingKit (= 2.1.5)
-    - PLMediaStreamingKit/PLMediaStreamingKit (= 2.1.5)
-    - PLMediaStreamingKit/PLRTCStreamingKit (= 2.1.5)
-    - PLMediaStreamingKit/PLStreamingKit (= 2.1.5)
-    - QNNetDiag
-  - PLMediaStreamingKit/Common (2.1.5):
-    - HappyDNS (~> 0.3.0)
-    - pili-librtmp (= 1.0.5)
-    - QNNetDiag
-  - PLMediaStreamingKit/PLCameraStreamingKit (2.1.5):
-    - HappyDNS (~> 0.3.0)
-    - pili-librtmp (= 1.0.5)
+  - pili-librtmp (1.0.6)
+  - PLMediaStreamingKit (2.1.6):
+    - HappyDNS (= 0.3.10)
+    - pili-librtmp (= 1.0.6)
+    - PLMediaStreamingKit/Common (= 2.1.6)
+    - PLMediaStreamingKit/PLCameraStreamingKit (= 2.1.6)
+    - PLMediaStreamingKit/PLMediaStreamingKit (= 2.1.6)
+    - PLMediaStreamingKit/PLRTCStreamingKit (= 2.1.6)
+    - PLMediaStreamingKit/PLStreamingKit (= 2.1.6)
+    - QNNetDiag (= 0.0.3)
+  - PLMediaStreamingKit/Common (2.1.6):
+    - HappyDNS (= 0.3.10)
+    - pili-librtmp (= 1.0.6)
+    - QNNetDiag (= 0.0.3)
+  - PLMediaStreamingKit/PLCameraStreamingKit (2.1.6):
+    - HappyDNS (= 0.3.10)
+    - pili-librtmp (= 1.0.6)
     - PLMediaStreamingKit/PLStreamingKit
-    - QNNetDiag
-  - PLMediaStreamingKit/PLMediaStreamingKit (2.1.5):
-    - HappyDNS (~> 0.3.0)
-    - pili-librtmp (= 1.0.5)
+    - QNNetDiag (= 0.0.3)
+  - PLMediaStreamingKit/PLMediaStreamingKit (2.1.6):
+    - HappyDNS (= 0.3.10)
+    - pili-librtmp (= 1.0.6)
     - PLMediaStreamingKit/PLCameraStreamingKit
     - PLMediaStreamingKit/PLRTCStreamingKit
-    - QNNetDiag
-  - PLMediaStreamingKit/PLRTCStreamingKit (2.1.5):
-    - HappyDNS (~> 0.3.0)
-    - pili-librtmp (= 1.0.5)
+    - QNNetDiag (= 0.0.3)
+  - PLMediaStreamingKit/PLRTCStreamingKit (2.1.6):
+    - HappyDNS (= 0.3.10)
+    - pili-librtmp (= 1.0.6)
     - PLMediaStreamingKit/PLStreamingKit
-    - QNNetDiag
-  - PLMediaStreamingKit/PLStreamingKit (2.1.5):
-    - HappyDNS (~> 0.3.0)
-    - pili-librtmp (= 1.0.5)
+    - QNNetDiag (= 0.0.3)
+  - PLMediaStreamingKit/PLStreamingKit (2.1.6):
+    - HappyDNS (= 0.3.10)
+    - pili-librtmp (= 1.0.6)
     - PLMediaStreamingKit/Common
-    - QNNetDiag
+    - QNNetDiag (= 0.0.3)
   - QNNetDiag (0.0.3)
   - WeiboSDK (3.1.3)
 
@@ -67,7 +67,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   PLMediaStreamingKit:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
@@ -75,11 +75,11 @@ SPEC CHECKSUMS:
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
-  pili-librtmp: 65a6e10f7c314bd1f407ba24bd074c57cba79d0c
-  PLMediaStreamingKit: 9a07505e4e995c77cb0b73c377d8ec48364e05af
+  pili-librtmp: da10df0e835f135a75696cef429cc306773dd6f6
+  PLMediaStreamingKit: 64427cb01e454fede4b6d4b85df93d7279ca9ab1
   QNNetDiag: 90727185d3cdd4f62f92b7f9b7d586451cf745d1
   WeiboSDK: acb067053668102cf07d01aa7604350162c2e466
 
 PODFILE CHECKSUM: 14de6849e20310a5c3ccffc657a1f50423c45303
 
-COCOAPODS: 1.1.0
+COCOAPODS: 1.1.1
