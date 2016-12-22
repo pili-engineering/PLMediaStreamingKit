@@ -45,45 +45,59 @@
  * @abstract 推流中的核心类。
  *
  * @discussion 一个 PLCameraStreamingSession 实例会包含了对视频源、音频源的控制，并且对流的操作及流状态的返回都是通过它来完成的。
+ *
+ * @warning PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ *
  */
+DEPRECATED_MSG_ATTRIBUTE("PLCameraStreamingSession 已废弃, 请使用 PLMediaStreamingSession")
 @interface PLCameraStreamingSession : NSObject
 
 /*!
  * 是否开始推流，只读属性
  *
  * @discussion 该状态表达的是 streamingSession 有没有开始推流。当 streamState 为 PLStreamStateConnecting 或者 PLStreamStateConnected 时, isRunning 都会为 YES，所以它为 YES 时并不表示流一定已经建立连接，其从广义上表达 streamingSession 作为客户端对象的状态。
+ *
+ * @warning PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ *
  */
-@property (nonatomic, assign, readonly) BOOL    isRunning;
+@property (nonatomic, assign, readonly) BOOL    isRunning DEPRECATED_ATTRIBUTE;
 
 /// 视频编码及推流配置，只读
-@property (nonatomic, copy, readonly) PLVideoCaptureConfiguration  *videoCaptureConfiguration;
+@property (nonatomic, copy, readonly) PLVideoCaptureConfiguration  *videoCaptureConfiguration DEPRECATED_ATTRIBUTE;
 
 /// 音频编码及推流配置，只读
-@property (nonatomic, copy, readonly) PLAudioCaptureConfiguration  *audioCaptureConfiguration;
+@property (nonatomic, copy, readonly) PLAudioCaptureConfiguration  *audioCaptureConfiguration DEPRECATED_ATTRIBUTE;
 
 /// 视频编码及推流配置，只读
-@property (nonatomic, copy, readonly) PLVideoStreamingConfiguration  *videoStreamingConfiguration;
+@property (nonatomic, copy, readonly) PLVideoStreamingConfiguration  *videoStreamingConfiguration DEPRECATED_ATTRIBUTE;
 
 /// 音频编码及推流配置，只读
-@property (nonatomic, copy, readonly) PLAudioStreamingConfiguration  *audioStreamingConfiguration;
+@property (nonatomic, copy, readonly) PLAudioStreamingConfiguration  *audioStreamingConfiguration DEPRECATED_ATTRIBUTE;
 
 
 /*!
  * @abstract 摄像头的预览视图，在 PLCameraStreamingSession 初始化之后可以获取该视图
  *
+ * @warning PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ *
  */
-@property (nonatomic, strong, readonly) UIView * previewView;
+@property (nonatomic, strong, readonly) UIView * previewView DEPRECATED_ATTRIBUTE;
 
-/// 代理对象
-@property (nonatomic, weak) id<PLCameraStreamingSessionDelegate> delegate;
+/*!
+ * @abstract 代理对象
+ *
+ * @warning PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ *
+ */
+@property (nonatomic, weak) id<PLCameraStreamingSessionDelegate> delegate DEPRECATED_ATTRIBUTE;
 
 /// 代理回调的队列
-@property (nonatomic, strong) dispatch_queue_t delegateQueue;
+@property (nonatomic, strong) dispatch_queue_t delegateQueue DEPRECATED_ATTRIBUTE;
 
 /**
  @brief previewView 中视频的填充方式，默认使用 PLVideoFillModePreserveAspectRatioAndFill
  */
-@property(readwrite, nonatomic) PLVideoFillModeType fillMode;
+@property(readwrite, nonatomic) PLVideoFillModeType fillMode DEPRECATED_ATTRIBUTE;
 
 /*!
  * 初始化方法
@@ -103,25 +117,39 @@
  * @return PLCameraStreamingSession 实例
  *
  * @discussion 该方法会检查传入参数，当 videoCaptureConfiguration 或 videoStreamingConfiguration 为 nil 时为纯音频推流模式，当 audioCaptureConfiguration 或 audioStreamingConfiguration 为 nil 时为纯视频推流模式，当初始化方法会优先使用后置摄像头，如果发现设备没有后置摄像头，会判断是否有前置摄像头，如果都没有，便会返回 nil。
+ 
+ * @warning PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ *
  */
 - (instancetype)initWithVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration
                         audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
                       videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
                       audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
                                            stream:(PLStream *)stream
-                                 videoOrientation:(AVCaptureVideoOrientation)videoOrientation DEPRECATED_ATTRIBUTE;
+                                 videoOrientation:(AVCaptureVideoOrientation)videoOrientation __deprecated;
 
 - (instancetype)initWithVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration
                         audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
                       videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
                       audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
-                                           stream:(PLStream *)stream;
+                                           stream:(PLStream *)stream __deprecated;
+
+- (instancetype)initWithVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration
+                        audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
+                      videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
+                      audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
+                                           stream:(PLStream *)stream
+                                      eaglContext:(EAGLContext *)eaglContext __deprecated;
+
 /*!
  * 销毁 session 的方法
  *
  * @discussion 销毁 PLCameraStreamingSession 的方法，销毁前不需要调用 stop 方法。
+ *
+ * @warning PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ *
  */
-- (void)destroy;
+- (void)destroy __deprecated;
 
 @end
 
@@ -131,18 +159,18 @@
 @interface PLCameraStreamingSession (PLStreamingKit)
 
 /// 流的状态，只读属性
-@property (nonatomic, assign, readonly) PLStreamState   streamState;
+@property (nonatomic, assign, readonly) PLStreamState   streamState DEPRECATED_ATTRIBUTE;
 
 /// 流对象
-@property (nonatomic, strong) PLStream   *stream;
+@property (nonatomic, strong) PLStream   *stream DEPRECATED_ATTRIBUTE;
 
-@property (nonatomic, copy) NSURL *pushURL;
+@property (nonatomic, copy) NSURL *pushURL DEPRECATED_ATTRIBUTE;
 
 /// 默认为 3s，可设置范围为 [1..30] 秒
-@property (nonatomic, assign) NSTimeInterval    statusUpdateInterval;
+@property (nonatomic, assign) NSTimeInterval    statusUpdateInterval DEPRECATED_ATTRIBUTE;
 
 /// [0..1], 不可超出这个范围, 默认为 0.5
-@property (nonatomic, assign) CGFloat threshold;
+@property (nonatomic, assign) CGFloat threshold DEPRECATED_ATTRIBUTE;
 
 /*!
  @property   receiveTimeout
@@ -152,9 +180,11 @@
  
  @see        sendTimeout
  
+ @warning PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ 
  @since      v2.1.2
  */
-@property (nonatomic, assign) int   receiveTimeout;
+@property (nonatomic, assign) int   receiveTimeout DEPRECATED_ATTRIBUTE;
 
 /*!
  @property   sendTimeout
@@ -162,21 +192,24 @@
  
  @discussion 以秒作为单位。默认为 3s, 设定最小数值不得低于 3s，否则不变更。
  
+ @warning PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ 
  @see        receiveTimeout
  
  @since      v2.1.2
  */
-@property (nonatomic, assign) int   sendTimeout;
+@property (nonatomic, assign) int   sendTimeout DEPRECATED_ATTRIBUTE;
 
 /// Buffer 最多可包含的包数，默认为 300
-@property (nonatomic, assign) NSUInteger    maxCount;
-@property (nonatomic, assign, readonly) NSUInteger    currentCount;
+@property (nonatomic, assign) NSUInteger    maxCount DEPRECATED_ATTRIBUTE;
+@property (nonatomic, assign, readonly) NSUInteger    currentCount DEPRECATED_ATTRIBUTE;
 
 /*!
  @property   dynamicFrameEnable
  @abstract   开启动态帧率功能，自动调整的最大帧率不超过 videoStreamingConfiguration.expectedSourceVideoFrameRate。该功能默认为关闭状态。
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-@property (nonatomic,assign, getter=isDynamicFrameEnable) BOOL dynamicFrameEnable;
+@property (nonatomic,assign, getter=isDynamicFrameEnable) BOOL dynamicFrameEnable DEPRECATED_ATTRIBUTE;
 
 /*!
  @property   monitorNetworkStateEnable
@@ -184,8 +217,9 @@
  
  @discussion 打开该开关后，需实现回调函数 connectionChangeActionCallback，以完成在某种网络切换状态下对推流连接的处理判断。
  @see        connectionChangeActionCallback
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-@property (nonatomic, assign, getter=isMonitorNetworkStateEnable) BOOL monitorNetworkStateEnable;
+@property (nonatomic, assign, getter=isMonitorNetworkStateEnable) BOOL monitorNetworkStateEnable DEPRECATED_ATTRIBUTE;
 
 /*!
  @property   autoReconnectEnable
@@ -194,8 +228,9 @@
  @discussion 该方法在推流 SDK 内部实现断线自动重连。若开启此机制，则当推流因异常导致中断时，-streamingSession:didDisconnectWithError:回调不会马上被触发，推流将进行最多三次自动重连，每次重连的等待时间会由初次的0~2s递增至最大10s。等待重连期间，推流状态 streamState 会变为 PLStreamStateAutoReconnecting。一旦三次自动重连仍无法成功连接，则放弃治疗，-streamingSession:didDisconnectWithError:回调将被触发。
  该机制默认关闭，用户可在 -streamingSession:didDisconnectWithError: 方法中自定义添加断线重连处理逻辑。
  @see        connectionInterruptionHandler
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-@property (nonatomic, assign, getter=isAutoReconnectEnable) BOOL autoReconnectEnable;
+@property (nonatomic, assign, getter=isAutoReconnectEnable) BOOL autoReconnectEnable DEPRECATED_ATTRIBUTE;
 
 /*!
  @method     enableAdaptiveBitrateControlWithMinVideoBitRate:
@@ -205,14 +240,16 @@
  
  @discussion 该方法在推流 SDK 内部实现动态码率调节。开启该机制时，需设置允许调节的最低码率，以便使自动调整后的码率不会低于该范围。该机制根据网络吞吐量来调节推流的码率，在网络带宽变小导致发送缓冲区数据持续增长时，SDK 内部将适当降低推流码率，若情况得不到改善，则会重复该过程直至平均码率降至用户设置的最低值；反之，当一段时间内网络带宽充裕，SDK 将适当增加推流码率，直至达到预设的推流码率。
  自适应码率机制默认关闭，用户可利用 -streamingSession:streamStatusDidUpdate 回调数据实现自定义版本的码率调节功能。
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-- (void)enableAdaptiveBitrateControlWithMinVideoBitRate:(NSUInteger)minVideoBitRate;
+- (void)enableAdaptiveBitrateControlWithMinVideoBitRate:(NSUInteger)minVideoBitRate __deprecated;
 
 /*!
  @method     disableAdaptiveBitrateControl
  @abstract   关闭自适应码率调节功能，默认即为关闭状态
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-- (void)disableAdaptiveBitrateControl;
+- (void)disableAdaptiveBitrateControl __deprecated;
 
 /*!
  @property    adaptiveQualityMode
@@ -220,8 +257,9 @@
  
  @discussion  提供码率调整优先、帧率调整优先以及混合调整三种模式，只有在同时打开自适应码率开关 (enableAdaptiveBitrateControlWithMinVideoBitRate:) 以及动态帧率开关 (dynamicFrameEnable) 时，该模式才起到控制作用。默认为混合调整模式，即弱网时同时调节帧率跟码率。
  @see         PLStreamAdaptiveQualityMode
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-@property (nonatomic, assign) PLStreamAdaptiveQualityMode adaptiveQualityMode;
+@property (nonatomic, assign) PLStreamAdaptiveQualityMode adaptiveQualityMode DEPRECATED_ATTRIBUTE;
 
 /*!
  @property   connectionInterruptionHandler
@@ -232,8 +270,9 @@
  @warning    该回调会在主线程中执行
  
  @see        autoReconnectEnable
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-@property (nonatomic, copy) _Nullable ConnectionInterruptionHandler connectionInterruptionHandler;
+@property (nonatomic, copy) _Nullable ConnectionInterruptionHandler connectionInterruptionHandler DEPRECATED_ATTRIBUTE;
 
 /*!
  @property   connectionChangeActionCallback
@@ -245,8 +284,9 @@
  
  @see        monitorNetworkStateEnable
  @see        connectionInterruptionHandler
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-@property (nonatomic, copy) _Nullable ConnectionChangeActionCallback connectionChangeActionCallback;
+@property (nonatomic, copy) _Nullable ConnectionChangeActionCallback connectionChangeActionCallback DEPRECATED_ATTRIBUTE;
 
 /*!
  @method     startWithCompleted:
@@ -263,10 +303,10 @@
  
  @see        stop
  @see        destroy
- 
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  @since      @v1.0.0
  */
-- (void)startWithCompleted:(void (^)(BOOL success))handler DEPRECATED_ATTRIBUTE;
+- (void)startWithCompleted:(void (^)(BOOL success))handler __deprecated;
 
 /*!
  @method     startWithFeedback:
@@ -283,10 +323,10 @@
  
  @see        stop
  @see        destroy
- 
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  @since      @v2.0.0
  */
-- (void)startWithFeedback:(void (^)(PLStreamStartStateFeedback feedback))handler;
+- (void)startWithFeedback:(void (^)(PLStreamStartStateFeedback feedback))handler __deprecated;
 
 /*!
  @method     startWithPushURL:feedback:
@@ -302,10 +342,10 @@
  
  @see        stop
  @see        destroy
- 
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  @since      @v2.0.0
  */
-- (void)startWithPushURL:(NSURL *)pushURL feedback:(void (^)(PLStreamStartStateFeedback feedback))handler;
+- (void)startWithPushURL:(NSURL *)pushURL feedback:(void (^)(PLStreamStartStateFeedback feedback))handler __deprecated;
 
 /*!
  @method     restartWithCompleted:
@@ -321,13 +361,13 @@
  @warning    当前 Streaming Session 处于正在推流状态时调用此方法时才会重新推流，其它状态时调用无效
  Streaming Session。
  当采用 dynamic 认证且过期时，需要更新 Stream 对象，否则推流将失败。
- 
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  @see        stop
  @see        destroy
  
  @since      @v1.2.2
  */
-- (void)restartWithCompleted:(void (^)(BOOL success))handler DEPRECATED_ATTRIBUTE;
+- (void)restartWithCompleted:(void (^)(BOOL success))handler __deprecated;
 
 /*!
  @method     restartWithFeedback:
@@ -343,13 +383,14 @@
  @warning    当前 Streaming Session 处于正在推流状态时调用此方法时才会重新推流，其它状态时调用无效
  Streaming Session。
  当采用 dynamic 认证且过期时，需要更新 Stream 对象，否则推流将失败。
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  
  @see        stop
  @see        destroy
  
  @since      @v2.0.0
  */
-- (void)restartWithFeedback:(void (^)(PLStreamStartStateFeedback feedback))handler;
+- (void)restartWithFeedback:(void (^)(PLStreamStartStateFeedback feedback))handler __deprecated;
 
 /*!
  @method     restartWithPushURL:feedback:
@@ -364,28 +405,31 @@
  
  @warning    当前 Streaming Session 处于正在推流状态时调用此方法时才会重新推流，其它状态时调用无效
  Streaming Session。
+ @warning    PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  
  @see        stop
  @see        destroy
  
  @since      @v2.0.0
  */
-- (void)restartWithPushURL:(NSURL *)pushURL feedback:(void (^)(PLStreamStartStateFeedback feedback))handler;
+- (void)restartWithPushURL:(NSURL *)pushURL feedback:(void (^)(PLStreamStartStateFeedback feedback))handler __deprecated;
 
 /*!
- * 结束推流
+ @abstract  结束推流
+ @warning   PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-- (void)stop;
+- (void)stop __deprecated;
 
 /**
  @brief 重新加载视频推流配置
  
  @param videoStreamingConfiguration 新的视频编码配置
  @param videoCaptureConfiguration   新的视频采集配置
+ @warning   PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-- (void)reloadVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration videoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration DEPRECATED_ATTRIBUTE;
+- (void)reloadVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration videoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration __deprecated;
 
-- (void)reloadVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration;
+- (void)reloadVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration __deprecated;
 
 @end
 
@@ -399,75 +443,75 @@
 @interface PLCameraStreamingSession (CameraSource)
 
 /// default as AVCaptureDevicePositionBack.
-@property (nonatomic, assign) AVCaptureDevicePosition   captureDevicePosition;
+@property (nonatomic, assign) AVCaptureDevicePosition   captureDevicePosition DEPRECATED_ATTRIBUTE;
 
 /**
  @brief 开启 camera 时的采集摄像头的旋转方向，默认为 AVCaptureVideoOrientationPortrait
  */
-@property (nonatomic, assign) AVCaptureVideoOrientation videoOrientation;
+@property (nonatomic, assign) AVCaptureVideoOrientation videoOrientation DEPRECATED_ATTRIBUTE;
 
 /// default as NO.
-@property (nonatomic, assign, getter=isTorchOn) BOOL    torchOn;
+@property (nonatomic, assign, getter=isTorchOn) BOOL    torchOn DEPRECATED_ATTRIBUTE;
 
 /*!
  @property  continuousAutofocusEnable
  @abstract  连续自动对焦。该属性默认开启。
  */
-@property (nonatomic, assign, getter=isContinuousAutofocusEnable) BOOL  continuousAutofocusEnable;
+@property (nonatomic, assign, getter=isContinuousAutofocusEnable) BOOL  continuousAutofocusEnable DEPRECATED_ATTRIBUTE;
 
 /*!
  @property  touchToFocusEnable
  @abstract  手动点击屏幕进行对焦。该属性默认开启。
  */
-@property (nonatomic, assign, getter=isTouchToFocusEnable) BOOL touchToFocusEnable;
+@property (nonatomic, assign, getter=isTouchToFocusEnable) BOOL touchToFocusEnable DEPRECATED_ATTRIBUTE;
 
 /*!
  @property  smoothAutoFocusEnabled
  @abstract  该属性适用于视频拍摄过程中用来减缓因自动对焦产生的镜头伸缩，使画面不因快速的对焦而产生抖动感。该属性默认开启。
  */
-@property (nonatomic, assign, getter=isSmoothAutoFocusEnabled) BOOL  smoothAutoFocusEnabled;
+@property (nonatomic, assign, getter=isSmoothAutoFocusEnabled) BOOL  smoothAutoFocusEnabled DEPRECATED_ATTRIBUTE;
 
 /// default as (0.5, 0.5), (0,0) is top-left, (1,1) is bottom-right.
-@property (nonatomic, assign) CGPoint   focusPointOfInterest;
+@property (nonatomic, assign) CGPoint   focusPointOfInterest DEPRECATED_ATTRIBUTE;
 
 /// 默认为 1.0，设置的数值需要小于等于 videoActiveForat.videoMaxZoomFactor，如果大于会设置失败。
-@property (nonatomic, assign) CGFloat videoZoomFactor;
+@property (nonatomic, assign) CGFloat videoZoomFactor DEPRECATED_ATTRIBUTE;
 
-@property (nonatomic, strong, readonly) NSArray<AVCaptureDeviceFormat *> *videoFormats;
+@property (nonatomic, strong, readonly) NSArray<AVCaptureDeviceFormat *> *videoFormats DEPRECATED_ATTRIBUTE;
 
-@property (nonatomic, retain) AVCaptureDeviceFormat *videoActiveFormat;
+@property (nonatomic, retain) AVCaptureDeviceFormat *videoActiveFormat DEPRECATED_ATTRIBUTE;
 
 /**
  @brief 采集的视频的 sessionPreset，默认为 AVCaptureSessionPreset640x480
  */
-@property (nonatomic, copy) NSString *sessionPreset;
+@property (nonatomic, copy) NSString *sessionPreset DEPRECATED_ATTRIBUTE;
 
 /**
  @brief 采集的视频数据的帧率，默认为 30
  */
-@property (nonatomic, assign) NSUInteger videoFrameRate;
+@property (nonatomic, assign) NSUInteger videoFrameRate DEPRECATED_ATTRIBUTE;
 
 /**
  @brief 前置预览是否开启镜像，默认为 YES
  */
-@property (nonatomic, assign) BOOL previewMirrorFrontFacing;
+@property (nonatomic, assign) BOOL previewMirrorFrontFacing DEPRECATED_ATTRIBUTE;
 
 /**
  @brief 后置预览是否开启镜像，默认为 NO
  */
-@property (nonatomic, assign) BOOL previewMirrorRearFacing;
+@property (nonatomic, assign) BOOL previewMirrorRearFacing DEPRECATED_ATTRIBUTE;
 
 /**
  *  前置摄像头，推的流是否开启镜像，默认 NO
  */
-@property (nonatomic, assign) BOOL streamMirrorFrontFacing;
+@property (nonatomic, assign) BOOL streamMirrorFrontFacing DEPRECATED_ATTRIBUTE;
 
 /**
  *  后置摄像头，推的流是否开启镜像，默认 NO
  */
-@property (nonatomic, assign) BOOL streamMirrorRearFacing;
+@property (nonatomic, assign) BOOL streamMirrorRearFacing DEPRECATED_ATTRIBUTE;
 
-- (void)toggleCamera;
+- (void)toggleCamera __deprecated;
 
 /*!
  * 开启摄像头 session
@@ -476,8 +520,10 @@
  * 如果要重新启用推流的摄像头，可以调用这个方法
  *
  * @see - (void)stopCaptureSession
+ * @warning   PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
+ *
  */
-- (void)startCaptureSession;
+- (void)startCaptureSession __deprecated;
 
 /*!
  * 停止摄像头 session
@@ -486,8 +532,9 @@
  * 你需要调用这个方法来暂停当前 streaming session 对 captureSession 的占用。当需要恢复时，调用 - (void)startCaptureSession 方法。
  *
  * @see - (void)startCaptureSession
+ * @warning   PLCameraStreamingSession 从 v2.1.6 开始废弃，请使用 PLMediaStreamingSession
  */
-- (void)stopCaptureSession;
+- (void)stopCaptureSession __deprecated;
 
 /**
  @brief 由于硬件性能限制，为了保证推流的质量，下列 API 只支持 iPhone 5、iPad 3、iPod touch 4 及以上的设备，这些 API 在低端设备上将无效
@@ -497,21 +544,21 @@
 /**
  *  是否开启美颜
  */
--(void)setBeautifyModeOn:(BOOL)beautifyModeOn;
+-(void)setBeautifyModeOn:(BOOL)beautifyModeOn __deprecated;
 
 /**
  @brief 设置对应 Beauty 的程度参数.
  
  @param beautify 范围从 0 ~ 1，0 为不美颜
  */
--(void)setBeautify:(CGFloat)beautify;
+-(void)setBeautify:(CGFloat)beautify __deprecated;
 
 /**
  *  设置美白程度（注意：如果美颜不开启，设置美白程度参数无效）
  *
  *  @param white 范围是从 0 ~ 1，0 为不美白
  */
--(void)setWhiten:(CGFloat)whiten;
+-(void)setWhiten:(CGFloat)whiten __deprecated;
 
 /**
  *  设置红润的程度参数.（注意：如果美颜不开启，设置美白程度参数无效）
@@ -519,7 +566,7 @@
  *  @param redden 范围是从 0 ~ 1，0 为不红润
  */
 
--(void)setRedden:(CGFloat)redden;
+-(void)setRedden:(CGFloat)redden __deprecated;
 
 /**
  *  开启水印
@@ -527,12 +574,12 @@
  *  @param wateMarkImage 水印的图片
  *  @param positio       水印的位置
  */
--(void)setWaterMarkWithImage:(UIImage *)wateMarkImage position:(CGPoint)position;
+-(void)setWaterMarkWithImage:(UIImage *)wateMarkImage position:(CGPoint)position __deprecated;
 
 /**
  *  移除水印
  */
--(void)clearWaterMark;
+-(void)clearWaterMark __deprecated;
 
 /**
  *  @brief 视频截图
@@ -545,7 +592,7 @@
  *  @since v2.2.0
  *
  */
-- (void)getScreenshotWithCompletionHandler:(nullable PLStreamScreenshotHandler)handler;
+- (void)getScreenshotWithCompletionHandler:(nullable PLStreamScreenshotHandler)handler __deprecated;
 
 @end
 
@@ -562,24 +609,24 @@
 /*!
  * @brief 返听功能
  */
-@property (nonatomic, assign, getter=isPlayback) BOOL   playback;
+@property (nonatomic, assign, getter=isPlayback) BOOL   playback DEPRECATED_ATTRIBUTE;
 
-@property (nonatomic, assign, getter=isMuted)   BOOL    muted;                   // default as NO.
+@property (nonatomic, assign, getter=isMuted)   BOOL    muted DEPRECATED_ATTRIBUTE;                   // default as NO.
 
 /*!
  @brief 是否允许在后台与其他 App 的音频混音而不被打断，默认关闭
  */
-@property (nonatomic, assign) BOOL allowAudioMixWithOthers;
+@property (nonatomic, assign) BOOL allowAudioMixWithOthers DEPRECATED_ATTRIBUTE;
 
 /*!
  @brief 音频被其他 app 中断开始时会回调该函数，注意回调不在主线程进行。
  */
-@property (nonatomic, copy) PLAudioSessionDidBeginInterruptionCallback _Nullable audioSessionBeginInterruptionCallback;
+@property (nonatomic, copy) PLAudioSessionDidBeginInterruptionCallback _Nullable audioSessionBeginInterruptionCallback DEPRECATED_ATTRIBUTE;
 
 /*!
  @brief 音频中断结束时回调，即其他 app 结束打断音频操作时会回调该函数，注意回调不在主线程进行。
  */
-@property (nonatomic, copy) PLAudioSessionDidEndInterruptionCallback _Nullable audioSessionEndInterruptionCallback;
+@property (nonatomic, copy) PLAudioSessionDidEndInterruptionCallback _Nullable audioSessionEndInterruptionCallback DEPRECATED_ATTRIBUTE;
 
 
 /**
@@ -587,14 +634,14 @@
  
  @warning iPhone 6s 系列不支持调节麦克风采集的音量。
  */
-@property (nonatomic, assign) float inputGain;
+@property (nonatomic, assign) float inputGain DEPRECATED_ATTRIBUTE;
 
 /**
  * @brief 音效，所有生效音效的一个数组。
  *
  * @see PLAudioEffectConfiguration
  */
-@property (nonatomic, strong) NSArray<PLAudioEffectConfiguration *> *audioEffectConfigurations;
+@property (nonatomic, strong) NSArray<PLAudioEffectConfiguration *> *audioEffectConfigurations DEPRECATED_ATTRIBUTE;
 
 /**
  * @brief 绑定一个音频文件播放器。该播放器播放出的声音将和麦克风声音混和，并推流出去。
@@ -603,12 +650,12 @@
  * @param audioFilePath 音频文件路径
  * @see PLAudioPlayer
  */
-- (PLAudioPlayer *)audioPlayerWithFilePath:(NSString *)audioFilePath;
+- (PLAudioPlayer *)audioPlayerWithFilePath:(NSString *)audioFilePath __deprecated;
 
 /**
  * @brief 关闭当前的音频文件播放器
  */
-- (void)closeCurrentAudio;
+- (void)closeCurrentAudio __deprecated;
 
 @end
 
@@ -621,7 +668,7 @@
  */
 @interface PLCameraStreamingSession (Application)
 
-@property (nonatomic, assign, getter=isIdleTimerDisable) BOOL  idleTimerDisable;   // default as YES.
+@property (nonatomic, assign, getter=isIdleTimerDisable) BOOL  idleTimerDisable DEPRECATED_ATTRIBUTE;   // default as YES.
 
 @end
 
@@ -635,22 +682,22 @@
 @interface PLCameraStreamingSession (Authorization)
 
 // Camera
-+ (PLAuthorizationStatus)cameraAuthorizationStatus;
++ (PLAuthorizationStatus)cameraAuthorizationStatus __deprecated;
 
 /**
  * 获取摄像头权限
  * @param handler 该 block 将会在主线程中回调。
  */
-+ (void)requestCameraAccessWithCompletionHandler:(void (^)(BOOL granted))handler;
++ (void)requestCameraAccessWithCompletionHandler:(void (^)(BOOL granted))handler __deprecated;
 
 // Microphone
-+ (PLAuthorizationStatus)microphoneAuthorizationStatus;
++ (PLAuthorizationStatus)microphoneAuthorizationStatus __deprecated;
 
 /**
  * 获取麦克风权限
  * @param handler 该 block 将会在主线程中回调。
  */
-+ (void)requestMicrophoneAccessWithCompletionHandler:(void (^)(BOOL granted))handler;
++ (void)requestMicrophoneAccessWithCompletionHandler:(void (^)(BOOL granted))handler __deprecated;
 
 @end
 
@@ -669,6 +716,6 @@
  
  @since      v1.8.1
  */
-+ (NSString *)versionInfo;
++ (NSString *)versionInfo __deprecated;
 
 @end
