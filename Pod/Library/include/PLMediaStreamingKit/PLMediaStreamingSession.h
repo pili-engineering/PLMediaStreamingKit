@@ -126,7 +126,64 @@
                         audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
                       videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
                       audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
-                                           stream:(PLStream *)stream;
+                                           stream:(PLStream *)stream NS_DESIGNATED_INITIALIZER;
+  
+/*!
+ * 初始化方法
+ *
+ * @param videoCaptureConfiguration 视频采集的配置信息
+ *
+ * @param audioCaptureConfiguration 音频采集的配置信息
+ *
+ * @param videoStreamingConfiguration 视频编码及推流的配置信息
+ *
+ * @param audioStreamingConfiguration 音频编码及推流的配置信息
+ *
+ * @param stream Stream 对象
+ *
+ * @param dns dnsmanager，自定义 dns 查询，使用 HappyDNS
+ *
+ * @return PLCameraStreamingSession 实例
+ *
+ * @discussion 该方法会检查传入参数，当 videoCaptureConfiguration 或 videoStreamingConfiguration 为 nil 时为纯音频推流模式，当 audioCaptureConfiguration 或 audioStreamingConfiguration 为 nil 时为纯视频推流模式，当videoStreamingConfiguration 和 audioStreamingConfiguration 同时为 nil 时为纯连麦模式。当初始化方法会优先使用后置摄像头，如果发现设备没有后置摄像头，会判断是否有前置摄像头，如果都没有，便会返回 nil。PLMediaStreamingSession 对象默认会使用 HappyDNS 做 dns 解析，如果你期望自己配置 dns 解析的规则，可以通过传递自己定义的 dns manager 来做 dns 查询。如果你对 dns 解析部分不清楚，可以直接使用 
+    -initWithVideoCaptureConfiguration:audioCaptureConfiguration:videoStreamingConfiguration:audioStreamingConfiguration:stream 来初始化 PLCameraStreamingSession 对象
+ */
+- (instancetype)initWithVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration
+                        audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
+                      videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
+                      audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
+                                           stream:(PLStream *)stream
+                                              dns:(QNDnsManager *)dns;
+
+/*!
+ * 初始化方法
+ *
+ * @param videoCaptureConfiguration 视频采集的配置信息
+ *
+ * @param audioCaptureConfiguration 音频采集的配置信息
+ *
+ * @param videoStreamingConfiguration 视频编码及推流的配置信息
+ *
+ * @param audioStreamingConfiguration 音频编码及推流的配置信息
+ *
+ * @param stream Stream 对象
+ *
+ * @param dns dnsmanager，自定义 dns 查询，使用 HappyDNS
+ *
+ * @param eaglContext 外部 EAGLContext 对象，用做画面预览视图的 context
+ *
+ * @return PLCameraStreamingSession 实例
+ *
+ * @discussion 该方法会检查传入参数，当 videoCaptureConfiguration 或 videoStreamingConfiguration 为 nil 时为纯音频推流模式，当 audioCaptureConfiguration 或 audioStreamingConfiguration 为 nil 时为纯视频推流模式，当videoStreamingConfiguration 和 audioStreamingConfiguration 同时为 nil 时为纯连麦模式。当初始化方法会优先使用后置摄像头，如果发现设备没有后置摄像头，会判断是否有前置摄像头，如果都没有，便会返回 nil。PLMediaStreamingSession 对象默认会使用 HappyDNS 做 dns 解析，如果你期望自己配置 dns 解析的规则，可以通过传递自己定义的 dns manager 来做 dns 查询。如果你对 dns 解析部分不清楚，可以直接使用
+ -initWithVideoCaptureConfiguration:audioCaptureConfiguration:videoStreamingConfiguration:audioStreamingConfiguration:stream 来初始化 PLCameraStreamingSession 对象
+ */
+- (instancetype)initWithVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration
+                        audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
+                      videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
+                      audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
+                                           stream:(PLStream *)stream
+                                              dns:(QNDnsManager *)dns
+                                      eaglContext:(EAGLContext *)eaglContext;
 
 /*!
  * 销毁 session 的方法
@@ -433,6 +490,16 @@
  *  后置摄像头，推的流是否开启镜像，默认 NO
  */
 @property (nonatomic, assign) BOOL streamMirrorRearFacing;
+
+/**
+ *  推流预览的渲染队列
+ */
+@property (nonatomic, strong, readonly) dispatch_queue_t renderQueue;
+
+/**
+ *  推流预览的渲染 OpenGL context
+ */
+@property (nonatomic, strong, readonly) EAGLContext *renderContext;
 
 - (void)toggleCamera;
 

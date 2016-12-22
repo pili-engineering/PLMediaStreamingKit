@@ -1,15 +1,15 @@
 {
   "name": "PLMediaStreamingKit",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "summary": "Pili iOS media streaming framework via RTMP.",
   "homepage": "https://github.com/pili-engineering/PLMediaStreamingKit",
   "license": "Apache License, Version 2.0",
   "authors": {
-    "hzwangsiyu": "hzwangsiyu@gmail.com"
+    "pili": "pili@qiniu.com"
   },
   "source": {
     "git": "https://github.com/pili-engineering/PLMediaStreamingKit.git",
-    "tag": "v2.1.5"
+    "tag": "v2.1.6"
   },
   "platforms": {
     "ios": "7.0"
@@ -17,13 +17,13 @@
   "requires_arc": true,
   "dependencies": {
     "pili-librtmp": [
-      "1.0.5"
+      "1.0.6"
     ],
     "HappyDNS": [
-      "~> 0.3.0"
+      "0.3.10"
     ],
     "QNNetDiag": [
-
+      "0.0.3"
     ]
   },
   "frameworks": [
