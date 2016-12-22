@@ -1,6 +1,6 @@
 # PLMediaStreamingKit
 
-PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，可高度定制化和二次开发。特色是支持 iOS Camera 画面捕获并进行 H.264 硬编码，以及支持 iOS 麦克风音频采样并进行 AAC 硬编码；同时，还根据移动网络环境的多变性，实现了一套可供开发者灵活选择的编码参数集合。借助 PLMediaStreamingKit，开发者可以快速构建一款类似 [Meerkat](https://meerkatapp.co/) 或 [Periscope](https://www.periscope.tv/) 的手机直播应用。PLMediaStreamingKit 支持两种不同层次的 API，分别为 PLCameraStreamingKit 和 PLStreamingKit， PLStreamingKit 提供包括音视频编码，封包以及网络发送功能，PLCameraStreamingKit 除了提供 PLStreamingKit 的功能以外还提供了内置的采集，音视频处理以及一些系统打断事件的处理等。我们强烈推荐对音视频没有太多了解的开发者使用 PLCameraStreamingKit 提供的 API 进行开发，如果您对音视频数据的采集和处理有更多的需求，那么需要使用 PLStreamingKit 提供的 API 进行开发，不过在进行开发之前请确保您已经掌握了包括音视频采集，编码以及处理等相关的基础支持。
+PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，可高度定制化和二次开发。特色是支持 iOS Camera 画面捕获并进行 H.264 硬编码，以及支持 iOS 麦克风音频采样并进行 AAC 硬编码；同时，还根据移动网络环境的多变性，实现了一套可供开发者灵活选择的编码参数集合。借助 PLMediaStreamingKit，开发者可以快速构建一款类似 [Meerkat](https://meerkatapp.co/) 或 [Periscope](https://www.periscope.tv/) 的手机直播应用。PLMediaStreamingKit 支持两种不同层次的 API，分别为 PLMediaStreamingKit 和 PLStreamingKit， PLStreamingKit 提供包括音视频编码，封包以及网络发送功能，PLMediaStreamingKit 除了提供 PLStreamingKit 的功能以外还提供了内置的采集，音视频处理以及一些系统打断事件的处理等。我们强烈推荐对音视频没有太多了解的开发者使用 PLMediaStreamingKit 提供的 API 进行开发，如果您对音视频数据的采集和处理有更多的需求，那么需要使用 PLStreamingKit 提供的 API 进行开发，不过在进行开发之前请确保您已经掌握了包括音视频采集，编码以及处理等相关的基础支持。
 
 ## 功能特性
 
@@ -38,6 +38,7 @@ PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，可高度
 - [x] 内置断线及网络切换自动重连功能
 - [x] 支持预览与直播流分别镜像
 - [x] 支持自定义音视频处理
+- [x] 支持苹果 ATS 安全标准
 - [x] 提供两种层次的 API，灵活选择，高可定制性与简单两不误
 
 ## 系统要求
