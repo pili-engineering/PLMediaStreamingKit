@@ -43,8 +43,8 @@ PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，可高度
 
 ## 系统要求
 
-- iOS Target : >= iOS 7
-- iOS Device : >= iPhone 4s
+- iOS Target : >= iOS 8
+- iOS Device : >= iPhone 5
 
 ## 安装方法
 
