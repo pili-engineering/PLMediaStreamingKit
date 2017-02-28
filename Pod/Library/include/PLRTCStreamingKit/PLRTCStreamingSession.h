@@ -52,6 +52,13 @@
 /// @abstract userID 离开房间
 - (void)RTCStreamingSession:(PLRTCStreamingSession *)session didLeaveConferenceOfUserID:(NSString *)userID;
 
+/// @abstract 连麦时，SDK 内部不渲染连麦者（以 userID 标识）的视频，而由该接口返回相应的视频数据
+/// @ warning pixelBuffer必须在用完之后手动释放，否则会引起内存泄漏
+- (void)RTCStreamingSession:(PLRTCStreamingSession *)session  didGetPixelBuffer:(CVPixelBufferRef)pixelBuffer ofUserID:(NSString *)userID;
+
+/// @abstract 连麦时，对方（以 userID 标识）取消视频的数据回调
+- (void)RTCStreamingSession:(PLRTCStreamingSession *)session didLostPixelBufferOfUserID:(NSString *)userID;
+
 @end
 
 @interface PLRTCStreamingSession : NSObject
@@ -417,6 +424,13 @@
  @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
 */
 @property (nonatomic, strong) NSDictionary *rtcOption;
+
+/**
+ @abstract 外部传入用于连麦的视频格式
+ 
+ @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
+ */
+@property (nonatomic, assign) PLRTCVideoFormat rtcVideoFormat;
 
 /*!
  * 开始连麦

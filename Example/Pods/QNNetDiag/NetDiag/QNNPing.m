@@ -18,6 +18,7 @@
 #include <AssertMacros.h>
 
 #import "QNNPing.h"
+#import "QNNQue.h"
 
 const int kQNNInvalidPingResponse = -22001;
 
@@ -323,10 +324,10 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
         if (host == NULL || host->h_addr == NULL) {
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
-                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [QNNQue async_run_main:^(void) {
                     QNNPingResult *result = [[QNNPingResult alloc] init:-1006 ip:nil size:_size max:0 min:0 avg:0 loss:0 count:0 totalTime:0 stddev:0];
                     _complete(result);
-                });
+                }];
             }
             return;
         }
@@ -377,9 +378,9 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
                                              loss:loss
                                         totalTime:[[NSDate date] timeIntervalSinceDate:begin] * 1000];
         [self.output write:result.description];
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [QNNQue async_run_main:^(void) {
             _complete(result);
-        });
+        }];
     }
     free(durations);
 }
@@ -415,9 +416,9 @@ static BOOL isValidResponse(char *buffer, int len, int seq, int identifier) {
              interval:(NSInteger)interval
                 count:(NSInteger)count {
     QNNPing *ping = [[QNNPing alloc] init:host size:size output:output complete:complete interval:interval count:count];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+    [QNNQue async_run_serial:^{
         [ping run];
-    });
+    }];
     return ping;
 }
 

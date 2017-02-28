@@ -15,6 +15,7 @@
 #import <netinet/in.h>
 #import <netinet/tcp.h>
 
+#import "QNNQue.h"
 #import "QNNTraceRoute.h"
 
 @interface QNNTraceRouteRecord : NSObject
@@ -174,10 +175,10 @@ static const int TraceMaxAttempts = 3;
         if (host == NULL || host->h_addr == NULL) {
             [self.output write:@"Problem accessing the DNS"];
             if (_complete != nil) {
-                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [QNNQue async_run_main:^(void) {
                     QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1006 ip:nil content:nil];
                     _complete(result);
-                });
+                }];
             }
             return;
         }
@@ -189,10 +190,10 @@ static const int TraceMaxAttempts = 3;
     if (-1 == fcntl(recv_sock, F_SETFL, O_NONBLOCK)) {
         NSLog(@"fcntl socket error!");
         if (_complete != nil) {
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [QNNQue async_run_main:^(void) {
                 QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:-1 ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:nil];
                 _complete(result);
-            });
+            }];
         }
         close(recv_sock);
         return;
@@ -218,10 +219,10 @@ static const int TraceMaxAttempts = 3;
     if (_stopped) {
         code = kQNNRequestStoped;
     }
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
+    [QNNQue async_run_main:^(void) {
         QNNTraceRouteResult* result = [[QNNTraceRouteResult alloc] init:code ip:[NSString stringWithUTF8String:inet_ntoa(addr.sin_addr)] content:_contentString];
         _complete(result);
-    });
+    }];
 }
 
 + (instancetype)start:(NSString*)host
@@ -236,9 +237,9 @@ static const int TraceMaxAttempts = 3;
                maxTtl:(NSInteger)maxTtl {
     QNNTraceRoute* t = [[QNNTraceRoute alloc] init:host output:output complete:complete maxTtl:maxTtl];
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+    [QNNQue async_run_serial:^(void) {
         [t run];
-    });
+    }];
 
     return t;
 }
