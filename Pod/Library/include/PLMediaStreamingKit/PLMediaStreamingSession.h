@@ -63,6 +63,13 @@
 /// @abstract userID 离开房间
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session didLeaveConferenceOfUserID:(NSString *)userID;
 
+/// @abstract 连麦时，SDK 内部不渲染连麦者（以 userID 标识）的视频，而由该接口返回相应的视频数据
+/// @ warning pixelBuffer必须在用完之后手动释放，否则会引起内存泄漏
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session  didGetPixelBuffer:(CVPixelBufferRef)pixelBuffer ofUserID:(NSString *)userID;
+
+/// @abstract 连麦时，对方（以 userID 标识）取消视频的数据回调
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session didLostPixelBufferOfUserID:(NSString *)userID;
+
 @end
 
 #pragma mark - basic

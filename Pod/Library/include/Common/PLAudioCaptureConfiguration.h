@@ -18,6 +18,13 @@
 @property (nonatomic, assign) NSUInteger channelsPerFrame;
 
 /**
+ @brief 回声消除开关，默认为 NO
+ 
+ @discussion 普通直播用到回声消除的场景不多，当用户开启返听功能，并且使用外放时，可打开这个开关，防止产生尖锐的啸叫声。
+ */
+@property (nonatomic, assign) BOOL acousticEchoCancellationEnable;
+
+/**
  @brief 创建一个默认配置的 PLAudioCaptureConfiguration 实例.
   
  @return 创建的默认 PLAudioCaptureConfiguration 对象
