@@ -33,6 +33,11 @@
 +(void)enableQos:(BOOL)flag;
 
 /**
+ @brief 获取 QoS 的采样间隔
+ */
++(NSUInteger)getSampleInterval;
+
+/**
  @brief 是否打开测速功能，默认关闭
  
  @param flag 开启为 YES，否则为 NO

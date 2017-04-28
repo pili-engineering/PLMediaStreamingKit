@@ -588,6 +588,17 @@
  */
 - (void)getScreenshotWithCompletionHandler:(nullable PLStreamScreenshotHandler)handler;
 
+/**
+ *  @brief 设置推流图片
+ *
+ *  @param image 推流的图片
+ *
+ *  @discussion 由于某些特殊原因不想使用摄像头采集的数据来推流时，可以使用该接口设置一张图片来替代。传入 nil 则关闭该功能。
+ *
+ *  @since v2.2.1
+ */
+- (void)setPushImage:(nullable UIImage *)image;
+
 @end
 
 #pragma mark - Category (MicrophoneSource)
