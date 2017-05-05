@@ -73,9 +73,9 @@ end
 $ pod install
 ```
 
-## PLMediaStreamingKit Wiki
+## PLMediaStreamingKit 文档
 
-请参考 Wiki 文档：[PLMediaStreamingKit 开发指南](https://github.com/pili-engineering/PLMediaStreamingKit/wiki)
+请参考开发者中心文档：[PLMediaStreamingKit 文档](https://developer.qiniu.com/pili/sdk/1216/PLMediaStreamingKit)
 
 ## 反馈及意见
 
