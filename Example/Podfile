@@ -1,7 +1,8 @@
-source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
 
 target 'PLMediaStreamingKitDemo' do
   pod "PLMediaStreamingKit", :path => "../"
+  pod 'PreDemObjc'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Masonry'
