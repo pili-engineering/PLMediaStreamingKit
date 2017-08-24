@@ -9,6 +9,7 @@
 #import "PLAppDelegate.h"
 #import "PLMainViewController.h"
 #import "PLMediaStreamingKit.h"
+#import <PreDemObjc/PREDemObjc.h>
 
 @interface PLAppDelegate ()
 
@@ -18,6 +19,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [PREDManager startWithAppKey:@"00000002000ad127kgc9rqsp"
+                   serviceDomain:@"http://pili-dem-push.qbox.net"];
     
     [PLStreamingEnv initEnv];
     
