@@ -8,9 +8,8 @@
 
 #import "PLAppDelegate.h"
 #import "PLMainViewController.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
 #import "PLMediaStreamingKit.h"
+#import <PreDemObjc/PREDemObjc.h>
 
 @interface PLAppDelegate ()
 
@@ -21,8 +20,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [Fabric with:@[[Crashlytics class]]];
-
+    [PREDManager startWithAppKey:@"00000002000ad127kgc9rqsp"
+                   serviceDomain:@"http://pili-dem-push.qbox.net"];
+    
     [PLStreamingEnv initEnv];
     
     PLMainViewController *mainVC = [[PLMainViewController alloc] init];
