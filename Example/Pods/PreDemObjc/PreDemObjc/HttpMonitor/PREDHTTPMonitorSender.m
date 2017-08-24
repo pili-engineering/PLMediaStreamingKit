@@ -113,6 +113,7 @@ NSURLSessionDelegate
                             wrapString(model.osVersion),
                             wrapString(model.deviceModel),
                             wrapString(model.deviceUUID),
+                            wrapString(model.tag),
                             wrapString(model.domain),
                             wrapString(model.path),
                             wrapString(model.method),

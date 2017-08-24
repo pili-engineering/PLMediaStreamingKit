@@ -20,6 +20,7 @@
         self.osVersion = PREDHelper.osVersion;
         self.deviceModel = PREDHelper.deviceModel;
         self.deviceUUID = PREDHelper.UUID;
+        self.tag = PREDHelper.tag;
     }
     return self;
 }

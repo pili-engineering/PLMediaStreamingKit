@@ -80,6 +80,14 @@ static NSString* app_id(NSString* appKey){
     PREDLogger.currentLogLevel = logLevel;
 }
 
++ (NSString *)tag {
+    return PREDHelper.tag;
+}
+
++ (void)setTag:(NSString *)tag {
+    PREDHelper.tag = tag;
+}
+
 + (void)setLogHandler:(PREDLogHandler)logHandler {
     [PREDLogger setLogHandler:logHandler];
 }

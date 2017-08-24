@@ -178,6 +178,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"os_build": PREDHelper.osBuild,
                            @"sdk_version": PREDHelper.sdkVersion,
                            @"sdk_id": PREDHelper.UUID,
+                           @"tag": PREDHelper.tag,
                            @"device_id": @"",
                            @"report_uuid": reportUUID,
                            @"lag_log_key": key,

@@ -21,6 +21,7 @@
 
 static NSString *const kPREDUtcDateFormatter = @"utcDateFormatter";
 NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplicationSupportFromBackup";
+__strong static NSString *_tag = @"";
 
 @implementation PREDHelper
 
@@ -324,6 +325,18 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     }
     
     return @"";
+}
+
++ (void)setTag:(NSString *)tag {
+    if (!tag) {
+        _tag = @"";
+    } else {
+        _tag = tag.copy;
+    }
+}
+
++ (NSString *)tag {
+    return _tag;
 }
 
 + (NSString *)encodeAppIdentifier:(NSString *)inputString {

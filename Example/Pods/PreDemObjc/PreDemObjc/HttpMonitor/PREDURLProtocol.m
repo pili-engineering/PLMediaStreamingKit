@@ -75,6 +75,9 @@ NSURLSessionDataDelegate
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
+    if (mutableRequest.URL.path.length == 0) {
+        mutableRequest.URL = [NSURL URLWithString:@"/" relativeToURL:mutableRequest.URL];
+    }
     [NSURLProtocol setProperty:@YES
                         forKey:@"PREDInternalRequest"
                      inRequest:mutableRequest];

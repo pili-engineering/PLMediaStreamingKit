@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSString      *osVersion;
 @property (nonatomic, strong) NSString      *deviceModel;
 @property (nonatomic, strong) NSString      *deviceUUID;
+@property (nonatomic, strong) NSString      *tag;
 @property (nonatomic, strong) NSString      *domain;
 @property (nonatomic, strong) NSString      *path;
 @property (nonatomic, strong) NSString      *method;

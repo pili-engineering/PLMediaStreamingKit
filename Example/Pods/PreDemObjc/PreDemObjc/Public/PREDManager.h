@@ -73,6 +73,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, assign) PREDLogLevel logLevel;
 
 /**
+ This property is used to identify a specific user, for instance, you can assign user id to tag, so that you can use user id to search reports gathered by the sdk.
+ */
+@property (class, nonatomic, strong) NSString *tag;
+
+/**
  Set a custom block that handles all the log messages that are emitted from the SDK.
  
  You can use this to reroute the messages that would normally be logged by `NSLog();`
