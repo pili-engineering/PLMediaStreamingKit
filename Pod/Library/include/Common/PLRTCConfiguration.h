@@ -15,11 +15,28 @@ NSCopying
 >
 
 /**
- @brief 设置连麦窗口的大小，默认是 PLRTCVideoSizePresetDefault，即使用传入的视频数据的 size；
- 由于主播涉及到画面合成和推流，可不设置或者设置较大 size，其它连麦者可以设置较小 size。
+ @brief 设置连麦者的画面尺寸，默认是 PLRTCVideoSizePresetDefault，即使用传入的视频的尺寸；
  */
 @property (nonatomic, assign) PLRTCVideoSizePreset videoSize;
 @property (nonatomic, assign) PLRTCConferenceType conferenceType;
+
+/**
+ @brief 设置是否在连麦状态下外部渲染画面，默认为NO
+ */
+@property (nonatomic, assign, getter=isRtcExternalRendering) BOOL rtcExternalRendering;
+
+/**
+ @brief 设置连麦合流的画面尺寸，若未设置，则合流的画面尺寸由 videoSize 决定；
+ 默认为：CGSizeZero，即连麦合流的画面尺寸等于 videoSize；
+ */
+@property (nonatomic, assign) CGSize mixVideoSize;
+
+/**
+ @brief 设置本地视频数据在连麦合流的画面中的大小和位置，若 mixVideoSize 未设置，则该值无效；
+ 默认为：CGRectNull
+ */
+@property (nonatomic, assign) CGRect localVideoRect;
+
 
 + (instancetype)defaultConfiguration;
 

@@ -196,7 +196,8 @@ typedef enum {
     PLRTCStreamingErrorConnectRoomFailed = -3009,
     PLRTCStreamingErrorSetVideoBitrateFailed = -3010,
     PLRTCStreamingErrorSystemVersionNotSupported = -3011,
-    PLRTCStreamingErrorRTCLibraryNotFound = -3012
+    PLRTCStreamingErrorRTCLibraryNotFound = -3012,
+    PLRTCStreamingErrorUnsubscribeFailed = -3013
 } PLStreamError;
 
 #pragma mark - Video Streaming Quality
@@ -457,7 +458,8 @@ typedef NS_ENUM(NSUInteger, PLRTCVideoSizePreset) {
     PLRTCVideoSizePreset544x720,        //4:3
     PLRTCVideoSizePreset544x960,        //16:9
     PLRTCVideoSizePreset720x960,        //4:3
-    PLRTCVideoSizePreset720x1280        //16:9
+    PLRTCVideoSizePreset720x1280,       //16:9
+    PLRTCVideoSizePreset144x192         //4:3
 };
 
 ///连麦类型

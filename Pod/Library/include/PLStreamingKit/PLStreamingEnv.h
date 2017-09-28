@@ -26,13 +26,6 @@
 +(BOOL)isInited;
 
 /**
- @brief 是否开启 QoS，默认开启
- 
- @param flag 开启为 YES，否则为NO
- */
-+(void)enableQos:(BOOL)flag;
-
-/**
  @brief 获取 QoS 的采样间隔
  */
 +(NSUInteger)getSampleInterval;
@@ -60,5 +53,9 @@
  @warning    请确保不要在线上产品开启PLStreamLogLevelVerbose级别输出，这将影响产品性能。
  */
 + (void)setLogLevel:(PLStreamLogLevel)logLevel;
+
++ (NSString *)deviceID;
+
++ (void)setDeviceID:(NSString *)deviceID;
 
 @end
