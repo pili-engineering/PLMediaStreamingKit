@@ -146,9 +146,9 @@
         __block NSDate *startDate = begin;
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             _complete([self buildResult:code ip:ip durations:intervals loss:loss count:index totalTime:[[NSDate date] timeIntervalSinceDate:startDate] * 1000]);
+            free(intervals);
         });
     }
-    free(intervals);
 }
 
 - (QNNTcpPingResult *)buildResult:(NSInteger)code

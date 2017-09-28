@@ -15,6 +15,9 @@
 #import <netinet/in.h>
 #import <netinet/tcp.h>
 
+#import <sys/select.h>
+#import <sys/time.h>
+
 #import "QNNQue.h"
 #import "QNNTraceRoute.h"
 

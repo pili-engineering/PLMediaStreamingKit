@@ -70,6 +70,21 @@
 /// @abstract 连麦时，对方（以 userID 标识）取消视频的数据回调
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session didLostPixelBufferOfUserID:(NSString *)userID;
 
+/*!
+ *  @abstract 连麦时，连麦用户（以 userID 标识）音量监测回调
+ *
+ * @param inputLevel 本地语音输入音量
+ *
+ * @param outputLevel 本地语音输出音量
+ *
+ * @param rtcActiveStreams 其他连麦用户的语音音量对应表，以userID为key，对应音量为值，只包含音量大于0的用户
+ *
+ * @discussion 音量对应幅度：0-9，其中0为无音量，9为最大音量
+ *
+ * @see rtcMonitorAudioLevel开启当前回调
+ */
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session audioLocalInputLevel:(NSInteger)inputLevel localOutputLevel:(NSInteger)outputLevel otherRtcActiveStreams:(NSDictionary *)rtcActiveStreams;
+
 @end
 
 #pragma mark - basic
@@ -595,6 +610,8 @@
  *
  *  @discussion 由于某些特殊原因不想使用摄像头采集的数据来推流时，可以使用该接口设置一张图片来替代。传入 nil 则关闭该功能。
  *
+ *  @warning 请确保传入的 image 的宽和高是 16 的整数倍。请勿在 applicationState 为 UIApplicationStateBackground 时调用该接口，否则将出错。
+ *
  *  @since v2.2.1
  */
 - (void)setPushImage:(nullable UIImage *)image;
@@ -719,25 +736,16 @@
 
 /**
  @abstract 连麦的状态，只读属性
- 
- @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
- 
  */
 @property (nonatomic, assign, readonly) PLRTCState   rtcState;
 
 /**
  @abstract 连麦房间中的 userID 列表（不包含自己），只读
- 
- @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
- 
  */
 @property (nonatomic, strong, readonly) NSArray *rtcParticipants;
 
 /**
  @abstract 连麦房间中的人数（不包含自己），只读
- 
- @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
- 
  */
 @property (nonatomic, assign, readonly) NSUInteger rtcParticipantsCount;
 
@@ -749,31 +757,40 @@
  @see - (void)RTCStreamingSession:(PLRTCStreamingSession *)session userID:(NSString *)userID didDetachRemoteView:(UIView *)remoteView;
  
  @warning - 目前版本需要在连麦开始前设置好，连麦过程中更新无效
- 
- @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
  */
 @property (nonatomic, strong) NSArray *rtcMixOverlayRectArray;
 
 /**
  @abstract 设置连麦视频动态码率调整的范围的下限(单位：bps)，当上下限相等时，码率固定，将不会动态调整。
- 
- @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
  */
 @property (nonatomic, assign) NSUInteger rtcMinVideoBitrate;
 
 /**
  @abstract 设置连麦视频动态码率调整的范围的上限(单位：bps)，当上下限相等时，码率固定，将不会动态调整
- 
- @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
  */
 @property (nonatomic, assign) NSUInteger rtcMaxVideoBitrate;
 
 /**
  @abstract 设置连麦窗口的大小，请在 joinRoom 前设置。由于主播涉及到画面合成和推流，可不设置或者设置较大 size，其它连麦者可以设置较小 size。
- 
- @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
  */
 @property (nonatomic, strong) NSDictionary *rtcOption;
+
+/**
+ @abstract 设置是否播放房间内其他连麦者音频，默认是 NO，为 YES 时，其他连麦者音频静默
+ */
+@property (nonatomic, assign, getter=isMuteSpeaker) BOOL muteSpeaker;
+
+/**
+ @abstract  设置连麦是否开启连麦音频监测回调，默认是 NO，为 YES 时，开启房间连麦音频音量回调
+  */
+@property (nonatomic, assign, getter=isRtcMonitorAudioLevel) BOOL rtcMonitorAudioLevel;
+
+/// @abstract 设置是否静音，默认是 NO，为 YES 时，连麦静音，推流的音频自己的声音静音，其它连麦者的声音正常
+/// @see muted
+/// @warning 请勿与 muted 同时使用，否则可能出现状态错乱
+@property (nonatomic, assign, getter=isMuteMicrophone) BOOL muteMicrophone;
+
+
 
 /*!
  * 开始连麦
@@ -791,8 +808,6 @@
  * @param rtcConfiguration 连麦相关的配置项
  *
  * @discussion 开始连麦后，音视频会发布到房间中，同时拉取房间中的音视频流。可通过 PLMediaStreamingSessionDelegate 的回调得到连麦的状态及对方的 View。
- *
- * @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
  */
 - (void)startConferenceWithRoomName:(NSString *)roomName
                              userID:(NSString *)userID
@@ -804,7 +819,6 @@
  *
  * @discussion 结束连麦后，会停止推送本地音视频流，同时停止拉取房间中的音视频流。可通过 PLMediaStreamingSessionDelegate 得到连麦的状态及取消渲染对方的 View。
  *
- *  @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
  */
 - (void)stopConference;
 
@@ -812,8 +826,6 @@
  * 踢出指定 userID 的用户
  *
  * @discussion 踢出指定 userID 的用户，只有主播才有踢人的权限。
- *
- *  @warning 要调用此接口请确保工程中已经引入了 PLMediaStreamingKit(RTC).a，如果没有引入该静态库，调用该接口会导致程序抛 exception
  */
 - (void)kickoutUserID:(NSString *)userID;
 

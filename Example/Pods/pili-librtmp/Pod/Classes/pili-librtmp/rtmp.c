@@ -1709,6 +1709,11 @@ static int
         if (!enc)
             return FALSE;
     }
+    if (r->Link.pageUrl.av_len) {
+        enc = PILI_AMF_EncodeNamedString(enc, pend, &av_pageUrl, &r->Link.pageUrl);
+        if (!enc)
+            return FALSE;
+    }
     if (!(r->Link.protocol & RTMP_FEATURE_WRITE)) {
         enc = PILI_AMF_EncodeNamedBoolean(enc, pend, &av_fpad, FALSE);
         if (!enc)
@@ -1725,11 +1730,6 @@ static int
         enc = PILI_AMF_EncodeNamedNumber(enc, pend, &av_videoFunction, 1.0);
         if (!enc)
             return FALSE;
-        if (r->Link.pageUrl.av_len) {
-            enc = PILI_AMF_EncodeNamedString(enc, pend, &av_pageUrl, &r->Link.pageUrl);
-            if (!enc)
-                return FALSE;
-        }
     }
     if (r->m_fEncoding != 0.0 || r->m_bSendEncoding) { /* AMF0, AMF3 not fully supported yet */
         enc = PILI_AMF_EncodeNamedNumber(enc, pend, &av_objectEncoding, r->m_fEncoding);
@@ -3434,12 +3434,20 @@ int PILI_RTMP_SendPacket(PILI_RTMP *r, PILI_RTMPPacket *packet, int queue, RTMPE
                 header -= cSize;
                 hSize += cSize;
             }
+            if (t >= 0xffffff) {
+                header -= 4;
+                hSize += 4;
+            }
             *header = (0xc0 | c);
             if (cSize) {
                 int tmp = packet->m_nChannel - 64;
                 header[1] = tmp & 0xff;
                 if (cSize == 2)
                     header[2] = tmp >> 8;
+            }
+            if (t >= 0xffffff) {
+                hptr = header + hSize - 4;
+                hptr = PILI_AMF_EncodeInt32(hptr, hptr + 4, t);
             }
         }
     }
@@ -4034,11 +4042,11 @@ static int
             }
 
             /* we have to ignore the 0ms frames since these are the first
-	   * keyframes; we've got these so don't mess around with multiple
-	   * copies sent by the server to us! (if the keyframe is found at a
-	   * later position there is only one copy and it will be ignored by
-	   * the preceding if clause)
-	   */
+    	     * keyframes; we've got these so don't mess around with multiple
+    	     * copies sent by the server to us! (if the keyframe is found at a
+    	     * later position there is only one copy and it will be ignored by
+    	     * the preceding if clause)
+    	     */
             if (!(r->m_read.flags & RTMP_READ_NO_IGNORE) &&
                 packet.m_packetType != 0x16) { /* exclude type 0x16 (FLV) since it can
 				 * contain several FLV packets */
