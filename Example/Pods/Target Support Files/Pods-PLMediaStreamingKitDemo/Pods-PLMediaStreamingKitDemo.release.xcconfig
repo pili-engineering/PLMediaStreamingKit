@@ -1,4 +1,3 @@
-ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Crashlytics/iOS" "${PODS_ROOT}/Fabric/iOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BlocksKit" "${PODS_ROOT}/Headers/Public/Crashlytics" "${PODS_ROOT}/Headers/Public/Fabric" "${PODS_ROOT}/Headers/Public/HappyDNS" "${PODS_ROOT}/Headers/Public/Masonry" "${PODS_ROOT}/Headers/Public/PLMediaStreamingKit" "${PODS_ROOT}/Headers/Public/QNNetDiag" "${PODS_ROOT}/Headers/Public/WeiboSDK" "${PODS_ROOT}/Headers/Public/pili-librtmp"
@@ -7,4 +6,5 @@ OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${P
 OTHER_LDFLAGS = $(inherited) -ObjC -l"BlocksKit" -l"HappyDNS" -l"Masonry" -l"PLMediaStreamingKit" -l"QNNetDiag" -l"WeiboSDK" -l"c++" -l"fdk-aac" -l"icucore" -l"pili-librtmp" -l"resolv" -l"sqlite3" -l"z" -framework "AVFoundation" -framework "AudioToolbox" -framework "CFNetwork" -framework "CoreGraphics" -framework "CoreMedia" -framework "CoreTelephony" -framework "CoreText" -framework "Crashlytics" -framework "Fabric" -framework "Foundation" -framework "ImageIO" -framework "MessageUI" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "UIKit" -framework "VideoToolbox"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
