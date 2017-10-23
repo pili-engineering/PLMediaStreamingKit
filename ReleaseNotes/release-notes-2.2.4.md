@@ -20,7 +20,6 @@ PLMediaStreamingKit 为 iOS 开发者提供直播推流 SDK。
 
 - 缺陷
 	- 修复 iOS 11 设备上预览启动慢的问题
-	- 修复 iOS 11 设备上非主线程访问 UI 属性的问题
-	- 修复 iPhone X 设备上的出现的 crash 问题
+	- 修复 iPhone X 设备上出现的 crash 问题
 
 
