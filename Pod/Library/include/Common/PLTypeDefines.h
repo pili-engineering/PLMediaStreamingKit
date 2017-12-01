@@ -89,7 +89,9 @@ typedef NS_ENUM(NSUInteger, PLStreamStartStateFeedback) {
     /// PLStreamStartStateStreamURLUnauthorized session 当前的 StreamURL 没有被授权
     PLStreamStartStateStreamURLUnauthorized,
     /// PLStreamStartStateSessionConnectStreamError session 建立 socket 连接错误
-    PLStreamStartStateSessionConnectStreamError
+    PLStreamStartStateSessionConnectStreamError,
+    /// PLStreamStartStateSessionURLInvalid session 当前传入的 pushURL 无效
+    PLStreamStartStateSessionPushURLInvalid
 };
 
 #pragma mark - Log

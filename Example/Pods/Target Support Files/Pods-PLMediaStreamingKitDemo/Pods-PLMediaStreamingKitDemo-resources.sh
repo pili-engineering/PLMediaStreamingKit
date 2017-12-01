@@ -18,12 +18,6 @@ case "${TARGETED_DEVICE_FAMILY}" in
   2)
     TARGET_DEVICE_ARGS="--target-device ipad"
     ;;
-  3)
-    TARGET_DEVICE_ARGS="--target-device tv"
-    ;;
-  4)
-    TARGET_DEVICE_ARGS="--target-device watch"
-    ;;
   *)
     TARGET_DEVICE_ARGS="--target-device mac"
     ;;
