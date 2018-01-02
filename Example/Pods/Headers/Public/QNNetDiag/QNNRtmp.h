@@ -1,1 +1,0 @@
-../../../QNNetDiag/NetDiag/QNNRtmp.h

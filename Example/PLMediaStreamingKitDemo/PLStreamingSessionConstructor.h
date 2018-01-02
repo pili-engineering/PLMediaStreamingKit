@@ -6,7 +6,7 @@
 //  Copyright © 2016年 pili-engineering. All rights reserved.
 //
 
-#import "PLMediaStreamingKit.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
 @class PLStreamingSessionConstructor;
 

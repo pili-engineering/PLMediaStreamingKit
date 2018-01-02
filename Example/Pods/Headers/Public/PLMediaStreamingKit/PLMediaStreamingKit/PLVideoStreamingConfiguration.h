@@ -1,0 +1,1 @@
+../../../../../../Pod/Library/PLMediaStreamingKit.framework/Headers/PLVideoStreamingConfiguration.h

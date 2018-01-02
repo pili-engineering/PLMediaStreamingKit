@@ -10,7 +10,7 @@
 #import "PLMainViewController.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "PLMediaStreamingKit.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
 @interface PLAppDelegate ()
 
@@ -24,6 +24,8 @@
     [Fabric with:@[[Crashlytics class]]];
 
     [PLStreamingEnv initEnv];
+    
+    NSLog(@"version is %@", [PLMediaStreamingSession versionInfo]);
     
     PLMainViewController *mainVC = [[PLMainViewController alloc] init];
 

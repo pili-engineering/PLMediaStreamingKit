@@ -11,8 +11,7 @@
 #import "PLStreamingSessionConstructor.h"
 #import "PLPermissionRequestor.h"
 #import "PLPanelDelegateGenerator.h"
-
-#import "PLMediaStreamingKit.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import <Masonry/Masonry.h>
 #import <BlocksKit/BlocksKit.h>
 #import <BlocksKit/BlocksKit+UIKit.h>
