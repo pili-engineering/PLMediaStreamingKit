@@ -17,44 +17,8 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Fabric (1.7.2)
-  - HappyDNS (0.3.10)
   - Masonry (1.1.0)
-  - pili-librtmp (1.0.7)
-  - PLMediaStreamingKit (2.2.5):
-    - HappyDNS (= 0.3.10)
-    - pili-librtmp (= 1.0.7)
-    - PLMediaStreamingKit/Common (= 2.2.5)
-    - PLMediaStreamingKit/PLCameraStreamingKit (= 2.2.5)
-    - PLMediaStreamingKit/PLMediaStreamingKit (= 2.2.5)
-    - PLMediaStreamingKit/PLRTCStreamingKit (= 2.2.5)
-    - PLMediaStreamingKit/PLStreamingKit (= 2.2.5)
-    - QNNetDiag (= 0.0.6)
-  - PLMediaStreamingKit/Common (2.2.5):
-    - HappyDNS (= 0.3.10)
-    - pili-librtmp (= 1.0.7)
-    - QNNetDiag (= 0.0.6)
-  - PLMediaStreamingKit/PLCameraStreamingKit (2.2.5):
-    - HappyDNS (= 0.3.10)
-    - pili-librtmp (= 1.0.7)
-    - PLMediaStreamingKit/PLStreamingKit
-    - QNNetDiag (= 0.0.6)
-  - PLMediaStreamingKit/PLMediaStreamingKit (2.2.5):
-    - HappyDNS (= 0.3.10)
-    - pili-librtmp (= 1.0.7)
-    - PLMediaStreamingKit/PLCameraStreamingKit
-    - PLMediaStreamingKit/PLRTCStreamingKit
-    - QNNetDiag (= 0.0.6)
-  - PLMediaStreamingKit/PLRTCStreamingKit (2.2.5):
-    - HappyDNS (= 0.3.10)
-    - pili-librtmp (= 1.0.7)
-    - PLMediaStreamingKit/PLStreamingKit
-    - QNNetDiag (= 0.0.6)
-  - PLMediaStreamingKit/PLStreamingKit (2.2.5):
-    - HappyDNS (= 0.3.10)
-    - pili-librtmp (= 1.0.7)
-    - PLMediaStreamingKit/Common
-    - QNNetDiag (= 0.0.6)
-  - QNNetDiag (0.0.6)
+  - PLMediaStreamingKit (2.3.0)
   - WeiboSDK (3.1.3)
 
 DEPENDENCIES:
@@ -67,19 +31,16 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   PLMediaStreamingKit:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
-  HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  pili-librtmp: e8a06a45b0a1a166c48ae6dc718171c0963f32ea
-  PLMediaStreamingKit: b272e6e4f873b31ac5b32771d4cffe48f6133fce
-  QNNetDiag: 6f7bbafa34c1b020e51d440f25044fe5ee10145d
+  PLMediaStreamingKit: 24043a10cc4b0fc98817307c68a8471da90a3f6e
   WeiboSDK: acb067053668102cf07d01aa7604350162c2e466
 
-PODFILE CHECKSUM: 14de6849e20310a5c3ccffc657a1f50423c45303
+PODFILE CHECKSUM: 6f679f7dc7004741cffdbbe7fd79b0f13ed22c4a
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.3.1

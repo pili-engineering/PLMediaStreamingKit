@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PLMediaStreamingKit.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
 @class PLPanelDelegateGenerator;
 

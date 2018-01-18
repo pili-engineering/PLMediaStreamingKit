@@ -1,0 +1,6 @@
+framework module HappyDNS {
+  umbrella header "HappyDNS.h"
+
+  export *
+  module * { export * }
+}

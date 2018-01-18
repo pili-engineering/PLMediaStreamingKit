@@ -7,8 +7,7 @@
 //
 
 #import "PLPermissionRequestor.h"
-
-#import "PLMediaStreamingKit.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
 @implementation PLPermissionRequestor
 
@@ -24,10 +23,10 @@
 
 - (void)checkAndRequestPermission
 {
-    PLAuthorizationStatus status = [PLCameraStreamingSession cameraAuthorizationStatus];
-    
+    PLAuthorizationStatus status = [PLMediaStreamingSession cameraAuthorizationStatus];
+
     if (PLAuthorizationStatusNotDetermined == status) {
-        [PLCameraStreamingSession requestCameraAccessWithCompletionHandler:^(BOOL granted) {
+        [PLMediaStreamingSession requestCameraAccessWithCompletionHandler:^(BOOL granted) {
             granted ? _permissionGranted() : _noPermission();
         }];
     } else if (PLAuthorizationStatusAuthorized == status) {
