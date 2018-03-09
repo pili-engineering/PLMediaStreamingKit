@@ -69,6 +69,16 @@ pod 'PLMediaStreamingKit'
 end
 ```
 
+- 默认为真机版
+- 若需要使用模拟器 + 真机，则改用如下配置
+
+```
+pod "PLMediaStreamingKit", :podspec => 'https://raw.githubusercontent.com/pili-engineering/PLMediaStreamingKit/master/PLMediaStreamingKit-Universal.podspec'
+```
+
+**注意：鉴于目前 iOS 上架，只支持动态库真机，请在 App 上架前，更换至真机版本**
+
+
 然后，运行如下的命令：
 
 ```bash
