@@ -144,6 +144,7 @@ typedef NS_ENUM(NSUInteger, PLStreamLogLevel){
     @constant   PLStreamErrorTLSConnectFailed   TLS 连接失败
     @constant   PLStreamErrorNoSSLOrTLSSupport  没有 SSL 或者 TLS 支持
     @constant   PLStreamErrorDNSResolveFailed   DNS 解析失败
+    @constant   PLStreamErrorRTMPPublishStreamFailed   rtmp 发布失败
  
     @since      v1.0.0
  */
@@ -166,6 +167,7 @@ typedef enum {
     PLStreamErrorSocketClosedByPeer = -1013,
     PLStreamErrorRTMPConnectStreamFailed = -1014,
     PLStreamErrorSocketTimeout = -1015,
+    PLStreamErrorRTMPPublishStreamFailed = -1016,
     
     // SSL errors
     PLStreamErrorTLSConnectFailed = -1200,
