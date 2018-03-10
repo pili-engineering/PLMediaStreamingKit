@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.subspec "universal" do |ss1|
-    s.vendored_frameworks = ['Pod/Library-Universal/PLMediaStreamingKit.framework', 'Pod/Library-Universal/HappyDNS.framework']
+    ss1.vendored_frameworks = ['Pod/Library-Universal/PLMediaStreamingKit.framework', 'Pod/Library-Universal/HappyDNS.framework']
   end
  
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']
