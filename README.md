@@ -70,7 +70,7 @@ end
 ```
 
 - 默认为真机版
-- 若需要使用模拟器 + 真机，则改用如下配置
+- 若需要使用模拟器 + 真机版，则改用如下配置
 
 ```
 pod "PLMediaStreamingKit", :podspec => 'https://raw.githubusercontent.com/pili-engineering/PLMediaStreamingKit/master/PLMediaStreamingKit-Universal.podspec'
