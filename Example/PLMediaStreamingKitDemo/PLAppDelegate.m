@@ -7,7 +7,7 @@
 //
 
 #import "PLAppDelegate.h"
-#import "PLMainViewController.h"
+#import "PLViewController.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
@@ -26,11 +26,9 @@
     [PLStreamingEnv initEnv];
     
     NSLog(@"version is %@", [PLMediaStreamingSession versionInfo]);
-    
-    PLMainViewController *mainVC = [[PLMainViewController alloc] init];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = mainVC;
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[PLViewController alloc]init]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController.view.frame = self.window.bounds;
     self.window.rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |

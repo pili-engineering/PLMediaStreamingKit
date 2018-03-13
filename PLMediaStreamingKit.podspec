@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "PLMediaStreamingKit"
-  s.version          = "2.3.0"
+  s.version          = "2.3.1"
   s.summary          = "Pili iOS media streaming framework via RTMP."
   s.homepage         = "https://github.com/pili-engineering/PLMediaStreamingKit"
   s.license          = 'Apache License, Version 2.0'
@@ -19,9 +19,12 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = '8.0'
 
-  s.requires_arc = true  
+  s.requires_arc = true
+
+  s.subspec "iphoneos" do |ss1|
+    ss1.vendored_frameworks = ['Pod/Library/PLMediaStreamingKit.framework', 'Pod/Library/HappyDNS.framework']
+  end
  
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']
   s.libraries = 'z', 'c++', 'icucore', 'sqlite3'
-  s.vendored_frameworks = ['Pod/Library/PLMediaStreamingKit.framework', 'Pod/Library/HappyDNS.framework']
 end
