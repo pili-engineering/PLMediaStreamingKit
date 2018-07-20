@@ -14,13 +14,13 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Crashlytics (3.10.1):
-    - Fabric (~> 1.7.5)
-  - Fabric (1.7.5)
+  - Crashlytics (3.10.5):
+    - Fabric (~> 1.7.9)
+  - Fabric (1.7.9)
   - Masonry (1.1.0)
-  - PLMediaStreamingKit (2.3.1):
-    - PLMediaStreamingKit/iphoneos (= 2.3.1)
-  - PLMediaStreamingKit/iphoneos (2.3.1)
+  - PLMediaStreamingKit (2.3.2):
+    - PLMediaStreamingKit/iphoneos (= 2.3.2)
+  - PLMediaStreamingKit/iphoneos (2.3.2)
   - WeiboSDK (3.1.3)
 
 DEPENDENCIES:
@@ -31,18 +31,26 @@ DEPENDENCIES:
   - PLMediaStreamingKit (from `../`)
   - WeiboSDK
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - BlocksKit
+    - Crashlytics
+    - Fabric
+    - Masonry
+    - WeiboSDK
+
 EXTERNAL SOURCES:
   PLMediaStreamingKit:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
-  Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
+  Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
+  Fabric: a2917d3895e4c1569b9c3170de7320ea1b1e6661
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  PLMediaStreamingKit: 811e8428bc5dfa516a85dbd4b6d76d0d39a090da
+  PLMediaStreamingKit: 0b13b3e41a201ed9e25d2eb9ec88d6787fd8ef2d
   WeiboSDK: acb067053668102cf07d01aa7604350162c2e466
 
 PODFILE CHECKSUM: 6f679f7dc7004741cffdbbe7fd79b0f13ed22c4a
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

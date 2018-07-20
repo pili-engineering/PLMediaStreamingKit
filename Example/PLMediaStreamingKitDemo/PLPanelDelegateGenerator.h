@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
 @class PLPanelDelegateGenerator;
@@ -26,6 +27,7 @@
 
 @property (nonatomic, weak) id<PLPanelDelegateGeneratorDelegate> delegate;
 @property (nonatomic, assign) BOOL needProcessVideo;
+@property (nonatomic, assign) BOOL isDynamicWatermark;
 
 - (instancetype)initWithMediaStreamingSession:(PLMediaStreamingSession *)streamingSession;
 - (void)generate;

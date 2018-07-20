@@ -8,13 +8,34 @@
 
 #import "PLModelPanelGenerator.h"
 #import "PLStreamingKitDemoUtils.h"
+
+#import "PLPasterView.h"
+#import "PLPasterScrollView.h"
+
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
+
+@interface PLModelPanelGenerator ()
+<
+PLPasterViewDelegate,
+PLPasterScrollViewDelegate,
+PLAudioPlayerDelegate
+>
+
+@end
 
 @implementation PLModelPanelGenerator
 {
     PLMediaStreamingSession *_streamingSession;
     PLPanelDelegateGenerator *_generator;
     CGPoint _wartmarkOrigin;
+    UIImage *_pushImage1, *_pushImage2;
+    
+    PLPasterScrollView *_pasterScrollView;
+    NSMutableArray *_imageArray;
+    PLPasterView *_pasterView;
+    
+    PLAttributeModel *_sliderAttributeModel;
+    UISlider *_seekSlider;
 }
 
 - (instancetype)initWithMediaStreamingSession:(PLMediaStreamingSession *)streamingSession panelDelegateGenerator:(PLPanelDelegateGenerator *)generator
@@ -23,6 +44,9 @@
         _streamingSession = streamingSession;
         _wartmarkOrigin = CGPointMake(100, 300);
         _generator = generator;
+        
+        _pushImage1 = [UIImage imageNamed:@"pushImage_720x1280_1"];
+        _pushImage2 = [UIImage imageNamed:@"pushImage_720x1280_2"];
     }
     return self;
 }
@@ -146,8 +170,17 @@
     PLTitleValueConf *channelsPerFrameConf = [PLTitleValueConf confWithTitleFormat:@"%@" withValues:@[@1, @2]];
 
     PLTitleValueConf *audioBitRateConf = [PLTitleValueConf confWithTitleFormat:@"%@Kbps" withValues:@[@64, @96, @128]];
-    PLTitleValueConf *encodedNumberOfChannelsConf = [PLTitleValueConf confWithTitleFormat:@"%@" withValues:@[@1, @2]];
+    NSArray *audioBitRateArray = @[@(PLStreamingAudioBitRate_64Kbps), @(PLStreamingAudioBitRate_96Kbps), @(PLStreamingAudioBitRate_128Kbps)];
     
+    PLTitleValueConf *encodedNumberOfChannelsConf = [PLTitleValueConf confWithTitleFormat:@"%@" withValues:@[@1, @2]];
+    PLTitleValueConf *audioEncoderTypeConf = [PLTitleValueConf confWithTitles:@[
+        @"aac", @"fdk-aac", @"fdk-he-aac"
+    ] withValues:@[
+        @(PLAACEncoderType_iOS_AAC),
+        @(PLAACEncoderType_fdk_AAC_LC),
+        @(PLAACEncoderType_fdk_AAC__HE_BSR),
+    ]];
+
     model.attributeModels = @[
                               
         [PLAttributeModel titleAttributeModelWithTitle:@">> PLVideoCaptureConfiguration"],
@@ -244,16 +277,25 @@
                                         videoStreamingConfigutationToApply = [wsession.videoStreamingConfiguration copy];
                                         videoStreamingConfigutationToApply.averageVideoBitRate = [averageVideoBitRateConf unsignedIntegerAt:selectedIndex] * 1024;
         }],
-        
-        
-        [PLAttributeModel titleAttributeModelWithTitle:@">> PLAudioCaptureConfiguration"],
-        [PLAttributeModel segmentAttributeModelWithTitle:@"channelsPerFrame"
-                                           withSegements:channelsPerFrameConf.titles
-                                        withDefaultIndex:0
+        [PLAttributeModel titleAttributeModelWithTitle:@"VideoToolbox Encoder"],
+        [PLAttributeModel segmentAttributeModelWithTitle:@"enable"
+                                           withSegements:@[@"YES", @"NO"]
+                                        withDefaultIndex:1
                                     withSelectedCallback:^(NSInteger selectedIndex) {
-                                        audioCaptureConfigutationToApply = [wsession.audioCaptureConfiguration copy];
-                                        audioCaptureConfigutationToApply.channelsPerFrame = [channelsPerFrameConf unsignedIntegerAt:selectedIndex];
+                                        BOOL useVideoToolbox = (selectedIndex == 0);
+                                        PLH264EncoderType videoEncoderType = useVideoToolbox ? PLH264EncoderType_VideoToolbox : PLH264EncoderType_AVFoundation;
+                                        videoStreamingConfigutationToApply = [wsession.videoStreamingConfiguration copy];
+                                        videoStreamingConfigutationToApply.videoEncoderType = videoEncoderType;
                                     }],
+        
+        //该配置项更改后并未实际设置到 session 中，故先注释掉
+//        [PLAttributeModel titleAttributeModelWithTitle:@">> PLAudioCaptureConfiguration"],
+//        [PLAttributeModel segmentAttributeModelWithTitle:@"channelsPerFrame"
+//                                           withSegements:channelsPerFrameConf.titles
+//                                        withDefaultIndex:0
+//                                    withSelectedCallback:^(NSInteger selectedIndex) {
+//                                        audioCaptureConfigutationToApply.channelsPerFrame = [channelsPerFrameConf unsignedIntegerAt:selectedIndex];
+//                                    }],
         
         [PLAttributeModel titleAttributeModelWithTitle:@">> PLAudioStreamingConfiguration"],
         [PLAttributeModel segmentAttributeModelWithTitle:@"audioBitRate"
@@ -261,7 +303,7 @@
                                         withDefaultIndex:1
                                     withSelectedCallback:^(NSInteger selectedIndex) {
                                         audioStreamingConfigutationToApply = [wsession.audioStreamingConfiguration copy];
-                                        audioStreamingConfigutationToApply.audioBitRate = [audioBitRateConf intAt:selectedIndex];
+                                        audioStreamingConfigutationToApply.audioBitRate = [(NSNumber *)(audioBitRateArray[selectedIndex]) intValue];
                                     }],
         [PLAttributeModel segmentAttributeModelWithTitle:@"encodedNumberOfChannels"
                                            withSegements:encodedNumberOfChannelsConf.titles
@@ -270,15 +312,29 @@
                                         audioStreamingConfigutationToApply = [wsession.audioStreamingConfiguration copy];
                                         audioStreamingConfigutationToApply.encodedNumberOfChannels = [encodedNumberOfChannelsConf unsignedIntAt:selectedIndex];
                                     }],
+        [PLAttributeModel titleAttributeModelWithTitle:@"audioEncoderType"],
+        [PLAttributeModel segmentAttributeModelWithTitle:@""
+                                           withSegements:audioEncoderTypeConf.titles
+                                        withDefaultIndex:0
+                                    withSelectedCallback:^(NSInteger selectedIndex) {
+                                        audioStreamingConfigutationToApply = [wsession.audioStreamingConfiguration copy];
+                                        audioStreamingConfigutationToApply.audioEncoderType = [audioEncoderTypeConf unsignedIntAt:selectedIndex];
+                                    }],
+
             ];
     [model setOnAnyAttributeValueChanged:^(PLAttributeModel *attributeModel) {
         [wsession reloadVideoStreamingConfiguration:videoStreamingConfigutationToApply];
+        id rtcStreamingSession = [wsession performSelector:@selector(streamingSession)];
+        [rtcStreamingSession performSelector:@selector(reloadAudioStreamingConfiguration:)
+                                  withObject:audioStreamingConfigutationToApply];
     }];
     return model;
 }
 
 - (PLPanelModel *)_generateStreamingSessionOperation
 {
+    __weak typeof(self)weakSelf = self;
+
     PLPanelModel *model = [[PLPanelModel alloc] initWithTitle:@"Session"];
     __weak PLMediaStreamingSession *wsession = _streamingSession;
     
@@ -323,16 +379,22 @@
         @(400*1000),
         @(600*1000),
         @(800*1000),
-        @1000]];
+        @(1000*1000)]];
+    
+    PLTitleValueConf *networkTransitionConf = [PLTitleValueConf confWithTitles:@[
+                                                                                 @"Allow",
+                                                                                 @"Disallow"
+                                                                                 ]
+                                                                    withValues:@[@(YES), @(NO)]];
 
     PLTitleValueConf *thresholdConf = [PLTitleValueConf confWithValues:@[@0, @0.25, @0.5, @0.75, @1]];
     PLTitleValueConf *maxCountConf = [PLTitleValueConf confWithValues:@[@0,  @150, @300, @450, @600]];
     
     PLTitleValueConf *musicNameConf = [PLTitleValueConf confWithTitles:@[@"M1", @"M2",
                                                                          @"M3", @"M4", @"M5"]
-                                                            withValues:@[@"TestMusic1.mp3",
+                                                            withValues:@[@"TestMusic1.m4a",
                                                                          @"TestMusic2.wav",
-                                                                         @"TestMusic3.wav",
+                                                                         @"TestMusic3.mp3",
                                                                          @"TestMusic4.mp3",
                                                                          @"TestMusic5.mp3",]];
     
@@ -366,6 +428,24 @@
                 [wsession enableAdaptiveBitrateControlWithMinVideoBitRate:[minVideoBitRateConf unsignedIntegerAt:selectedIndex]];
             }
         }],
+        [PLAttributeModel spinnerAttributeModelWithTitle:@"reconnect WiFi->4G" withElements:networkTransitionConf.titles withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
+            BOOL allowTransitionToWWAN = [networkTransitionConf boolAt:selectedIndex];
+            wsession.connectionChangeActionCallback = ^(PLNetworkStateTransition transition) {
+                switch (transition) {
+                    case PLNetworkStateTransitionWiFiToWWAN:
+                        NSLog(@"%@允许WiFi->4G重启推流", allowTransitionToWWAN ? @"" : @"不");
+                        return allowTransitionToWWAN;
+                    
+                    case PLNetworkStateTransitionWWANToWiFi:
+                        NSLog(@"允许4G->WiFi重启推流");
+                        return YES;
+                        
+                    default:
+                        break;
+                }
+                return YES;
+            };
+        }],
         [PLAttributeModel segmentAttributeModelWithTitle:@"dynamicFrameEnable" withSegements:@[@"YES", @"NO"] withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.dynamicFrameEnable = !selectedIndex;
         }],
@@ -375,13 +455,17 @@
         [PLAttributeModel segmentAttributeModelWithTitle:@"monitorNetworkStateEnable" withSegements:@[@"YES", @"NO"] withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.monitorNetworkStateEnable = !selectedIndex;
         }],
+
+        [PLAttributeModel segmentAttributeModelWithTitle:@"quicEnable" withSegements:@[@"YES", @"NO"] withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
+            wsession.quicEnable = !selectedIndex;
+        }],
         
         [PLAttributeModel titleAttributeModelWithTitle:@"Buffer"],
         [PLAttributeModel segmentAttributeModelWithTitle:@"threshold" withSegements:thresholdConf.titles withDefaultIndex:2 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.threshold = [thresholdConf doubleAt:selectedIndex];
         }],
         [PLAttributeModel segmentAttributeModelWithTitle:@"maxCount" withSegements:maxCountConf.titles withDefaultIndex:2 withSelectedCallback:^(NSInteger selectedIndex) {
-            wsession.maxCount = [thresholdConf unsignedIntegerAt:selectedIndex];
+            wsession.maxCount = [maxCountConf unsignedIntegerAt:selectedIndex];
         }],
         [PLAttributeModel segmentAttributeModelWithTitle:@"idleTimerDisable" withSegements:@[@"YES", @"NO"] withDefaultIndex:0 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.idleTimerDisable = (selectedIndex == 0);
@@ -390,11 +474,18 @@
         [PLAttributeModel segmentAttributeModelWithTitle:@"muted" withSegements:@[@"YES", @"NO"] withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.muted = (selectedIndex == 0);
         }],
+//        [PLAttributeModel segmentAttributeModelWithTitle:@"Denoise" withSegements:@[@"ON", @"OFF"] withDefaultIndex:0 withSelectedCallback:^(NSInteger selectedIndex) {
+//            wsession.denoiseOn = (selectedIndex == 0);
+//        }],
         [PLAttributeModel segmentAttributeModelWithTitle:@"playback" withSegements:@[@"YES", @"NO"] withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.playback = (selectedIndex == 0);
         }],
         [PLAttributeModel segmentAttributeModelWithTitle:@"inputGain" withSegements:inputGainConf.titles withDefaultIndex:2 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.inputGain = [inputGainConf doubleAt:selectedIndex];
+        }],
+        // 是否允许在后台与其他 App 的音频混音而不被打断
+        [PLAttributeModel segmentAttributeModelWithTitle:@"allowAudioMixWithOthers" withSegements:@[@"YES", @"NO"] withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
+            wsession.allowAudioMixWithOthers = (selectedIndex == 0);
         }],
         
         [PLAttributeModel titleAttributeModelWithTitle:@"AudioEffect"],
@@ -424,9 +515,10 @@
         [PLAttributeModel titleAttributeModelWithTitle:@"PLAudioPlayer"],
         [PLAttributeModel segmentAttributeModelWithTitle:@"open player" withSegements:@[@"YES", @"NO"] withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
             if (selectedIndex == 0) {
-                audioPath = audioPath ?: [[NSBundle mainBundle] pathForResource:@"TestMusic1" ofType:@"mp3"];
+                audioPath = audioPath ?: [[NSBundle mainBundle] pathForResource:@"TestMusic1" ofType:@"m4a"];
                 audioPlayer = [wsession audioPlayerWithFilePath:audioPath];
                 audioPlayer.volume = audioVolume;
+                audioPlayer.delegate = weakSelf;
                 [audioPlayer play];
             } else {
                 [wsession closeCurrentAudio];
@@ -448,6 +540,11 @@
             audioPath = [[NSBundle mainBundle] pathForResource:arr[0] ofType:arr[1]];
             if (audioPlayer) {
                 audioPlayer.audioFilePath = audioPath;
+                
+                // 如果上一个文件是暂停状态（播放中暂停、播放结束），那么当前文件就需要手动启动播放。
+                if ( !audioPlayer.isRunning ) {
+                    [audioPlayer play];
+                }
             }
         }],
         [PLAttributeModel sliderAttributeModelWithTitle:@"volume" withDefaultValue:0.1 withValueChangedCallback:^(float value) {
@@ -456,6 +553,7 @@
                 audioPlayer.volume = value;
             }
         }],
+        _sliderAttributeModel =
         [PLAttributeModel sliderAttributeModelWithTitle:@"seek" withDefaultValue:0 withValueChangedCallback:^(float value) {
             if (audioPlayer) {
                 audioPlayer.audioDidPlayedRate = value;
@@ -478,12 +576,45 @@
         [PLAttributeModel segmentAttributeModelWithTitle:@"smoothAutoFocusEnabled" withSegements:@[@"YES", @"NO"] withDefaultIndex:0 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.smoothAutoFocusEnabled = (selectedIndex == 0);
         }],
-        
+        [PLAttributeModel titleAttributeModelWithTitle:@"PushImage"],
+        [PLAttributeModel segmentAttributeModelWithTitle:@"image" withSegements:@[@"image1", @"image2", @"noImage"] withDefaultIndex:2 withSelectedCallback:^(NSInteger selectedIndex) {
+            switch (selectedIndex) {
+                case 0:
+                    [_streamingSession setPushImage:_pushImage1];
+                    break;
+                    
+                case 1:
+                    [_streamingSession setPushImage:_pushImage2];
+                    break;
+                    
+                case 2:
+                    [_streamingSession setPushImage:nil];
+                    break;
+                default:
+                    [_streamingSession setPushImage:nil];
+                    break;
+            }
+        }],
         [PLAttributeModel titleAttributeModelWithTitle:@"Application"],
         [PLAttributeModel segmentAttributeModelWithTitle:@"idleTimerDisable" withSegements:@[@"YES", @"NO"] withDefaultIndex:0 withSelectedCallback:^(NSInteger selectedIndex) {
             wsession.idleTimerDisable = (selectedIndex == 0);
         }],
+        [PLAttributeModel titleAttributeModelWithTitle:@"StickerImage"],
+        [PLAttributeModel segmentAttributeModelWithTitle:@"" withSegements:@[@"YES", @"NO"] withDefaultIndex:1 withSelectedCallback:^(NSInteger selectedIndex) {
+            if (selectedIndex) {
+                [self removeStickerView];
+            } else {
+                [self addStickerView];
+            }
+        }],
     ];
+    
+    for (UIView *view in _sliderAttributeModel.view.subviews) {
+        if ([view isKindOfClass:[UISlider class]]) {
+            _seekSlider = (UISlider *)view;
+        }
+    }
+
     return model;
 }
 
@@ -504,8 +635,9 @@
     
     model.attributeModels = @[
         [PLAttributeModel titleAttributeModelWithTitle:@"waterMark"],
-        [PLAttributeModel segmentAttributeModelWithTitle:@"" withSegements:@[@"七牛", @"小奇1", @"小奇2", @"清空"] withDefaultIndex:3 withSelectedCallback:^(NSInteger selectedIndex) {
+        [PLAttributeModel segmentAttributeModelWithTitle:@"" withSegements:@[@"七牛", @"小奇1", @"小奇2", @"动态", @"alpha", @"清空"] withDefaultIndex:5 withSelectedCallback:^(NSInteger selectedIndex) {
             UIImage *image = nil;
+            _generator.isDynamicWatermark = NO;
             switch (selectedIndex) {
                 case 0:
                     image = [UIImage imageNamed:@"qiniu.png"];
@@ -516,14 +648,26 @@
                 case 2:
                     image = [UIImage imageNamed:@"xiaoqi2.png"];
                     break;
+                case 3:
+                     // isDynamicWatermark 设置为 YES 时，可实现实时更换水印（动态水印），水印的更换逻辑添加在视频数据回调
+                     // - (CVPixelBufferRef)mediaStreamingSession:(PLMediaStreamingSession *)session cameraSourceDidGetPixelBuffer:(CVPixelBufferRef)pixelBuffer
+                    // 具体处理逻辑见 PLPanelDelegateGenerator.m 第97行
+                    _generator.isDynamicWatermark = YES;
+                    break;
+                case 4:
+                    image = [UIImage imageNamed:@"alpha.png"];
+                    break;
                 default:
                     break;
             }
             __strong PLMediaStreamingSession *strongSession = wsession;
-            if (image) {
-                [strongSession setWaterMarkWithImage:image position:CGPointMake(100, 100)];
-            } else {
-                [strongSession clearWaterMark];
+            // isDynamicWatermark 设置为 NO 时，静态水印的处理逻辑
+            if (selectedIndex != 3) {
+                if (image) {
+                    [strongSession setWaterMarkWithImage:image position:CGPointMake(100, 100)];
+                } else {
+                    [strongSession clearWaterMark];
+                }
             }
         }],
         
@@ -561,6 +705,104 @@
         }],
     ];
     return model;
+}
+
+- (void)addStickerView {
+    if (!_imageArray) {
+        _imageArray = [NSMutableArray arrayWithCapacity:0];
+        for (int i = 1; i <= 9; i++) {
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"00%d", i]];
+            [_imageArray addObject:image];
+        }
+    }
+    
+    if (!_pasterScrollView) {
+        CGFloat screen_W = [UIScreen mainScreen].bounds.size.width;
+        _pasterScrollView = [[PLPasterScrollView alloc] initScrollViewWithPasterImageArray:_imageArray];
+        _pasterScrollView.frame = CGRectMake(0, 0 , screen_W, 120);
+        _pasterScrollView.backgroundColor = [UIColor lightGrayColor];
+        _pasterScrollView.showsHorizontalScrollIndicator = YES;
+        _pasterScrollView.showsVerticalScrollIndicator = NO;
+        _pasterScrollView.bounces = YES;
+        _pasterScrollView.contentSize = CGSizeMake(_pasterScrollView.pasterImage_W_H * _pasterScrollView.pasterImageArray.count + 15 * (_pasterScrollView.pasterImageArray.count + 1), 0);
+        _pasterScrollView.pasterDelegate = self;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _streamingSession.overlaySuperView.frame = _streamingSession.previewView.bounds;
+        [_streamingSession.previewView addSubview:_streamingSession.overlaySuperView];
+        [_streamingSession.previewView addSubview:_pasterScrollView];
+    });
+}
+
+- (void)removeStickerView {
+    [_streamingSession.overlaySuperView removeFromSuperview];
+    [_pasterScrollView removeFromSuperview];
+    
+    [_streamingSession removeAllOverlayViews];
+}
+
+#pragma mark - PLPasterScrollViewDelegate
+- (void)pasterScrollView:(PLPasterScrollView *)pasterScrollView pasterTag:(NSInteger)pasterTag pasterImage:(UIImage *)pasterImage {
+    PLPasterView *pasterView = [[PLPasterView alloc] initWithFrame:CGRectMake(0, 0, 120, 120)];
+    pasterView.center = CGPointMake(_streamingSession.overlaySuperView.frame.size.width / 2, _streamingSession.overlaySuperView.frame.size.height / 2);
+    pasterView.pasterImage = pasterImage;
+    pasterView.delegate = self;
+    
+    _pasterView = pasterView;
+    
+    [_streamingSession addOverlayView:_pasterView];
+}
+
+#pragma mark - PLPasterViewDelegate
+- (void)deletePasterView:(PLPasterView *)PasterView {
+    _pasterScrollView.defaultButton.selected = NO;
+    _pasterScrollView.defaultButton.layer.borderColor = [UIColor clearColor].CGColor;
+    _pasterScrollView.defaultButton.layer.borderWidth = 0.1;
+    
+    [_streamingSession removeOverlayView:_pasterView];
+    
+    _pasterView = nil;    
+}
+
+- (void)endDragPasterView:(PLPasterView *)PasterView {
+    [_streamingSession refreshOverlayView:_pasterView];
+}
+
+#pragma mark - PLAudioPlayerDelegate
+- (void)audioPlayer:(PLAudioPlayer *)audioPlayer audioDidPlayedRateChanged:(double)audioDidPlayedRate {
+    NSLog(@"audioPlayer: audioDidPlayedRateChanged: %f", audioDidPlayedRate);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // 实时更新背景音乐的播放进度条，范围为 0～1
+        _seekSlider.value = audioDidPlayedRate;
+    });
+}
+
+- (void)audioPlayer:(PLAudioPlayer *)audioPlayer findFileError:(PLAudioPlayerFileError)fileError {
+    NSLog(@"audioPlayer: findFileError: %d", fileError);
+}
+
+- (BOOL)didAudioFilePlayingFinishedAndShouldAudioPlayerPlayAgain:(PLAudioPlayer *)audioPlayer {
+    NSLog(@"audioPlayer: didAudioFilePlayingFinishedAndShouldAudioPlayerPlayAgain");
+#if 1
+    // 场景1: 播放结束时，那就停止了
+    return NO;
+#elif 0
+    // 场景2: 播放结束时，重新播放，即 loop 播放
+    return YES;
+#else
+    // 场景3:
+    // 替换文件，播放新的文件
+    NSString *audioPath = [[NSBundle mainBundle] pathForResource:@"TestMusic2" ofType:@"wav"];
+    audioPlayer.audioFilePath = audioPath;
+    // loop 播放
+    return YES;
+#endif
+}
+
+- (void)dealloc {
+
 }
 
 @end

@@ -24,6 +24,7 @@
 - (NSNumber *)numberAt:(NSUInteger)index;
 - (int)intAt:(NSUInteger)index;
 - (unsigned int)unsignedIntAt:(NSUInteger)index;
+- (BOOL)boolAt:(NSUInteger)index;
 - (double)doubleAt:(NSUInteger)index;
 - (NSInteger)integerAt:(NSUInteger)index;
 - (NSUInteger)unsignedIntegerAt:(NSUInteger)index;
