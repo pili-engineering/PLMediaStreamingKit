@@ -1,4 +1,4 @@
-# PLMediaStreamingKit Release Notes for 2.3.1
+# PLMediaStreamingKit Release Notes for 2.3.2
 
 ## 内容
 
@@ -18,7 +18,5 @@ PLMediaStreamingKit 为 iOS 开发者提供直播推流 SDK。
 
 ## 记录
 - 功能
-	- 添加 URL 签名超时推流失败回调
-	- 支持 SDK 真机和模拟器版本共存
-- 缺陷
-	- 修复非 1935 端口的地址不能推流问题
+	- 重构了音频采集模块，包含音频数据采集、背景音乐播放、混音、音效、返听。重构后，插入耳机与否，背景音乐的声音都会从扬声器/耳机发出。
+	- 支持在推流过程中往视频画面上添加多个静态图片和文字
