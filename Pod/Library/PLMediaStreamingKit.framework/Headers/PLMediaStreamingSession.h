@@ -63,7 +63,7 @@
 /// @abstract userID 离开房间
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session didLeaveConferenceOfUserID:(NSString *)userID;
 
-/// @abstract 连麦时，SDK 内部不渲染连麦者（以 userID 标识）的视频，而由该接口返回相应的视频数据
+/// @abstract 连麦时，SDK 内部渲染连麦者（以 userID 标识）的视频数据
 /// @ warning pixelBuffer必须在用完之后手动释放，否则会引起内存泄漏
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session  didGetPixelBuffer:(CVPixelBufferRef)pixelBuffer ofUserID:(NSString *)userID;
 
@@ -457,6 +457,22 @@
  */
 @interface PLMediaStreamingSession (CameraSource)
 
+/*!
+ @property   captureSession
+ @abstract   视频采集 session，只读变量，给有特殊需求的开发者使用，最好不要修改
+ 
+ @since      v2.3.2
+ */
+@property (nonatomic, readonly) AVCaptureSession * _Nullable captureSession;
+
+/*!
+ @property   videoCaptureDeviceInput
+ @abstract   视频采集输入源，只读变量，给有特殊需求的开发者使用，最好不要修改
+ 
+ @since      v2.3.2
+ */
+@property (nonatomic, readonly) AVCaptureDeviceInput * _Nullable videoCaptureDeviceInput;
+
 /// default as AVCaptureDevicePositionBack.
 @property (nonatomic, assign) AVCaptureDevicePosition   captureDevicePosition;
 
@@ -628,6 +644,58 @@
  *  @since v2.2.1
  */
 - (void)setPushImage:(nullable UIImage *)image;
+
+@end
+
+#pragma mark - Category (OverlayView)
+
+/*!
+ * @category PLMediaStreamingSession(OverlayView)
+ *
+ * @discussion 与贴纸、文字相关的接口
+ */
+@interface PLMediaStreamingSession (OverlayView)
+
+/*!
+ * @brief 贴纸、文字的父视图
+ 
+ *  @since v2.3.2
+ */
+@property (nonatomic, strong, readonly) UIView * _Nonnull overlaySuperView;
+
+/**
+ * @brief 将 view 添加到 overlaySuperView 上。
+ *
+ * @param view 要添加的视图
+ 
+ *  @since v2.3.2
+ */
+- (void)addOverlayView:(UIView * _Nullable )view;
+
+/**
+ * @brief 刷新 overlaySuperView 上的 view 视图。
+ *
+ * @param view 要刷新的视图
+ 
+ *  @since v2.3.2
+ */
+- (void)refreshOverlayView:(UIView * _Nullable)view;
+
+/**
+ * @brief 将 view 从 overlaySuperView 上移除。
+ *
+ * @param view 要移除的视图
+ 
+ *  @since v2.3.2
+ */
+- (void)removeOverlayView:(UIView * _Nullable)view;
+
+/**
+ * @brief 将 overlaySuperView 上的所有子视图 view 移除。
+ 
+ *  @since v2.3.2
+ */
+- (void)removeAllOverlayViews;
 
 @end
 

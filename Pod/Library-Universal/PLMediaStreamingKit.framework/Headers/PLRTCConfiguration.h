@@ -21,11 +21,6 @@ NSCopying
 @property (nonatomic, assign) PLRTCConferenceType conferenceType;
 
 /**
- @brief 设置是否在连麦状态下外部渲染画面，默认为NO
- */
-@property (nonatomic, assign, getter=isRtcExternalRendering) BOOL rtcExternalRendering;
-
-/**
  @brief 设置连麦合流的画面尺寸，若未设置，则合流的画面尺寸由 videoSize 决定；
  默认为：CGSizeZero，即连麦合流的画面尺寸等于 videoSize；
  */
