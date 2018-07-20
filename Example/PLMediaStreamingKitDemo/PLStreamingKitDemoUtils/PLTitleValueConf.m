@@ -64,6 +64,11 @@
     return [((NSNumber *)_values[index]) unsignedIntValue];
 }
 
+- (BOOL)boolAt:(NSUInteger)index
+{
+    return [((NSNumber *)_values[index]) boolValue];
+}
+
 - (double)doubleAt:(NSUInteger)index
 {
     return [((NSNumber *)_values[index]) doubleValue];

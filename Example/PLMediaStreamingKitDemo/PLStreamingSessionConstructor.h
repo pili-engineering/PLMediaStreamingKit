@@ -8,19 +8,9 @@
 
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
-@class PLStreamingSessionConstructor;
-
-@protocol PLStreamingSessionConstructorDelegate <NSObject>
-
-- (void)PLStreamingSessionConstructor:(PLStreamingSessionConstructor *)constructor didGetStreamURL:(NSURL *)streamURL;
-
-@end
-
 @interface PLStreamingSessionConstructor : NSObject
 
-@property (nonatomic, weak) id<PLStreamingSessionConstructorDelegate>delegate;
-
-- (instancetype)initWithStreamCloudURL:(NSURL *)streamCloudURL;
+- (instancetype)initWithAudioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration;
 - (PLMediaStreamingSession *)streamingSession;
 
 @end

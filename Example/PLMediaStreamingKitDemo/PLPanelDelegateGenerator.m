@@ -13,12 +13,15 @@
 @implementation PLPanelDelegateGenerator
 {
     PLMediaStreamingSession *_streamingSession;
+    int _count;
 }
 
 - (instancetype)initWithMediaStreamingSession:(PLMediaStreamingSession *)streamingSession
 {
     if (self = [self init]) {
         _streamingSession = streamingSession;
+        _isDynamicWatermark = NO;
+        _count = 1;
     }
     return self;
 }
@@ -62,7 +65,7 @@
         }];
         [d implementMethod:@selector(mediaStreamingSession:streamStatusDidUpdate:) withBlock:^(PLMediaStreamingSession *session, PLStreamStatus *status){
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"%@", [NSString stringWithFormat:@"session status %@", status]);
+//                NSLog(@"%@", [NSString stringWithFormat:@"session status %@", status]);
             });
         }];
         [d implementMethod:@selector(mediaStreamingSession:didGetCameraAuthorizationStatus:) withBlock:^(PLMediaStreamingSession *session, PLAuthorizationStatus authorizationStatus){
@@ -90,6 +93,18 @@
                 }
                 CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
             }
+            
+            if (_isDynamicWatermark) {
+                ++_count;
+                if (_count == 9) {
+                    _count = 1;
+                }
+                NSString *name = [NSString stringWithFormat:@"ear_00%d.png", _count];
+                UIImage *waterMark = [UIImage imageNamed:name];
+                [session clearWaterMark];
+                [session setWaterMarkWithImage:waterMark position:CGPointMake(10, 100)];
+            }
+            
             return pixelBuffer;
         }];
     }];
