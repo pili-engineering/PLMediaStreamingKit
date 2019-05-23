@@ -1,6 +1,6 @@
 {
   "name": "PLMediaStreamingKit",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "summary": "Pili iOS media streaming framework via RTMP.",
   "homepage": "https://github.com/pili-engineering/PLMediaStreamingKit",
   "license": "Apache License, Version 2.0",
@@ -8,7 +8,7 @@
     "pili": "pili@qiniu.com"
   },
   "source": {
-    "http": "http://sdk-release.qnsdk.com/PLMediaStreamingKit-v2.3.3-iphoneos.zip"
+    "http": "https://sdk-release.qnsdk.com/PLMediaStreamingKit-v2.3.4-iphoneos.zip"
   },
   "platforms": {
     "ios": "8.0"

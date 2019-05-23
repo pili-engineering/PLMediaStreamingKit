@@ -1,1 +1,0 @@
-../../../../../../Pod/Library/HappyDNS.framework/Headers/QNResolverDelegate.h

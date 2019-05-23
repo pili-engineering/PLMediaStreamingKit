@@ -527,6 +527,24 @@ typedef enum {
     PLVideoFillModePreserveAspectRatioAndFill
 } PLVideoFillModeType;
 
+/// 。。
+/*!
+ @abstract 方向的旋转类型
+ 
+ @warning 以顺时针为基准
+ 
+ @since v2.3.4
+ */
+typedef NS_ENUM(NSUInteger, PLRotateModeType) {
+    PLRotateModeNone = 0, /// 无效果
+    PLRotateModeDegree90, /// 顺时针旋转 90 度，竖屏变横屏或横屏变竖屏
+    PLRotateModeDegree180, /// 倒立效果
+    PLRotateModeDegree270, ///顺时针旋转 270 度，竖屏变横屏或横屏变竖屏
+    PLRotateModeFlipVertical, /// 垂直翻转，倒影效果
+    PLRotateModeFlipHorizonal /// 水平翻转，镜像效果
+};
+
+
 typedef BOOL(^ConnectionChangeActionCallback)(PLNetworkStateTransition transition);
 
 typedef BOOL(^ConnectionInterruptionHandler)(NSError *error);

@@ -34,5 +34,6 @@ FOUNDATION_EXPORT const unsigned char PLMediaStreamingKit_VersionString[];
 #import <PLMediaStreamingKit/PLAudioStreamingConfiguration.h>
 #import <PLMediaStreamingKit/PLVideoStreamingConfiguration.h>
 #import <PLMediaStreamingKit/PLAudioEffectCustomConfiguration.h>
+#import <PLMediaStreamingKit/PLRotatePixelBufferProcessor.h>
 
 
