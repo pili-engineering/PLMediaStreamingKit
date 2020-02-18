@@ -32,7 +32,16 @@
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session didGetMicrophoneAuthorizationStatus:(PLAuthorizationStatus)status;
 
 /// @abstract 获取到摄像头原数据时的回调, 便于开发者做滤镜等处理，需要注意的是这个回调在 camera 数据的输出线程，请不要做过于耗时的操作，否则可能会导致推流帧率下降
-- (CVPixelBufferRef)mediaStreamingSession:(PLMediaStreamingSession *)session cameraSourceDidGetPixelBuffer:(CVPixelBufferRef)pixelBuffer;
+- (CVPixelBufferRef)mediaStreamingSession:(PLMediaStreamingSession *)session cameraSourceDidGetPixelBuffer:(CVPixelBufferRef)pixelBuffer __deprecated_msg("Method deprecated in v2.3.5. Use `mediaStreamingSession:cameraSourceDidGetPixelBuffer:timingInfo:'");
+
+/*!
+ @abstract 获取到摄像头原数据时的回调, 便于开发者做滤镜等处理，需要注意的是这个回调在 camera 数据的输出线程，请不要做过于耗时的操作，否则可能会导致帧率下降
+ 
+ @param pixelBuffer 视频帧数据
+ @param timingInfo 采样时间信息
+ @warning 不建议与 mediaStreamingSession:cameraSourceDidGetPixelBuffer: 一同调用，如果一同调用，默认优先使用此方法
+ */
+- (CVPixelBufferRef __nonnull)mediaStreamingSession:(PLMediaStreamingSession *__nonnull)session cameraSourceDidGetPixelBuffer:(CVPixelBufferRef __nonnull)pixelBuffer timingInfo:(CMSampleTimingInfo)timingInfo;
 
 /// @abstract 获取到麦克风原数据时的回调，需要注意的是这个回调在 AU Remote IO 线程，请不要做过于耗时的操作，否则可能阻塞该线程影响音频输出或其他未知问题
 - (AudioBuffer *)mediaStreamingSession:(PLMediaStreamingSession *)session microphoneSourceDidGetAudioBuffer:(AudioBuffer *)audioBuffer;
@@ -445,6 +454,17 @@
  *
  */
 - (void)postDiagnosisWithCompletionHandler:(nullable PLStreamDiagnosisResultHandler)handle;
+
+/**
+ *  发送 SEI 消息
+ *
+ *  @discussion 视频编码数据中规定的一种附加增强信息，平时一般不被使用，但可以在其中加入一些自定义消息，这些消息会被直播 CDN 转发到观众端
+ *
+ *  @warning 由于消息是直接被塞入视频数据中的，所以不能太大（几个字节比较合适）
+ *  @since v2.3.5
+ *
+ */
+- (void)pushSEIMessage:(nonnull NSString *)message repeat:(NSInteger)repeatNum;
 
 @end
 
