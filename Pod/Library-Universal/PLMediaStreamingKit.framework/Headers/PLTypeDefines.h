@@ -201,7 +201,10 @@ typedef enum {
     PLRTCStreamingErrorSetVideoBitrateFailed = -3010,
     PLRTCStreamingErrorSystemVersionNotSupported = -3011,
     PLRTCStreamingErrorRTCLibraryNotFound = -3012,
-    PLRTCStreamingErrorUnsubscribeFailed = -3013
+    PLRTCStreamingErrorUnsubscribeFailed = -3013,
+    
+    // Authorization error
+    PLStreamErrorAuthenticationFailed = -1600
 } PLStreamError;
 
 #pragma mark - Video Streaming Quality
@@ -509,6 +512,20 @@ typedef NS_ENUM(NSUInteger, PLAuthorizationStatus) {
     /// 已授权
     PLAuthorizationStatusAuthorized
 };
+
+/*!
+ @typedef    PLAuthenticationResult
+ @abstract   SDK 授权状态查询。
+ @since      v3.0.0
+ */
+typedef enum {
+    // 还没有确定是否授权
+    PLAuthenticationResultNotDetermined = 0,
+    // 未授权
+    PLAuthenticationResultDenied,
+    // 已成功
+    PLAuthenticationResultAuthorized
+} PLAuthenticationResult;
 
 typedef enum {
     /**

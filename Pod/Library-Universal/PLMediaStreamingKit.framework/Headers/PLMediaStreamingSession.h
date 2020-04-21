@@ -949,5 +949,15 @@
  */
 + (NSString *)versionInfo;
 
+/*!
+ @method     checkAuthentication:
+ @abstract   SDK 授权状态立即查询
+ 
+ @param      resultBlock 授权状态查询完成之后的回调
+ 
+ @since      v3.0.0
+ */
++ (void)checkAuthentication:(void(^ __nonnull)(PLAuthenticationResult result))resultBlock;
+
 @end
 
