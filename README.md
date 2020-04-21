@@ -49,6 +49,12 @@ PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，可高度
 - iOS Target : >= iOS 8
 - iOS Device : >= iPhone 5
 
+## 版本升级
+
+- **从 v3.0.0 版本开始，七牛直播推流 SDK 需要先获取授权才能使用。授权分为试用版和正式版，可通过 400-808-9176 转 2 号线联系七牛商务咨询，或者 [通过工单](https://support.qiniu.com/?ref=developer.qiniu.com) 联系七牛的技术支持。**
+- **v3.0.0 之前的版本不受影响，请继续放心使用。**
+- **老客户升级 v3.0.0 版本之前，请先联系七牛获取相应授权，以免发生鉴权不通过的现象。**
+
 ## 安装方法
 
 [CocoaPods](https://cocoapods.org/) 是针对 Objective-C 的依赖管理工具，它能够将使用类似 PLMediaStreamingKit 的第三方库的安装过程变得非常简单和自动化，你能够用下面的命令来安装它：

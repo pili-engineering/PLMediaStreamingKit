@@ -28,6 +28,12 @@
 #define kWeiboAppSecret  @"Your weibo app secret"
 #define kWeiXinAppID     @"Your weixin app ID"
 
+static NSString *authenticationStatus[] = {
+    @"PLAuthenticationResultNotDetermined",
+    @"PLAuthenticationResultDenied",
+    @"PLAuthenticationResultAuthorized"
+};
+
 @interface PLMainViewController ()
 <
 PLMediaStreamingSessionDelegate,
@@ -269,6 +275,30 @@ UIAlertViewDelegate
         button;
     });
     
+    UIButton *seiTestButton = ({
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        [self.cameraPreviewView addSubview:button];
+        [button setTitle:@"SEI" forState:UIControlStateNormal];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(100, 50));
+            make.top.equalTo(self.cameraPreviewView).with.offset(150);
+            make.centerX.equalTo(self.cameraPreviewView).with.offset(0);
+        }];
+        button;
+    });
+    
+    UIButton *authButton = ({
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        [self.cameraPreviewView addSubview:button];
+        [button setTitle:@"auth" forState:UIControlStateNormal];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(100, 50));
+            make.top.equalTo(self.cameraPreviewView).with.offset(150);
+            make.left.equalTo(self.cameraPreviewView).with.offset(60);
+        }];
+        button;
+    });
+    
     [_startButton addTarget:self action:@selector(_pressedStartButton:)
            forControlEvents:UIControlEventTouchUpInside];
     [qrCodeButton addTarget:self action:@selector(_pressedQRButton:)
@@ -283,6 +313,8 @@ UIAlertViewDelegate
                forControlEvents:UIControlEventTouchUpInside];
     [_zoomSlider addTarget:self action:@selector(_scrollSlider:) forControlEvents:UIControlEventValueChanged];
     [inputPushURLButton addTarget:self action:@selector(_pressedInputURL:) forControlEvents:UIControlEventTouchUpInside];
+    [seiTestButton addTarget:self action:@selector(sendSETData:) forControlEvents:UIControlEventTouchUpInside];
+    [authButton addTarget:self action:@selector(initiativeAuthCheck:) forControlEvents:UIControlEventTouchUpInside];
     
     _inputURLView = ({
         UIView *view = [[UIView alloc] init];
@@ -315,6 +347,25 @@ UIAlertViewDelegate
         view;
     });
     _inputURLView.hidden = YES;
+}
+
+- (void)sendSETData:(UIButton *)button {
+    if (_streamingSession.isStreamingRunning) {
+        [_streamingSession pushSEIMessage:@"seitest" repeat:6];
+    }
+}
+
+- (void)initiativeAuthCheck:(UIButton *)button {
+    [PLMediaStreamingSession checkAuthentication:^(PLAuthenticationResult result) {
+        NSArray *array = @[
+            @"还未进行鉴权",
+            @"未经授权",
+            @"授权通过"
+        ];
+
+        NSLog(@"PLMediaStreamingKit authentication - %@", authenticationStatus[result]);
+        [[[UIAlertView alloc] initWithTitle:@"主动鉴权" message:array[result] delegate:nil cancelButtonTitle:@"知道啦" otherButtonTitles:nil] show];
+    }];
 }
 
 - (void)_pressedStartButton:(UIButton *)button
