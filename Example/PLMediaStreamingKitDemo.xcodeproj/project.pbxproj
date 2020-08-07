@@ -325,12 +325,12 @@
 		AA90784C24DD471800A7DF44 /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				AA90784D24DD471800A7DF44 /* PLCategoryModel.m */,
-				AA90784E24DD471800A7DF44 /* PLAssetReader.h */,
 				AA90784F24DD471800A7DF44 /* NSString+Random.h */,
-				AA90785024DD471800A7DF44 /* PLCategoryModel.h */,
-				AA90785124DD471800A7DF44 /* PLAssetReader.m */,
 				AA90785224DD471800A7DF44 /* NSString+Random.m */,
+				AA90784E24DD471800A7DF44 /* PLAssetReader.h */,
+				AA90785124DD471800A7DF44 /* PLAssetReader.m */,
+				AA90785024DD471800A7DF44 /* PLCategoryModel.h */,
+				AA90784D24DD471800A7DF44 /* PLCategoryModel.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
