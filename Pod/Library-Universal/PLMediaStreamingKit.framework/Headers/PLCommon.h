@@ -13,7 +13,6 @@
 #import "PLAudioCaptureConfiguration.h"
 #import "PLAudioEffectConfiguration.h"
 #import "PLAudioEffectCustomConfiguration.h"
-#import "PLRTCConfiguration.h"
 #import "PLAudioPlayer.h"
 #import "PLTypeDefines.h"
 #import "PLVideoStreamingConfiguration.h"

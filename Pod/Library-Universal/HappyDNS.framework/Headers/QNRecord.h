@@ -28,15 +28,26 @@ extern const int kQNTypeCname;
  */
 extern const int kQNTypeTXT;
 
+typedef NS_ENUM(NSUInteger, QNRecordSource) {
+    QNRecordSourceUnknown,
+    QNRecordSourceDnspodFree,
+    QNRecordSourceDnspodEnterprise,
+    QNRecordSourceSystem,
+};
+
 @interface QNRecord : NSObject
+
 @property (nonatomic, strong, readonly) NSString *value;
 @property (nonatomic, readonly) int ttl;
 @property (nonatomic, readonly) int type;
 @property (nonatomic, readonly) long long timeStamp;
+@property (nonatomic, readonly) QNRecordSource source;
 
 - (instancetype)init:(NSString *)value
                  ttl:(int)ttl
-                type:(int)type;
+                type:(int)type
+              source:(QNRecordSource)source;
 
 - (BOOL)expired:(long long)time;
+
 @end

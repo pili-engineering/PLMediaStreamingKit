@@ -11,8 +11,8 @@
 
 @interface PLAudioEffectConfiguration : NSObject
 
-/**
- @brief 音效配置类型
+/*!
+ @abstract 音效配置类型
  */
 @property (nonatomic, readonly) PLAudioEffectConfigurationType type;
 
@@ -20,21 +20,24 @@
 
 @interface PLAudioEffectModeConfiguration : PLAudioEffectConfiguration
 
-/**
- @brief 预设的混响音效配置 - LowLevel
+/*!
+ @abstract 预设的混响音效配置 - LowLevel
  */
 + (instancetype)reverbLowLevelModeConfiguration;
-/**
- @brief 预设的混响音效配置 - MediumLevel
+/*!
+ @abstract 预设的混响音效配置 - MediumLevel
  */
 + (instancetype)reverbMediumLevelModeConfiguration;
-/**
- @brief 预设的混响音效配置 - HeightLevel
+/*!
+ @abstract 预设的混响音效配置 - HeightLevel
  */
 + (instancetype)reverbHeightLevelModeConfiguration;
 
 @end
 
+/*!
+ @abstract 混响效果配置
+ */
 @interface PLAudioEffectReverb2Configuration : PLAudioEffectConfiguration
 
 @property (nonatomic, assign) double decayTimeAt0Hz;
@@ -50,6 +53,9 @@
 
 @end
 
+/*!
+ @abstract 动态压缩/扩大效果配置
+ */
 @interface PLAudioEffectDynamicsProcessorConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic, assign) double threshold;
@@ -65,6 +71,9 @@
 
 @end
 
+/*!
+ @abstract 带通效果配置
+ */
 @interface PLAudioEffectBandpassConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double centerFrequency;
@@ -74,6 +83,9 @@
 
 @end
 
+/*!
+ @abstract 延迟效果配置
+ */
 @interface PLAudioEffectDelayConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double wetDryMix;
@@ -85,6 +97,9 @@
 
 @end
 
+/*!
+ @abstract 失真效果配置
+ */
 @interface PLAudioEffectDistortionConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double delay;
@@ -108,6 +123,9 @@
 
 @end
 
+/*!
+ @abstract 变声效果配置
+ */
 @interface PLAudioEffectNewTimePitchConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double rate;
@@ -119,6 +137,9 @@
 
 @end
 
+/*!
+ @abstract 参数 EQ 效果配置
+ */
 @interface PLAudioEffectParametricEqConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double centerFrequency;
@@ -129,6 +150,10 @@
 
 @end
 
+
+/*!
+ @abstract 峰值压限效果配置
+ */
 @interface PLAudioEffectPeakLimiterConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double attackTime;
@@ -139,6 +164,9 @@
 
 @end
 
+/*!
+ @abstract 速率效果配置
+ */
 @interface PLAudioEffectVarispeedConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double playbackRate;
@@ -148,6 +176,9 @@
 
 @end
 
+/*!
+ @abstract 高通效果配置
+ */
 @interface PLAudioEffectHighPassConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double cutoffFrequency;
@@ -157,6 +188,9 @@
 
 @end
 
+/*!
+ @abstract 高频效果配置
+ */
 @interface PLAudioEffectHighShelfConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double cutoffFrequency;
@@ -166,6 +200,9 @@
 
 @end
 
+/*!
+ @abstract 低通效果配置
+ */
 @interface PLAudioEffecLowPassConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double cutoffFrequency;
@@ -175,6 +212,9 @@
 
 @end
 
+/*!
+ @abstract 低频效果配置
+ */
 @interface PLAudioEffectLowShelfConfiguration : PLAudioEffectConfiguration
 
 @property (nonatomic) double cutoffFrequency;

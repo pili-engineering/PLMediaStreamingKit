@@ -13,9 +13,9 @@
 @protocol PLPasterViewDelegate <NSObject>
 
 @optional;
-- (void)deletePasterView:(PLPasterView *)PasterView;
-- (void)draggingPasterView:(PLPasterView *)PasterView;
-- (void)endDragPasterView:(PLPasterView *)PasterView;
+- (void)deletePasterView:(PLPasterView *)pasterView;
+- (void)draggingPasterView:(PLPasterView *)pasterView;
+- (void)endDragPasterView:(PLPasterView *)pasterView;
 
 @end
 

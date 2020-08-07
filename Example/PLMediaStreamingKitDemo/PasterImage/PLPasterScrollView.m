@@ -9,7 +9,7 @@
 #import "PLPasterScrollView.h"
 
 // 底部 scrollView 的高
-static CGFloat pasterScrollView_H = 120;
+static CGFloat pasterScrollView_H = 80;
 // 贴纸直接间隔距离
 static CGFloat inset_space = 15;
 
