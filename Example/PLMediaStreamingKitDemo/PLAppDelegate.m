@@ -1,16 +1,15 @@
 //
 //  PLAppDelegate.m
-//  PLCameraStreamingKit
+//  PLMediaStreamingKit
 //
 //  Created on 01/10/2015.
 //  Copyright (c) Pili Engineering, Qiniu Inc. All rights reserved.
 //
 
 #import "PLAppDelegate.h"
-#import "PLViewController.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
+
+// PLMediaStreamSession 初始化配置界面
+#import "PLInitViewController.h"
 
 @interface PLAppDelegate ()
 
@@ -23,20 +22,25 @@
     
     [Fabric with:@[[Crashlytics class]]];
 
+    // 1.初始化 StreamingSession 的运行环境
     [PLStreamingEnv initEnv];
+    // 2.设置日志 log 等级
+    [PLStreamingEnv setLogLevel:PLStreamLogLevelDebug];
+    // 3.开启写 SDK 的日志文件到沙盒
+    [PLStreamingEnv enableFileLogging];
+    // 4.可添加设备 id 作为标识
+    [PLStreamingEnv setDeviceID:@"deviceId"];
     
-    NSLog(@"version is %@", [PLMediaStreamingSession versionInfo]);
-
+    PLInitViewController *initViewController = [[PLInitViewController alloc] init];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[PLViewController alloc]init]];
+    self.window.rootViewController = initViewController;
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController.view.frame = self.window.bounds;
     self.window.rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |
     UIViewAutoresizingFlexibleHeight;
     [self.window makeKeyAndVisible];
     
-    [PLStreamingEnv setLogLevel:PLStreamLogLevelDebug];
-    [PLStreamingEnv enableFileLogging];
     return YES;
 }
 

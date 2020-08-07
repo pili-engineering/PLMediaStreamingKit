@@ -7,6 +7,4 @@ target 'PLMediaStreamingKitDemo' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Masonry'
-  pod 'BlocksKit'
-  pod 'WeiboSDK'
 end

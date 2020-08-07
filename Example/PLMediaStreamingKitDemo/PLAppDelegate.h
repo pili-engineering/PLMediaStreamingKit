@@ -1,6 +1,6 @@
 //
 //  PLAppDelegate.h
-//  PLCameraStreamingKit
+//  PLMediaStreamingKit
 //
 //  Created on 01/10/2015.
 //  Copyright (c) Pili Engineering, Qiniu Inc. All rights reserved.
