@@ -13,100 +13,102 @@
 @class PLStreamingSession;
 @class QNDnsManager;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol PLStreamingSendingBufferDelegate;
 
 /*!
-    @protocol    PLStreamingSessionDelegate
-    @abstract    PLStreamingSession 实例的代理对象必须实现 PLStreamingSessionDelegate 协议。
+ @protocol    PLStreamingSessionDelegate
+ @abstract    PLStreamingSession 实例的代理对象必须实现 PLStreamingSessionDelegate 协议。
 
-    @since       v1.0.0
+ @since       v1.0.0
  */
 @protocol PLStreamingSessionDelegate <NSObject>
 
 @optional
 /*!
-    @method      streamingSession:streamStateDidChange:
-    @abstract    告知代理对象流的状态已经变更。
+ @method      streamingSession:streamStateDidChange:
+ @abstract    告知代理对象流的状态已经变更。
 
-    @param       session 调用该代理方法的 PLStreamingSession 对象
-    @param       state 已变更的状态
+ @param       session 调用该代理方法的 PLStreamingSession 对象
+ @param       state 已变更的状态
 
-    @discussion  该代理方法只会在以下几种状态时触发
-    <ul>
-    <li>         PLStreamStateConnecting
-    <li>         PLStreamStateConnected
-    <li>         PLStreamStateDisconnecting
-    <li>         PLStreamStateDisconnected
-    </ul>
-                 该代理方法的几种回调状态都是在正常操作时产生的，也就是主动触发的，对于意外状态，不在该方法中处理，
-                 PLStreamStateError 状态便不会触发该回调。
+ @discussion  该代理方法只会在以下几种状态时触发
+ <ul>
+ <li>         PLStreamStateConnecting
+ <li>         PLStreamStateConnected
+ <li>         PLStreamStateDisconnecting
+ <li>         PLStreamStateDisconnected
+ </ul>
+              该代理方法的几种回调状态都是在正常操作时产生的，也就是主动触发的，对于意外状态，不在该方法中处理，
+              PLStreamStateError 状态便不会触发该回调。
 
-    @warning     PLStreamStateError 状态不会触发该代理方法，而是触发 -streamingSession:didDisconnectWithError: 代理方法。
+ @warning     PLStreamStateError 状态不会触发该代理方法，而是触发 -streamingSession:didDisconnectWithError: 代理方法。
 
-    @see         streamingSession:didDisconnectWithError:
-    @see         PLStreamState
+ @see         streamingSession:didDisconnectWithError:
+ @see         PLStreamState
 
-    @since       v1.0.0
+ @since       v1.0.0
  */
 - (void)streamingSession:(PLStreamingSession *)session streamStateDidChange:(PLStreamState)state;
 
 /*!
-    @method     streamingSession:didDisconnectWithError:
-    @abstract   告知代理对象流意外断开。
+ @method     streamingSession:didDisconnectWithError:
+ @abstract   告知代理对象流意外断开。
 
-    @param      session 调用该代理方法的 PLStreamingSession 对象
-    @param      error 引起意外断流的错误信息
+ @param      session 调用该代理方法的 PLStreamingSession 对象
+ @param      error 引起意外断流的错误信息
 
-    @discussion 该代理方法只会在预期外的 PLStreamStateError 状态时触发回调，其他在预期内主动触发的状态不会触发该代理方法。
+ @discussion 该代理方法只会在预期外的 PLStreamStateError 状态时触发回调，其他在预期内主动触发的状态不会触发该代理方法。
 
-    @warning    只有 PLStreamStateError 状态会触发该代理方法。
+ @warning    只有 PLStreamStateError 状态会触发该代理方法。
 
-    @see        streamingSession:streamStateDidChange:
-    @see        PLStreamError
+ @see        streamingSession:streamStateDidChange:
+ @see        PLStreamError
 
-    @since      v1.0.0
+ @since      v1.0.0
  */
 - (void)streamingSession:(PLStreamingSession *)session didDisconnectWithError:(NSError *)error;
 
 /*!
-    @method     streamingSession:streamStatusDidUpdate:
-    @abstract   每隔一段时间告知代理对象流在这段时间内的流状态。
+ @method     streamingSession:streamStatusDidUpdate:
+ @abstract   每隔一段时间告知代理对象流在这段时间内的流状态。
 
-    @param      session 调用该代理方法的 PLStreamingSession 对象
-    @param      status 流的状态
+ @param      session 调用该代理方法的 PLStreamingSession 对象
+ @param      status 流的状态
 
-    @discussion 该代理方法在开始推流后启动触发，停止推流时停止触发。默认是每 3s 调用一次，可以通过更改 statusUpdateInterval 属性来变更触发频率。
+ @discussion 该代理方法在开始推流后启动触发，停止推流时停止触发。默认是每 3s 调用一次，可以通过更改 statusUpdateInterval 属性来变更触发频率。
 
-    @see        statusUpdateInterval
-    @see        PLStreamStatus
+ @see        statusUpdateInterval
+ @see        PLStreamStatus
 
-    @since      v1.1.1
+ @since      v1.1.1
  */
 - (void)streamingSession:(PLStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status;
 
 @end
 
 /*!
-    @class      PLStreamingSession
-    @abstract   PLStreamingSession 是 PLStreamingKit 的负责编码控制的核心类。
+ @class      PLStreamingSession
+ @abstract   PLStreamingSession 是 PLStreamingKit 的负责编码控制的核心类。
 
-    @discussion PLStreamingSession 对象负责音视频编码控制、网络连接控制以及各类状态的监控和向代理反馈。它的生命周期从 init 开始，destroy 结束。
-                init 时传递视频的 configuration, 音频的 configuration 以及推流对应的 stream 对象。<br>
+ @discussion PLStreamingSession 对象负责音视频编码控制、网络连接控制以及各类状态的监控和向代理反馈。它的生命周期从 init 开始，destroy 结束。
+               init 时传递视频的 configuration, 音频的 configuration 以及推流对应的 stream 对象。<br>
 
-                同时，为了更好的提供对 dns 域名解析的容错，PLStreamingKit 以 HappyDNS 做为依赖，当然你可以不去关心这部分，如果有定制 dns 解析的需求，也可以
-                通过 init 方法传递自定义的 HappyDNS QNDnsManager 对象。<br>
+             同时，为了更好的提供对 dns 域名解析的容错，PLStreamingKit 以 HappyDNS 做为依赖，当然你可以不去关心这部分，如果有定制 dns 解析的需求，也可以
+               通过 init 方法传递自定义的 HappyDNS QNDnsManager 对象。<br>
 
-                在一个 PLStreamingSession 对象的生命周期内，通过调用 -startWithCompleted: 方法开始调用，-stop 方法结束推流。只要一个流没有在服务端做 disable 操作，
-                都可以在 -stop 后再调用 -startWithCompleted: 方法重新推流。<br>
+             在一个 PLStreamingSession 对象的生命周期内，通过调用 -startWithCompleted: 方法开始调用，-stop 方法结束推流。只要一个流没有在服务端做 disable 操作，
+             都可以在 -stop 后再调用 -startWithCompleted: 方法重新推流。<br>
 
-                你只要实现了 PLStreamingSessionDelegate 对应的代理方法，就可以获取到推流的状态变更及异常状态的回调，同时还有定时回调的流状态信息反馈。
+             你只要实现了 PLStreamingSessionDelegate 对应的代理方法，就可以获取到推流的状态变更及异常状态的回调，同时还有定时回调的流状态信息反馈。
 
-    @see        PLStreamingSessionDelegate
-    @see        PLVideoStreamingConfiguration
-    @see        PLAudioStreamingConfiguration
-    @see        PLStream
+ @see        PLStreamingSessionDelegate
+ @see        PLVideoStreamingConfiguration
+ @see        PLAudioStreamingConfiguration
+ @see        PLStream
 
-    @since      v1.0.0
+ @since      v1.0.0
  */
 
 typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisResult);
@@ -136,91 +138,97 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @see        PLAudioStreamingConfiguration
  
  @since      v1.1.7
-  */
+ */
 @property (nonatomic, copy, readonly) PLAudioStreamingConfiguration  *audioStreamingConfiguration;
 
 /*!
-    @property   stream
-    @abstract   推流时对应的流对象。
+ @property   stream
+ @abstract   推流时对应的流对象。
 
-    @discussion stream 对象包含了生成推流、播放地址及签名鉴权等信息，该信息是通过七牛直播云服务的服务端获取的。
-                通过 init 方法传递给 stream session，或者从服务端获取到信息时，再设置给 stream session。
+ @discussion stream 对象包含了生成推流、播放地址及签名鉴权等信息，该信息是通过七牛直播云服务的服务端获取的。
+             通过 init 方法传递给 stream session，或者从服务端获取到信息时，再设置给 stream session。
 
-    @warning    务必确保在调用 -startWithCompleted: 方法前成功设置了正确的 stream，否则会引起推流失败。
+ @warning    务必确保在调用 -startWithCompleted: 方法前成功设置了正确的 stream，否则会引起推流失败。
 
-    @see        PLStream
+ @see        PLStream
 
-    @since      v1.0.0
+ @since      v1.0.0
  */
 @property (nonatomic, strong) PLStream   *stream;
 
+/*!
+ @property   pushURL
+ @abstract   推流时使用的推流地址。
+
+ @since      v1.0.0
+ */
 @property (nonatomic, copy) NSURL *pushURL;
 
 /*!
-    @property   delegate
-    @abstract   PLStreamingSession 的代理对象。
+ @property   delegate
+ @abstract   PLStreamingSession 的代理对象。
 
-    @discussion 要获取 stream session 的流状态、错误异常、流实时统计信息等需要实现 PLStreamingSessionDelegate 中的代理方法，
-                如果你设定了 delegateQueue, 那么所有回调将通过对应的 delegateQueue 执行异步回调，如果未指定，将使用 main queue 来执行回调。
+ @discussion 要获取 stream session 的流状态、错误异常、流实时统计信息等需要实现 PLStreamingSessionDelegate 中的代理方法，
+             如果你设定了 delegateQueue, 那么所有回调将通过对应的 delegateQueue 执行异步回调，如果未指定，将使用 main queue 来执行回调。
 
-    @see        PLStreamingSessionDelegate
-    @see        delegateQueue
+ @see        PLStreamingSessionDelegate
+ @see        delegateQueue
 
-    @since      v1.0.0
+ @since      v1.0.0
  */
 @property (nonatomic, weak) id<PLStreamingSessionDelegate> delegate;
 
 /*!
-    @property   delegateQueue
-    @abstract   触发代理对象回调时所在的任务队列。
+ @property   delegateQueue
+ @abstract   触发代理对象回调时所在的任务队列。
 
-    @discussion 默认情况下该值为 nil，此时代理方法都会通过 main queue 异步执行回调。如果你期望可以所有的回调在自己创建或者其他非主线程调用，
-                可以设置改 delegateQueue 属性。
+ @discussion 默认情况下该值为 nil，此时代理方法都会通过 main queue 异步执行回调。如果你期望可以所有的回调在自己创建或者其他非主线程调用，
+             可以设置改 delegateQueue 属性。
 
-    @see        PLStreamingSessionDelegate
-    @see        delegate
+ @see        PLStreamingSessionDelegate
+ @see        delegate
 
-    @since      v1.2.0
+ @since      v1.2.0
  */
 @property (nonatomic, strong) dispatch_queue_t   delegateQueue;
 
 /*!
-    @property   streamState
-    @abstract   流的状态，只读属性。
+ @property   streamState
+ @abstract   流的状态，只读属性。
 
-    @discussion 你可以在 delegate 的回调方法 -streamingSession:streamStateDidChange: 中及时的获取到该值的变更，当然也可以通过 kvo 的方式监听。
+ @discussion 你可以在 delegate 的回调方法 -streamingSession:streamStateDidChange: 中及时的获取到该值的变更，当然也可以通过 kvo 的方式监听。
 
-    @see        PLStreamingSessionDelegate
-    @see        PLStreamState
+ @see        PLStreamingSessionDelegate
+ @see        PLStreamState
 
-    @since      v1.0.0
+ @since      v1.0.0
  */
 @property (nonatomic, assign, readonly) PLStreamState   streamState;
 
 /*!
-    @property   isRunning
-    @abstract   是否开始尝试或正在推流，只读属性。
+ @property   isRunning
+ @abstract   是否开始尝试或正在推流，只读属性。
 
-    @discussion 该状态表达的是 streamingSession 有没有开始推流。当 streamState 为 PLStreamStateConnecting 或者 PLStreamStateConnected 时,
-                isRunning 都会为 YES，所以它为 YES 时并不表示流一定已经建立连接，其从广义上表达 streamingSession 作为客户端对象的状态，表示是否开始尝试或已经在推流。
+ @discussion 该状态表达的是 streamingSession 有没有开始推流。当 streamState 为 PLStreamStateConnecting 或者 PLStreamStateConnected 时,
+             isRunning 都会为 YES，所以它为 YES 时并不表示流一定已经建立连接，其从广义上表达 streamingSession 作为客户端对象的状态，表示是否开始尝试或已经在推流。
 
-    @see        streamState
+ @see        streamState
 
-    @since      v1.0.0
+ @since      v1.0.0
  */
 @property (nonatomic, assign, readonly) BOOL    isRunning;
 
 /*!
-    @property   statusUpdateInterval
-    @abstract   Stream Status 回调方法的调用间隔
+ @property   statusUpdateInterval
+ @abstract   Stream Status 回调方法的调用间隔
 
-    @discussion 该属性的单位为妙，默认为 3 妙，可设置范围为 [1..30] 秒。它影响 PLStreamSessionDelegate 中 -streamingSession:streamStatusDidUpdate:
-                方法每次调用的间隔，默认在主线程回调，如果你设置过 delegateQueue，会在 delegateQueue 触发回调。
+ @discussion 该属性的单位为妙，默认为 3 妙，可设置范围为 [1..30] 秒。它影响 PLStreamSessionDelegate 中 -streamingSession:streamStatusDidUpdate:
+             方法每次调用的间隔，默认在主线程回调，如果你设置过 delegateQueue，会在 delegateQueue 触发回调。
 
-    @see        PLStreamSessionDelegate
-    @see        delegateQueue
+ @see        PLStreamSessionDelegate
+ @see        delegateQueue
 
-    @since      v1.1.1
+ @since      v1.1.1
  */
 @property (nonatomic, assign) NSTimeInterval    statusUpdateInterval;
 
@@ -250,7 +258,6 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @see        initWithVideoStreamingConfiguration:audioStreamingConfiguration:stream:dns:
  
  @since      v1.1.7
- 
  */
 - (instancetype)initWithVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
                         audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
@@ -286,18 +293,18 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
                                                 dns:(QNDnsManager *)dns;
 
 /*!
-    @method     destroy
-    @abstract   销毁方法
+ @method     destroy
+ @abstract   销毁方法
 
-    @discussion 当一个 PLStreamingSession 对象被创建并初始化后，它便是可用的。可以通过调用 -startWithCompleted: 和 -stop 方法开始和停止推流，
-                即便 -stop 后，仍然可以调用 -startWithCompleted: 方法重新推流。
-                当你调用了 -destroy 方法后，PLStreamingSession 对象便不再可用，不可再调用 -startWithCompleted: 和 -stop 方法，如果还希望推流，就需要
-                再创建一个新的 PLStreamingSession 对象。另外，-destroy 方法调用前可以不用调用 -stop 方法，-destroy 方法内部会有调用。
+ @discussion 当一个 PLStreamingSession 对象被创建并初始化后，它便是可用的。可以通过调用 -startWithCompleted: 和 -stop 方法开始和停止推流，
+             即便 -stop 后，仍然可以调用 -startWithCompleted: 方法重新推流。
+             当你调用了 -destroy 方法后，PLStreamingSession 对象便不再可用，不可再调用 -startWithCompleted: 和 -stop 方法，如果还希望推流，就需要
+             再创建一个新的 PLStreamingSession 对象。另外，-destroy 方法调用前可以不用调用 -stop 方法，-destroy 方法内部会有调用。
 
-    @see        startWithCompleted:
-    @see        stop
+ @see        startWithCompleted:
+ @see        stop
 
-    @since      v1.0.0
+ @since      v1.0.0
  */
 - (void)destroy;
 
@@ -306,22 +313,22 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 ///---------------------------
 
 /*!
-    @method     startWithCompleted:
-    @abstract   使用 stream 对象指定推流地址时请使用该方法开始推流。
+ @method     startWithCompleted:
+ @abstract   使用 stream 对象指定推流地址时请使用该方法开始推流。
 
-    @param      handler 流连接的结果会通过该回调方法返回，携带是否已连接成功的布尔值，如果流连接成功将返回 YES，如果连接失败或当前流正在连接或已经连接将返回 NO
+ @param      handler 流连接的结果会通过该回调方法返回，携带是否已连接成功的布尔值，如果流连接成功将返回 YES，如果连接失败或当前流正在连接或已经连接将返回 NO
 
-    @discussion 当 Streaming Session 创建并初始化好后（务必确认 stream 对象已设置好），就可以调用此方法开始推流。当要停止一次推流但是并不销毁 Streaming Session
-                对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
-                Streaming Session 对象，销毁后的对象不可再用于推流或做其他操作，如有需求，需要创建一个新的 Streaming Session 对象。<br>
-                handler 回调的线程会优先使用 delegateQueue, 如果 delegateQueue 未设置，会在主线程异步调用。
+ @discussion 当 Streaming Session 创建并初始化好后（务必确认 stream 对象已设置好），就可以调用此方法开始推流。当要停止一次推流但是并不销毁 Streaming Session
+             对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
+             Streaming Session 对象，销毁后的对象不可再用于推流或做其他操作，如有需求，需要创建一个新的 Streaming Session 对象。<br>
+             handler 回调的线程会优先使用 delegateQueue, 如果 delegateQueue 未设置，会在主线程异步调用。
 
-    @warning    当采用 dynamic 认证且过期时，需要更新 Stream 对象，否则推流将失败。
+ @warning    当采用 dynamic 认证且过期时，需要更新 Stream 对象，否则推流将失败。
 
-    @see        stop
-    @see        destroy
+ @see        stop
+ @see        destroy
 
-    @since      @v1.0.0
+ @since      v1.0.0
  */
 - (void)startWithCompleted:(void (^)(BOOL success))handler DEPRECATED_ATTRIBUTE;
 
@@ -341,7 +348,7 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @see        stop
  @see        destroy
  
- @since      @v2.0.0
+ @since      v2.0.0
  */
 - (void)startWithFeedback:(void (^)(PLStreamStartStateFeedback feedback))handler;
 
@@ -353,36 +360,36 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @param      handler 流连接的结果会通过该回调方法返回，携带连接状态的枚举，当 feedback 为 PLStreamStartStateSuccess 时表示连接成功，其他状态均为连接失败。
  
  @discussion 当 Streaming Session 创建并初始化好后就可以调用此方法开始推流。当要停止一次推流但是并不销毁 Streaming Session
- 对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
+   对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
  Streaming Session 对象，销毁后的对象不可再用于推流或做其他操作，如有需求，需要创建一个新的 Streaming Session 对象。<br>
  handler 回调的线程会优先使用 delegateQueue, 如果 delegateQueue 未设置，会在主线程异步调用。
  
  @see        stop
  @see        destroy
  
- @since      @v2.0.0
+ @since      v2.0.0
  */
 - (void)startWithPushURL:(NSURL *)pushURL feedback:(void (^)(PLStreamStartStateFeedback feedback))handler;
 
 /*!
-    @method     restartWithCompleted:
-    @abstract   使用 stream 对象指定推流地址时请使用该方法重新开始推流。
+ @method     restartWithCompleted:
+ @abstract   使用 stream 对象指定推流地址时请使用该方法重新开始推流。
  
-    @param      handler 流连接的结果会通过该回调方法返回，携带是否已连接成功的布尔值，如果流连接成功将返回 YES，如果连接失败或当前流正在连接或已经连接将返回 NO
+ @param      handler 流连接的结果会通过该回调方法返回，携带是否已连接成功的布尔值，如果流连接成功将返回 YES，如果连接失败或当前流正在连接或已经连接将返回 NO
  
-    @discussion 当 Streaming Session 处于正在推流过程中，由于业务原因（如用户网络从 4G 切到 WIFI）需要快速重新推流时，可以调用此方法重新推流。当要停止一次推流但是并不销毁 Streaming Session
-                对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
-                Streaming Session 对象，销毁后的对象不可再用于推流或做其他操作，如有需求，需要创建一个新的 Streaming Session 对象。<br>
-                handler 回调的线程会优先使用 delegateQueue, 如果 delegateQueue 未设置，会在主线程异步调用。
+ @discussion 当 Streaming Session 处于正在推流过程中，由于业务原因（如用户网络从 4G 切到 WIFI）需要快速重新推流时，可以调用此方法重新推流。当要停止一次推流但是并不销毁 Streaming Session
+             对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
+             Streaming Session 对象，销毁后的对象不可再用于推流或做其他操作，如有需求，需要创建一个新的 Streaming Session 对象。<br>
+             handler 回调的线程会优先使用 delegateQueue, 如果 delegateQueue 未设置，会在主线程异步调用。
  
-    @warning    当前 Streaming Session 处于正在推流状态时调用此方法时才会重新推流，其它状态时调用无效
+ @warning    当前 Streaming Session 处于正在推流状态时调用此方法时才会重新推流，其它状态时调用无效
                 Streaming Session。
-                当采用 dynamic 认证且过期时，需要更新 Stream 对象，否则推流将失败。
+             当采用 dynamic 认证且过期时，需要更新 Stream 对象，否则推流将失败。
  
  @see        stop
  @see        destroy
  
- @since      @v1.2.2
+ @since      v1.2.2
  */
 - (void)restartWithCompleted:(void (^)(BOOL success))handler DEPRECATED_ATTRIBUTE;
 
@@ -393,18 +400,18 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @param      handler 流连接的结果会通过该回调方法返回，携带连接状态的枚举，当 feedback 为 PLStreamStartStateSuccess 时表示连接成功，其他状态均为连接失败。
  
  @discussion 当 Streaming Session 处于正在推流过程中，由于业务原因（如用户网络从 4G 切到 WIFI）需要快速重新推流时，可以调用此方法重新推流。当要停止一次推流但是并不销毁 Streaming Session
- 对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
+   对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
  Streaming Session 对象，销毁后的对象不可再用于推流或做其他操作，如有需求，需要创建一个新的 Streaming Session 对象。<br>
  handler 回调的线程会优先使用 delegateQueue, 如果 delegateQueue 未设置，会在主线程异步调用。
  
  @warning    当前 Streaming Session 处于正在推流状态时调用此方法时才会重新推流，其它状态时调用无效
- Streaming Session。
+   Streaming Session。
  当采用 dynamic 认证且过期时，需要更新 Stream 对象，否则推流将失败。
  
  @see        stop
  @see        destroy
  
- @since      @v2.0.0
+ @since      v2.0.0
  */
 - (void)restartWithFeedback:(void (^)(PLStreamStartStateFeedback feedback))handler;
 
@@ -415,31 +422,31 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @param      handler 流连接的结果会通过该回调方法返回，携带连接状态的枚举，当 feedback 为 PLStreamStartStateSuccess 时表示连接成功，其他状态均为连接失败。
  
  @discussion 当 Streaming Session 处于正在推流过程中，由于业务原因（如用户网络从 4G 切到 WIFI）需要快速重新推流时，可以调用此方法重新推流。当要停止一次推流但是并不销毁 Streaming Session
- 对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
+   对象时，调用 -stop 方法即可，便于在需要重新推流时再重新调用该方法进行推流。如果确认不再使用对应 stream 进行推流，可以调用 -destroy 销毁
  Streaming Session 对象，销毁后的对象不可再用于推流或做其他操作，如有需求，需要创建一个新的 Streaming Session 对象。<br>
  handler 回调的线程会优先使用 delegateQueue, 如果 delegateQueue 未设置，会在主线程异步调用。
  
  @warning    当前 Streaming Session 处于正在推流状态时调用此方法时才会重新推流，其它状态时调用无效
- Streaming Session。
+   Streaming Session。
  
  @see        stop
  @see        destroy
  
- @since      @v2.0.0
+ @since      v2.0.0
  */
 - (void)restartWithPushURL:(NSURL *)pushURL feedback:(void (^)(PLStreamStartStateFeedback feedback))handler;
 
 /*!
-    @method     stop
-    @abstract   结束推流
+ @method     stop
+ @abstract   结束推流
 
-    @discussion 当要结束一次推流时，调用该方法。在 stop 后，如果还需要推流，可以重新调用 -startWithCompleted: 方法，如果要销毁一个 Streaming Session 直接调用 -destroy
-                便可，不用额外调用 -stop。
+ @discussion 当要结束一次推流时，调用该方法。在 stop 后，如果还需要推流，可以重新调用 -startWithCompleted: 方法，如果要销毁一个 Streaming Session 直接调用 -destroy
+               便可，不用额外调用 -stop。
 
-    @see        startWithCompleted:
-    @see        destroy
+ @see        startWithCompleted:
+ @see        destroy
 
-    @since      @v1.0.0
+ @since      v1.0.0
  */
 - (void)stop;
 
@@ -467,7 +474,7 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  
  @see        PLAudioStreamingConfiguration
  
- @since      @v1.2.0
+ @since      v1.2.0
  */
 - (void)reloadAudioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration;
 
@@ -476,72 +483,72 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 ///------------------
 
 /*!
-    @method     pushVideoSampleBuffer:
-    @abstract   发送视频 SampleBuffer 数据。
+ @method     pushVideoSampleBuffer:
+ @abstract   发送视频 SampleBuffer 数据。
 
-    @param      sampleBuffer 待发送的 CMSampleBuffer 数据
+ @param      sampleBuffer 待发送的 CMSampleBuffer 数据
 
-    @discussion 该方法内部异步执行编码操作，所以如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用 -pushVideoSampleBuffer:completion: 方法，并在 handler block 中完成操作。
+ @discussion 该方法内部异步执行编码操作，所以如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用 -pushVideoSampleBuffer:completion: 方法，并在 handler block 中完成操作。
 
-    @see        pushVideoSampleBuffer:completion:
-    @see        pushPixelBuffer:
-    @see        pushPixelBuffer:completion:
+ @see        pushVideoSampleBuffer:completion:
+ @see        pushPixelBuffer:
+ @see        pushPixelBuffer:completion:
 
-    @since      @v1.0.0
+ @since      v1.0.0
  */
 - (void)pushVideoSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 
 /*!
-    @method     pushVideoSampleBuffer:completion:
-    @abstract   发送视频 SampleBuffer 数据。
+ @method     pushVideoSampleBuffer:completion:
+ @abstract   发送视频 SampleBuffer 数据。
 
-    @param      sampleBuffer 待发送的 CMSampleBuffer 数据
-    @param      handler 在编码 sampleBuffer 数据完成时的回调 block, 带是否编码成功的参数 success
+ @param      sampleBuffer 待发送的 CMSampleBuffer 数据
+ @param      handler 在编码 sampleBuffer 数据完成时的回调 block, 带是否编码成功的参数 success
 
-    @discussion 如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用该方法，并在 handler block 中完成操作。调用 -pushVideoSampleBuffer: 相当于调用该方法并以 nil 作为 handler 参数。
+ @discussion 如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用该方法，并在 handler block 中完成操作。调用 -pushVideoSampleBuffer: 相当于调用该方法并以 nil 作为 handler 参数。
 
-    @warning    该方法的 handler 回调并不在主线程，也不在 delegateQueue 线程，所以除了对 sampleBuffer 做 unlock 或者销毁等操作，务必不要做额外高计算量的操作，或者长时间让 handler 无法结束运行。
+ @warning    该方法的 handler 回调并不在主线程，也不在 delegateQueue 线程，所以除了对 sampleBuffer 做 unlock 或者销毁等操作，务必不要做额外高计算量的操作，或者长时间让 handler 无法结束运行。
 
-    @see        pushVideoSampleBuffer:
-    @see        pushPixelBuffer:
-    @see        pushPixelBuffer:completion:
+ @see        pushVideoSampleBuffer:
+ @see        pushPixelBuffer:
+ @see        pushPixelBuffer:completion:
 
-    @since      @v1.1.0
+ @since      v1.1.0
  */
 - (void)pushVideoSampleBuffer:(CMSampleBufferRef)sampleBuffer completion:(void (^)(BOOL success))handler;
 
 /*!
-    @method     pushPixelBuffer:
-    @abstract   发送视频 CVPixelBufferRef 数据。
+ @method     pushPixelBuffer:
+ @abstract   发送视频 CVPixelBufferRef 数据。
 
-    @param      pixelBuffer 待发送的 CVPixelBufferRef 数据
+ @param      pixelBuffer 待发送的 CVPixelBufferRef 数据
 
-    @discussion 该方法内部异步执行编码操作，所以如果你期望在调用完该方法后还要对 pixelBuffer 做操作，请调用 -pushPixelBuffer:completion: 方法，并在 handler block 中完成操作。
+ @discussion 该方法内部异步执行编码操作，所以如果你期望在调用完该方法后还要对 pixelBuffer 做操作，请调用 -pushPixelBuffer:completion: 方法，并在 handler block 中完成操作。
 
-    @see        pushVideoSampleBuffer:
-    @see        pushVideoSampleBuffer:completion:
-    @see        pushPixelBuffer:completion:
+ @see        pushVideoSampleBuffer:
+ @see        pushVideoSampleBuffer:completion:
+ @see        pushPixelBuffer:completion:
 
-    @since      @v1.0.0
+ @since      v1.0.0
  */
 - (void)pushPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 
 /*!
-    @method     pushPixelBuffer:completion:
-    @abstract   发送视频 CVPixelBufferRef 数据。
+ @method     pushPixelBuffer:completion:
+ @abstract   发送视频 CVPixelBufferRef 数据。
 
-    @param      pixelBuffer 待发送的 CVPixelBufferRef 数据
-    @param      handler 在编码 pixelBuffer 数据完成时的回调 block, 带是否编码成功的参数 success
+ @param      pixelBuffer 待发送的 CVPixelBufferRef 数据
+ @param      handler 在编码 pixelBuffer 数据完成时的回调 block, 带是否编码成功的参数 success
 
-    @discussion 如果你期望在调用完该方法后还要对 pixelBuffer 做操作，请调用该方法，并在 handler block 中完成操作。调用 -pushPixelBuffer: 相当于调用该方法并以 nil 作为 handler 参数。
+ @discussion 如果你期望在调用完该方法后还要对 pixelBuffer 做操作，请调用该方法，并在 handler block 中完成操作。调用 -pushPixelBuffer: 相当于调用该方法并以 nil 作为 handler 参数。
 
-    @warning    该方法的 handler 回调并不在主线程，也不在 delegateQueue 线程，所以除了对 pixelBuffer 做 unlock 或者销毁等操作，务必不要做额外高计算量的操作，或者长时间让 handler 无法结束运行。
+ @warning    该方法的 handler 回调并不在主线程，也不在 delegateQueue 线程，所以除了对 pixelBuffer 做 unlock 或者销毁等操作，务必不要做额外高计算量的操作，或者长时间让 handler 无法结束运行。
 
-    @see        pushVideoSampleBuffer:
-    @see        pushVideoSampleBuffer:completion:
-    @see        pushPixelBuffer:
+ @see        pushVideoSampleBuffer:
+ @see        pushVideoSampleBuffer:completion:
+ @see        pushPixelBuffer:
 
-    @since      @v1.1.0
+ @since      v1.1.0
  */
 - (void)pushPixelBuffer:(CVPixelBufferRef)pixelBuffer completion:(void (^)(BOOL success))handler;
 
@@ -550,36 +557,36 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 ///------------------
 
 /*!
-    @method     pushAudioSampleBuffer:
-    @abstract   发送音频 SampleBuffer 数据。
+ @method     pushAudioSampleBuffer:
+ @abstract   发送音频 SampleBuffer 数据。
 
-    @param      sampleBuffer 待发送的音频 CMSampleBuffer 数据
+ @param      sampleBuffer 待发送的音频 CMSampleBuffer 数据
 
-    @discussion 该方法内部异步执行编码操作，所以如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用 -pushAudioSampleBuffer:completion: 方法，并在 handler block 中完成操作。
+ @discussion 该方法内部异步执行编码操作，所以如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用 -pushAudioSampleBuffer:completion: 方法，并在 handler block 中完成操作。
 
-    @see        pushAudioSampleBuffer:completion:
-    @see        pushAudioBuffer:
-    @see        pushAudioBuffer:completion:
+ @see        pushAudioSampleBuffer:completion:
+ @see        pushAudioBuffer:
+ @see        pushAudioBuffer:completion:
 
-    @since      @v1.0.0
+ @since      v1.0.0
  */
 - (void)pushAudioSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 
 /*!
-    @method     pushAudioSampleBuffer:completion:
-    @abstract   发送音频 CMSampleBufferRef 数据。
+ @method     pushAudioSampleBuffer:completion:
+ @abstract   发送音频 CMSampleBufferRef 数据。
 
-    @param      sampleBuffer 待发送的音频 CMSampleBufferRef 数据
-    @param      handler 在编码 sampleBuffer 数据完成时的回调 block, 带是否编码成功的参数 success
+ @param      sampleBuffer 待发送的音频 CMSampleBufferRef 数据
+ @param      handler 在编码 sampleBuffer 数据完成时的回调 block, 带是否编码成功的参数 success
 
-    @discussion 如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用该方法，并在 handler block 中完成操作。调用 -pushAudioSampleBuffer: 相当于调用该方法并以 nil 作为 handler 参数。
+ @discussion 如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用该方法，并在 handler block 中完成操作。调用 -pushAudioSampleBuffer: 相当于调用该方法并以 nil 作为 handler 参数。
 
-    @warning    该方法的 handler 回调并不在主线程，也不在 delegateQueue 线程，所以除了对 sampleBuffer 做 unlock 或者销毁等操作，务必不要做额外高计算量的操作，或者长时间让 handler 无法结束运行。
-    @see        pushAudioSampleBuffer:
-    @see        pushAudioBuffer:
-    @see        pushAudioBuffer:completion:
+ @warning    该方法的 handler 回调并不在主线程，也不在 delegateQueue 线程，所以除了对 sampleBuffer 做 unlock 或者销毁等操作，务必不要做额外高计算量的操作，或者长时间让 handler 无法结束运行。
+ @see        pushAudioSampleBuffer:
+ @see        pushAudioBuffer:
+ @see        pushAudioBuffer:completion:
 
-    @since      @v1.1.0
+ @since      v1.1.0
  */
 - (void)pushAudioSampleBuffer:(CMSampleBufferRef)sampleBuffer completion:(void (^)(BOOL success))handler;
 
@@ -600,7 +607,7 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @see        pushAudioBuffer:
  @see        pushAudioBuffer:completion:
  
- @since      @v1.2.5
+ @since      v1.2.5
  */
 - (void)pushAudioSampleBuffer:(CMSampleBufferRef)sampleBuffer withChannelID:(const NSString *)channelID completion:(void (^)(BOOL success))handler;
 
@@ -621,7 +628,7 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @see        pushAudioBuffer:
  @see        pushAudioBuffer:completion:
  
- @since      @v1.1.6
+ @since      v1.1.6
  */
 - (void)pushAudioBuffer:(AudioBuffer *)buffer asbd:(const AudioStreamBasicDescription *)asbd;
 
@@ -640,40 +647,42 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @see        pushAudioBuffer:
  @see        pushAudioBuffer:completion:
  
- @since      @v1.1.6
+ @since      v1.1.6
  */
 - (void)pushAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd completion:(void (^)(BOOL success))handler;
 
-/**
- *  截图
- *  @param handle 类型 PLStreamScreenshotHandler block 。
- *
- *  @discussion 截图操作为异步，完成后将通过 handler 回调返回 UIImage 类型图片数据。
- *
- *  @since v2.2.0
- *
+/*!
+ @method     getScreenshotWithCompletionHandler:
+ @abstract   画面截图。
+ 
+ @param handler 类型 PLStreamScreenshotHandler block。
+
+ @discussion 截图操作为异步，完成后将通过 handler 回调返回 UIImage 类型图片数据。
+
+ @since      v2.2.0
  */
 - (void)getScreenshotWithCompletionHandler:(nullable PLStreamScreenshotHandler)handler;
 
-/**
- *  人工报障
- *
- *  @discussion 在出现特别卡顿的时候，可以调用次信息，上报故障。
- *
- *
- *  @since v2.2.1
- *
+/*!
+ @method     postDiagnosisWithCompletionHandler:
+ @abstract   人工报障
+
+ @param handle 类型 PLStreamScreenshotHandler block。
+ @discussion 在出现特别卡顿的时候，可以调用次信息，上报故障。
+
+ @since      v2.2.1
  */
 - (void)postDiagnosisWithCompletionHandler:(nullable PLStreamDiagnosisResultHandler)handle;
 
-/**
- *  发送 SEI 消息
- *
- *  @discussion 视频编码数据中规定的一种附加增强信息，平时一般不被使用，但可以在其中加入一些自定义消息，这些消息会被直播 CDN 转发到观众端
- *
- *  @warning 由于消息是直接被塞入视频数据中的，所以不能太大（几个字节比较合适）
- *  @since v2.3.5
- *
+/*!
+ @method     pushSEIMessage:repeat:
+ @abstract   发送 SEI 消息
+
+ @discussion 视频编码数据中规定的一种附加增强信息，平时一般不被使用，可以在其中加入一些自定义消息，这些消息会被直播 CDN 转发到观众端
+
+ @warning 由于消息是直接被塞入视频数据中的，所以不能太大（几个字节比较合适）
+ 
+ @since      v2.3.5
  */
 - (void)pushSEIMessage:(nonnull NSString *)message repeat:(NSInteger)repeatNum;
 
@@ -682,53 +691,53 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 #pragma mark - Category (Network)
 
 /*!
-    @category   PLStreamingSession (Network)
-    @abstract   PLStreamingSession 网络操作相关的参数与操作
+ @category   PLStreamingSession (Network)
+ @abstract   PLStreamingSession 网络操作相关的参数与操作
 
-    @since      v1.1.4
+ @since      v1.1.4
  */
 @interface PLStreamingSession (Network)
 
 /*!
-    @property   receiveTimeout
-    @abstract   网络连接和接收数据超时。
+ @property   receiveTimeout
+ @abstract   网络连接和接收数据超时。
 
-    @discussion 以秒作为单位。默认为 15s, 设定最小数值不得低于 3s，否则不变更。
+ @discussion 以秒作为单位。默认为 15s, 设定最小数值不得低于 3s，否则不变更。
 
-    @see        sendTimeout
+ @see        sendTimeout
 
-    @since      v1.1.4
+ @since      v1.1.4
  */
-@property (nonatomic, assign) int   receiveTimeout;
+@property (nonatomic, assign) int receiveTimeout;
 
 /*!
-     @property   sendTimeout
-     @abstract   网络发送数据超时。
+ @property   sendTimeout
+ @abstract   网络发送数据超时。
 
-     @discussion 以秒作为单位。默认为 3s, 设定最小数值不得低于 3s，否则不变更。
+ @discussion 以秒作为单位。默认为 3s, 设定最小数值不得低于 3s，否则不变更。
 
-     @see        receiveTimeout
+ @see        receiveTimeout
 
-     @since      v1.1.4
+ @since      v1.1.4
  */
-@property (nonatomic, assign) int   sendTimeout;
+@property (nonatomic, assign) int sendTimeout;
 
 /*!
-     @property   autoReconnectEnable
-     @abstract   自动断线重连开关，默认关闭。
+ @property   autoReconnectEnable
+ @abstract   自动断线重连开关，默认关闭。
  
-     @discussion 该方法在推流SDK内部实现断线自动重连。若开启此机制，则当推流因异常导致中断时，-streamingSession:didDisconnectWithError:回调不会马上被触发，推流将进行最多三次自动重连，每次重连的等待时间会由初次的0~2s递增至最大10s。等待重连期间，推流状态 streamState 会变为 PLStreamStateAutoReconnecting。一旦三次自动重连仍无法成功连接，则放弃治疗，-streamingSession:didDisconnectWithError:回调将被触发。
-                 该机制默认关闭，用户可在 -streamingSession:didDisconnectWithError: 方法中自定义添加断线重连处理逻辑。
-     @see        connectionInterruptionHandler
+ @discussion 该方法在推流SDK内部实现断线自动重连。若开启此机制，则当推流因异常导致中断时，-streamingSession:didDisconnectWithError:回调不会马上被触发，推流将进行最多三次自动重连，每次重连的等待时间会由初次的0~2s递增至最大10s。等待重连期间，推流状态 streamState 会变为 PLStreamStateAutoReconnecting。一旦三次自动重连仍无法成功连接，则放弃治疗，-streamingSession:didDisconnectWithError:回调将被触发。
+             该机制默认关闭，用户可在 -streamingSession:didDisconnectWithError: 方法中自定义添加断线重连处理逻辑。
+ @see        connectionInterruptionHandler
  */
 @property (nonatomic, assign, getter=isAutoReconnectEnable) BOOL autoReconnectEnable;
 
 /*!
-     @property    adaptiveQualityMode
-     @abstract    自适应质量(码率/帧率)控制模式
+ @property    adaptiveQualityMode
+ @abstract    自适应质量(码率/帧率)控制模式
      
-     @discussion  提供码率调整优先、帧率调整优先以及混合调整三种模式，只有在同时打开自适应码率开关 (enableAdaptiveBitrateControlWithMinVideoBitRate:) 以及动态帧率开关 (dynamicFrameEnable) 时，该模式才起到控制作用。默认为混合调整模式，即弱网时同时调节帧率跟码率。
-     @see         PLStreamAdaptiveQualityMode
+ @discussion  提供码率调整优先、帧率调整优先以及混合调整三种模式，只有在同时打开自适应码率开关 (enableAdaptiveBitrateControlWithMinVideoBitRate:) 以及动态帧率开关 (dynamicFrameEnable) 时，该模式才起到控制作用。默认为混合调整模式，即弱网时同时调节帧率跟码率。
+ @see         PLStreamAdaptiveQualityMode
  */
 @property (nonatomic, assign) PLStreamAdaptiveQualityMode adaptiveQualityMode;
 
@@ -744,20 +753,20 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 - (void)enableAdaptiveBitrateControlWithMinVideoBitRate:(NSUInteger)minVideoBitRate;
 
 /*!
-    @method     disableAdaptiveBitrateControl
-    @abstract   关闭自适应码率调节功能，默认即为关闭状态
+ @method     disableAdaptiveBitrateControl
+ @abstract   关闭自适应码率调节功能，默认即为关闭状态
  */
 - (void)disableAdaptiveBitrateControl;
 
 /*!
-     @property   connectionInterruptionHandler
-     @abstract   推流断开用户回调
+ @property   connectionInterruptionHandler
+ @abstract   推流断开用户回调
  
-     @discussion 该回调函数传入参数为推流断开产生的错误信息 error。返回值为布尔值，YES表示在该错误状态下允许推流自动重连，NO则代表不允许自动重连。本回调函数与 autoReconnectEnable 开关配合作用，只有在该开关开启时，本回调会在自动重连之前被调用，并通过返回值判断是否继续自动重连。若用户未设置该回调方法，则按默认策略最多进行三次自动重连。
+ @discussion 该回调函数传入参数为推流断开产生的错误信息 error。返回值为布尔值，YES表示在该错误状态下允许推流自动重连，NO则代表不允许自动重连。本回调函数与 autoReconnectEnable 开关配合作用，只有在该开关开启时，本回调会在自动重连之前被调用，并通过返回值判断是否继续自动重连。若用户未设置该回调方法，则按默认策略最多进行三次自动重连。
  
-     @warning    该回调会在主线程中执行
+ @warning    该回调会在主线程中执行
  
-     @see        autoReconnectEnable
+ @see        autoReconnectEnable
  */
 @property (nonatomic, copy) _Nullable ConnectionInterruptionHandler connectionInterruptionHandler;
 
@@ -795,10 +804,10 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 
  @discussion 打开该开关后，将使用 QUIC 协议推流，弱网下有更好的效果。
 
- @warning   请在开始推流前设置，推流过程中设置该值不会影响当次推流的行为。
- @warning   使用 QUIC 协议推流到不支持 QUIC 的 CDN 会失败。
+ @warning    请在开始推流前设置，推流过程中设置该值不会影响当次推流的行为。
+ @warning    使用 QUIC 协议推流到不支持 QUIC 的 CDN 会失败。
 
- @since      @v2.3.0
+ @since      v2.3.0
  */
 @property (nonatomic, assign, getter=isQuicEnable) BOOL quicEnable;
 
@@ -807,53 +816,53 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 #pragma mark - Category (SendingBuffer)
 
 /*!
-     @category   PLStreamingSession (SendingBuffer)
-     @abstract   PLStreamingSession 发送队列相关参数
+ @category   PLStreamingSession (SendingBuffer)
+ @abstract   PLStreamingSession 发送队列相关参数
 
-     @since      v1.0.0
+ @since      v1.0.0
  */
 @interface PLStreamingSession (SendingBuffer)
 
 /*!
-     @property   bufferDelegate
-     @abstract   发送队列的代理对象。
+ @property   bufferDelegate
+ @abstract   发送队列的代理对象。
 
-     @discussion 发送队列的代理对象需呀实现 PLStreamingSendingBufferDelegate 协议，可以在发送队列空或者满时获取到回调。
+ @discussion 发送队列的代理对象需呀实现 PLStreamingSendingBufferDelegate 协议，可以在发送队列空或者满时获取到回调。
 
-     @see        PLStreamingSendingBufferDelegate
+ @see        PLStreamingSendingBufferDelegate
 
-     @since      v1.0.0
+ @since      v1.0.0
  */
 @property (nonatomic, weak) id<PLStreamingSendingBufferDelegate> bufferDelegate;
 
 /*!
-    @property   threshold
-    @abstract   发送丢列触发丢包策略时会丢掉的阈值。
+ @property   threshold
+ @abstract   发送丢列触发丢包策略时会丢掉的阈值。
 
-    @discussion 当队列满时，会触发发送队列内的包被丢弃，即丢帧。此时需要一个边界来停止丢帧行为，就是这个阈值字段。
-                可设定范围 [0..1], 不可超出这个范围, 默认为 0.5。
+ @discussion 当队列满时，会触发发送队列内的包被丢弃，即丢帧。此时需要一个边界来停止丢帧行为，就是这个阈值字段。
+             可设定范围 [0..1], 不可超出这个范围, 默认为 0.5。
 
-    @see        v1.0.0
+ @see        v1.0.0
  */
-@property (nonatomic, assign) CGFloat   threshold;
+@property (nonatomic, assign) CGFloat threshold;
 
 /*!
-    @property   maxCount
-    @abstract   发送队列最大容纳包数量。
+ @property   maxCount
+ @abstract   发送队列最大容纳包数量。
 
-    @discussion 该数量囊括音频与视频包，默认为 300 个。当网络不佳时，发送队列就可能出现队列满的情况，此时会触发队列丢包。
+ @discussion 该数量囊括音频与视频包，默认为 300 个。当网络不佳时，发送队列就可能出现队列满的情况，此时会触发队列丢包。
 
-    @see        v1.0.0
+ @see        v1.0.0
  */
-@property (nonatomic, assign) NSUInteger    maxCount;
+@property (nonatomic, assign) NSUInteger maxCount;
 
 /*!
-    @property   currentCount
-    @abstract   发送队列当前已有包数，只读属性。
+ @property   currentCount
+ @abstract   发送队列当前已有包数，只读属性。
 
-    @see        v1.0.0
+ @see        v1.0.0
  */
-@property (nonatomic, assign, readonly) NSUInteger    currentCount;
+@property (nonatomic, assign, readonly) NSUInteger currentCount;
 
 @end
 
@@ -884,10 +893,10 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 ///------------------
 
 /*!
-    @category   PLCameraStreamingSession(Application)
-    @abstract   与应用状态相关的接口
-
-    @since      v1.0.0
+ @category   PLCameraStreamingSession(Application)
+ @abstract   与应用状态相关的接口
+ 
+ @since      v1.0.0
  */
 @interface PLStreamingSession (Application)
 
@@ -899,7 +908,7 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 
  @see        v1.0.0
  */
-@property (nonatomic, assign, getter=isIdleTimerDisable) BOOL  idleTimerDisable;   // default as YES.
+@property (nonatomic, assign, getter=isIdleTimerDisable) BOOL idleTimerDisable;   // default as YES.
 
 @end
 
@@ -918,11 +927,13 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
 @interface PLStreamingSession (Info)
 
 /*!
-    @method     versionInfo
-    @abstract   PLStreamingKit 的 SDK 版本。
+ @method     versionInfo
+ @abstract   PLStreamingKit 的 SDK 版本。
 
-    @since      v1.1.1
+ @since      v1.1.1
  */
 + (NSString *)versionInfo;
 
 @end
+
+NS_ASSUME_NONNULL_END

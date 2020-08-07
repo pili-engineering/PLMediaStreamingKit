@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/** Proxy class for AVAudioSession that adds a locking mechanism similar to
+/*! Proxy class for AVAudioSession that adds a locking mechanism similar to
  *  AVCaptureDevice. This is used to that interleaving configurations between
  *  WebRTC and the application layer are avoided. Only setter methods are
  *  currently proxied. Getters can be accessed directly off AVAudioSession.
@@ -22,21 +22,21 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PLAudioSession : NSObject
 
 
-/** Default constructor. Do not call init. */
+/*! Default constructor. Do not call init. */
 + (instancetype)sharedInstance;
 
-/** Convenience property to access the AVAudioSession singleton. Callers should
+/*! Convenience property to access the AVAudioSession singleton. Callers should
  *  not call setters on AVAudioSession directly, but other method invocations
  *  are fine.
  */
 @property(nonatomic, readonly) AVAudioSession *session;
 
-/** Request exclusive access to the audio session for configuration. This call
+/*! Request exclusive access to the audio session for configuration. This call
  *  will block if the lock is held by another object.
  */
 - (void)lockForConfiguration;
 
-/** Relinquishes exclusive access to the audio session. */
+/*! Relinquishes exclusive access to the audio session. */
 - (void)unlockForConfiguration;
 
 /* Set the session active or inactive. Note that activating an audio session is a synchronous (blocking) operation.

@@ -24,9 +24,7 @@ FOUNDATION_EXPORT const unsigned char PLMediaStreamingKit_VersionString[];
 #import <PLMediaStreamingKit/PLStreamingEnv.h>
 #import <PLMediaStreamingKit/PLStreamStatus.h>
 #import <PLMediaStreamingKit/PLAudioSession.h>
-#import <PLMediaStreamingKit/PLRTCConfiguration.h>
 #import <PLMediaStreamingKit/PLStreamingSession.h>
-#import <PLMediaStreamingKit/PLRTCStreamingSession.h>
 #import <PLMediaStreamingKit/PLMediaStreamingSession.h>
 #import <PLMediaStreamingKit/PLAudioEffectConfiguration.h>
 #import <PLMediaStreamingKit/PLAudioCaptureConfiguration.h>

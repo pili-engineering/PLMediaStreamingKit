@@ -12,8 +12,12 @@
 
 @interface PLAudioEffectCustomConfiguration : PLAudioEffectConfiguration
 
-/**
- @brief 用户自定义音效过滤器
+/*!
+ @abstract 用户自定义音效过滤器
+ 
+ @param block PLAudioEffectCustomConfigurationBlock
+ 
+ @return PLAudioEffectCustomConfiguration 对象
  */
 + (instancetype)configurationWithBlock:(PLAudioEffectCustomConfigurationBlock)block;
 

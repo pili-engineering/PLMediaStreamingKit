@@ -14,43 +14,43 @@
 
 @protocol PLRotatePixelBufferProcessorProtocol <NSObject>
 
-/**
- @brief 需要从原始图片中裁剪出来的部分的位置和大小
+/*!
+ @abstract 需要从原始图片中裁剪出来的部分的位置和大小
  
- @since v2.3.4
+ @since    v2.3.4
  */
 @property (nonatomic, assign) CGRect sourceRect;
 
-/**
- @brief 裁剪出来的部分放置在新图之中的位置和大小
+/*!
+ @abstract 裁剪出来的部分放置在新图之中的位置和大小
  
- @since v2.3.4
+ @since    v2.3.4
  */
 @property (nonatomic, assign) CGRect destRect;
 
-/**
- @brief 新图的整体画幅大小
+/*!
+ @abstract 新图的整体画幅大小
  
- @since v2.3.4
+ @since    v2.3.4
  */
 @property (nonatomic, assign) CGSize destFrameSize;
 
-/**
- @brief 当被裁剪的部分比例与在新图中需要安放的位置的比例不同时选择的填充模式
+/*!
+ @abstract 当被裁剪的部分比例与在新图中需要安放的位置的比例不同时选择的填充模式
  
- @since v2.3.4
+ @since    v2.3.4
  */
 @property (nonatomic, assign) PLVideoFillModeType aspectMode;
 
-/**
- @brief 旋转类型，默认值为 PLRotateModeNone
+/*!
+ @abstract 旋转类型，默认值为 PLRotateModeNone
  
- @since v2.3.4
+ @since    v2.3.4
  */
 @property (nonatomic, assign) PLRotateModeType rotateMode;
 
-/**
- @brief 初始化一个 PLRotatePixelBufferProcessor 对象
+/*!
+ @abstract 初始化一个 PLRotatePixelBufferProcessor 对象
  
  @param sourceRect    需要从原始图片中裁剪出来的部分的位置和大小
  @param destRect      裁剪出来的部分放置在新图之中的位置和大小
@@ -59,12 +59,12 @@
  
  @return 初始化后的 PLRotatePixelBufferProcessor 对象
  
- @since v2.3.4
+ @since  v2.3.4
  */
 - (instancetype)initWithSourceRect:(CGRect)sourceRect destRect:(CGRect)destRect destFrameSize:(CGSize)destFrameSize aspectMode:(PLVideoFillModeType)aspectMode;
 
-/**
- @brief 用于处理图像的接口
+/*!
+ @abstract 用于处理图像的接口
  
  @param sourceBuffer 原始图片的对象
  
@@ -72,7 +72,7 @@
  
  @discussion 使用该接口进行图像处理需要注意的是，为了保持图像处理的效率，减小开销，该类内部会持有一个 CVPixelBufferRef 并在每次都会返回该对象，因此在每次调用之后请确认对返回的数据已经使用完毕再进行下一次调用，否则会出现非预期的问题
  
- @since v2.3.4
+ @since      v2.3.4
  */
 - (CVPixelBufferRef)processPixelBuffer:(CVPixelBufferRef)sourceBuffer;
 
@@ -82,7 +82,7 @@
 
 @end
 
-/**
+/*!
  * 视频帧的裁剪+旋转的使用示例
  
  // -----------------------------------------------------
