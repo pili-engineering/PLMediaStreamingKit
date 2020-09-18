@@ -259,9 +259,9 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  
  @since      v1.1.7
  */
-- (instancetype)initWithVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
-                        audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
-                                             stream:(PLStream *)stream;
+- (instancetype)initWithVideoStreamingConfiguration:(nullable PLVideoStreamingConfiguration *)videoStreamingConfiguration
+                        audioStreamingConfiguration:(nullable PLAudioStreamingConfiguration *)audioStreamingConfiguration
+                                             stream:(nullable PLStream *)stream;
 
 /*!
  @method     initWithVideoStreamingConfiguration:audioStreamingConfiguration:stream:dns:
@@ -287,10 +287,10 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  
  @since      v1.0.0
  */
-- (instancetype)initWithVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
-                        audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
-                                             stream:(PLStream *)stream
-                                                dns:(QNDnsManager *)dns;
+- (instancetype)initWithVideoStreamingConfiguration:(nullable PLVideoStreamingConfiguration *)videoStreamingConfiguration
+                        audioStreamingConfiguration:(nullable PLAudioStreamingConfiguration *)audioStreamingConfiguration
+                                             stream:(nullable PLStream *)stream
+                                                dns:(nullable QNDnsManager *)dns;
 
 /*!
  @method     destroy

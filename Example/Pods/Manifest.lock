@@ -3,9 +3,9 @@ PODS:
     - Fabric (~> 1.10.1)
   - Fabric (1.10.1)
   - Masonry (1.1.0)
-  - PLMediaStreamingKit (3.0.1):
-    - PLMediaStreamingKit/iphoneos (= 3.0.1)
-  - PLMediaStreamingKit/iphoneos (3.0.1)
+  - PLMediaStreamingKit (3.0.2):
+    - PLMediaStreamingKit/iphoneos (= 3.0.2)
+  - PLMediaStreamingKit/iphoneos (3.0.2)
 
 DEPENDENCIES:
   - Crashlytics
@@ -14,7 +14,7 @@ DEPENDENCIES:
   - PLMediaStreamingKit (from `../`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Crashlytics
     - Fabric
     - Masonry
@@ -27,8 +27,8 @@ SPEC CHECKSUMS:
   Crashlytics: 5aa8e90dcbf2f34898b4f5a0037787531246cca0
   Fabric: f6f21452846788bb44595d73e9909d79d328e617
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  PLMediaStreamingKit: e458493ea7eff3ad7f1c0476fa4a4c9e43d99afd
+  PLMediaStreamingKit: 20e0dac77a93e488c8b06bfabf8fdb0fc61f07b5
 
 PODFILE CHECKSUM: 8d7c89f30111bbbfa14ac3d29f6dd4c6e565c1c5
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.7.5
