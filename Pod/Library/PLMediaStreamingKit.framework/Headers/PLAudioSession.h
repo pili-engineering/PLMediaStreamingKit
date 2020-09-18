@@ -9,6 +9,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 
+typedef void (^PermissionBlock)(BOOL granted);
+
 NS_ASSUME_NONNULL_BEGIN
 
 /*! Proxy class for AVAudioSession that adds a locking mechanism similar to

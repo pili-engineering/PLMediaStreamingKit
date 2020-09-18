@@ -154,11 +154,11 @@ NS_ASSUME_NONNULL_BEGIN
              当videoStreamingConfiguration 和 audioStreamingConfiguration 同时为 nil 时为纯连麦模式。
              当初始化方法会优先使用后置摄像头，如果发现设备没有后置摄像头，会判断是否有前置摄像头，如果都没有，便会返回 nil。
  */
-- (instancetype)initWithVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration
-                        audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
-                      videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
-                      audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
-                                           stream:(PLStream *)stream NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithVideoCaptureConfiguration:(nullable PLVideoCaptureConfiguration *)videoCaptureConfiguration
+                        audioCaptureConfiguration:(nullable PLAudioCaptureConfiguration *)audioCaptureConfiguration
+                      videoStreamingConfiguration:(nullable PLVideoStreamingConfiguration *)videoStreamingConfiguration
+                      audioStreamingConfiguration:(nullable PLAudioStreamingConfiguration *)audioStreamingConfiguration
+                                           stream:(nullable PLStream *)stream NS_DESIGNATED_INITIALIZER;
   
 /*!
  @abstract 初始化方法
@@ -180,12 +180,12 @@ NS_ASSUME_NONNULL_BEGIN
              如果你对 dns 解析部分不清楚，可以直接使用
  -initWithVideoCaptureConfiguration:audioCaptureConfiguration:videoStreamingConfiguration:audioStreamingConfiguration:stream 来初始化 PLMediaStreamingSession 对象
  */
-- (instancetype)initWithVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration
-                        audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
-                      videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
-                      audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
-                                           stream:(PLStream *)stream
-                                              dns:(QNDnsManager *)dns;
+- (instancetype)initWithVideoCaptureConfiguration:(nullable PLVideoCaptureConfiguration *)videoCaptureConfiguration
+                        audioCaptureConfiguration:(nullable PLAudioCaptureConfiguration *)audioCaptureConfiguration
+                      videoStreamingConfiguration:(nullable PLVideoStreamingConfiguration *)videoStreamingConfiguration
+                      audioStreamingConfiguration:(nullable PLAudioStreamingConfiguration *)audioStreamingConfiguration
+                                           stream:(nullable PLStream *)stream
+                                              dns:(nullable QNDnsManager *)dns;
 
 /*!
  @abstract 初始化方法
@@ -208,12 +208,12 @@ NS_ASSUME_NONNULL_BEGIN
              如果你对 dns 解析部分不清楚，可以直接使用
  -initWithVideoCaptureConfiguration:audioCaptureConfiguration:videoStreamingConfiguration:audioStreamingConfiguration:stream 来初始化 PLMediaStreamingSession 对象
  */
-- (instancetype)initWithVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration
-                        audioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration
-                      videoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration
-                      audioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration
-                                           stream:(PLStream *)stream
-                                              dns:(QNDnsManager *)dns
+- (instancetype)initWithVideoCaptureConfiguration:(nullable PLVideoCaptureConfiguration *)videoCaptureConfiguration
+                        audioCaptureConfiguration:(nullable PLAudioCaptureConfiguration *)audioCaptureConfiguration
+                      videoStreamingConfiguration:(nullable PLVideoStreamingConfiguration *)videoStreamingConfiguration
+                      audioStreamingConfiguration:(nullable PLAudioStreamingConfiguration *)audioStreamingConfiguration
+                                           stream:(nullable PLStream *)stream
+                                              dns:(nullable QNDnsManager *)dns
                                       eaglContext:(EAGLContext *)eaglContext;
 
 /*!
