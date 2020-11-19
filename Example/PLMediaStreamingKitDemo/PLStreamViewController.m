@@ -122,11 +122,15 @@ PLInputTextViewDelegate
     // 销毁 PLMediaStreamingSession
     if (_mediaSession.isStreamingRunning) {
         [_mediaSession stopStreaming];
+        _mediaSession.delegate = nil;
+        _mediaSession = nil;
     }
     
     // 销毁 PLStreamingSession
     if (_streamSession.isRunning) {
         [_streamSession stop];
+        _streamSession.delegate = nil;
+        _streamSession = nil;
     }
     
     // 打印代表 PLStreamViewController 成功释放
@@ -622,7 +626,9 @@ PLInputTextViewDelegate
 
 // 添加贴纸
 - (void)showDetailView:(PLShowDetailView *)showDetailView didAddStickerView:(PLPasterView *)stickerView {
-    _mediaSession.overlaySuperView.frame = _mediaSession.previewView.bounds;
+    CGFloat width = _mediaSession.videoStreamingConfiguration.videoSize.width;
+    CGFloat height = _mediaSession.videoStreamingConfiguration.videoSize.height;
+    _mediaSession.overlaySuperView.frame = CGRectMake(0, CGRectGetHeight(self.view.frame)/2 - height/width*CGRectGetWidth(self.view.frame)/2, CGRectGetWidth(self.view.frame), height/width*CGRectGetWidth(self.view.frame));
     [_mediaSession.previewView addSubview:_mediaSession.overlaySuperView];
     [_mediaSession addOverlayView:stickerView];
 }
@@ -712,10 +718,13 @@ PLInputTextViewDelegate
         if (!button.selected) {
             __weak typeof(self) weakSelf = self;
             [_mediaSession startStreamingWithPushURL:_pushURL feedback:^(PLStreamStartStateFeedback feedback) {
-                [weakSelf streamStateAlert:feedback];
-                if (feedback == PLStreamStartStateSuccess) {
-                    button.selected = YES;
-                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf streamStateAlert:feedback];
+                    NSLog(@"[PLStreamViewController] start stream feedback - %lu", (unsigned long)feedback);
+                    if (feedback == PLStreamStartStateSuccess) {
+                        button.selected = YES;
+                    }
+                });
             }];
         } else{
             button.selected = NO;

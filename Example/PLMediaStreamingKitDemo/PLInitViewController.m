@@ -258,6 +258,10 @@ UINavigationControllerDelegate
 
 // 进入推流程序
 - (void)nextStep {
+    if (_settingsView.urlTextField.text.length < 7 || _settingsView.urlTextField.text.length == 0) {
+        [self alertViewWithMessage:@"推流 URL 地址不可用！"];
+        return;
+    }
     if (_settingsView.streamType == 2) {
         // 外部导入数据 推流
         UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
