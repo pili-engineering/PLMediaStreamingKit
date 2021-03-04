@@ -42,7 +42,7 @@ static NSString *AudioFileError[] = {
 };
 
 // PreferredExtension
-static NSString *PLPreferredExtension = @"com.pili-engineering.PLMediaStreamingKitDemo.PLReplaykitExtension";
+static NSString *PLPreferredExtension = @"ccom.pili-engineering.PLMediaStreamingKitDemo.BroadcastUploadExtension";
 
 @interface PLStreamViewController ()
 <
