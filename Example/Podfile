@@ -2,9 +2,17 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '8.0'
 
+pod "PLMediaStreamingKit", :path => "../"
+
+
 target 'PLMediaStreamingKitDemo' do
-  pod "PLMediaStreamingKit", :path => "../"
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Masonry'
+end
+
+target 'BroadcastUploadExtension' do
+end
+
+target 'BroadcastUploadExtensionSetupUI' do
 end

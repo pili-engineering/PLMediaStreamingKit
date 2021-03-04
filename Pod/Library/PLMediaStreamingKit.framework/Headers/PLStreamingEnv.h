@@ -14,9 +14,21 @@
 /*!
  @abstract 初始化 StreamingSession 的运行环境，需要在 -application:didFinishLaunchingWithOptions: 方法下调用该方法，
  
- @warning 不调用该方法将导致 PLStreamingSession 对象无法初始化
+ @warning 低于 v3.0.3 版本，需要调用该方法初始化 PLStreamingEnv，否则将导致 PLStreamingSession 对象无法初始化
  */
-+(void)initEnv;
++(void)initEnv __deprecated_msg("Method deprecated in v3.0.3. Use `initEnvWithUserUID:`");;
+
+/*!
+ @abstract 初始化 StreamingSession 的运行环境，需要在 -application:didFinishLaunchingWithOptions: 方法下调用该方法，
+ 
+ @param UID 每个用户的唯一标识
+ 
+ @since v3.0.3
+ 
+ @warning initEnv 已废弃，需要调用该方法初始化 PLStreamingEnv，否则将导致 PLStreamingSession 对象无法初始化
+ */
+
++(void)initEnvWithUserUID:(NSString *)UID;
 
 /*!
  @abstract 判断当前环境是否已经初始化
@@ -63,5 +75,12 @@
  @abstract   设置设备 ID。
 */
 + (void)setDeviceID:(NSString *)deviceID;
+
+/*!
+ @abstract   获取用户唯一标识
+ 
+ @since v3.0.3
+ */
++ (NSString *)userUID;
 
 @end

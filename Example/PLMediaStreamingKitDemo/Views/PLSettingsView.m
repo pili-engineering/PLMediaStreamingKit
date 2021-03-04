@@ -684,46 +684,52 @@ PLListArrayViewDelegate
         } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioStreamingConfiguration"]) {
             PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
             if ([configureModel.configuraKey containsString:@"encodedAudioSampleRate"]) {
-                audioStreamingConfiguration.encodedAudioSampleRate = index;
-                if (_mediaSession) {
-                    _mediaSession.audioStreamingConfiguration.encodedAudioSampleRate = index;
+                switch (index) {
+                    case 0:
+                    {
+                        audioStreamingConfiguration.encodedAudioSampleRate = PLStreamingAudioSampleRate_48000Hz;
+                    }
+                        break;
+                    case 1:
+                    {
+                        audioStreamingConfiguration.encodedAudioSampleRate = PLStreamingAudioSampleRate_44100Hz;
+                    }
+                        break;
+                    case 2:
+                    {
+                        audioStreamingConfiguration.encodedAudioSampleRate = PLStreamingAudioSampleRate_22050Hz;
+                    }
+                        break;
+                    case 3:
+                    {
+                        audioStreamingConfiguration.encodedAudioSampleRate = PLStreamingAudioSampleRate_11025Hz;
+                    }
+                        break;
+
+                    default:
+                        break;
                 }
             } else if ([configureModel.configuraKey containsString:@"audioBitRate"]){
                 switch (index) {
                     case 0:
                         audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_64Kbps;
-                        if (_mediaSession) {
-                            _mediaSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_64Kbps;
-                        }
-
                         break;
                     case 1:
                         audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_96Kbps;
-                        if (_mediaSession) {
-                            _mediaSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_96Kbps;
-                        }
-
                         break;
                     case 2:
                         audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_128Kbps;
-                        if (_mediaSession) {
-                            _mediaSession.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_128Kbps;
-                        }
-
                         break;
                     default:
                         break;
                 }
             } else if ([configureModel.configuraKey containsString:@"encodedNumberOfChannels"]){
                 audioStreamingConfiguration.encodedNumberOfChannels = (UInt32) index + 1;
-                if (_mediaSession) {
-                    _mediaSession.audioStreamingConfiguration.encodedNumberOfChannels = (UInt32) index + 1;
-                }
             } else if ([configureModel.configuraKey containsString:@"audioEncoderType"]){
                 audioStreamingConfiguration.audioEncoderType = index;
-                if (_mediaSession) {
-                    _mediaSession.audioStreamingConfiguration.audioEncoderType = index;
-                }
+            }
+            if (_mediaSession) {
+                [_mediaSession reloadAudioStreamingConfiguration:audioStreamingConfiguration];
             }
             if (_streamSession) {
                 [_streamSession reloadAudioStreamingConfiguration:audioStreamingConfiguration];

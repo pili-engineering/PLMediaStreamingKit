@@ -22,8 +22,11 @@
     
     [Fabric with:@[[Crashlytics class]]];
 
+    
+    // 设计用户唯一标识
+    NSString *userUid = [NSString stringWithFormat:@"%@_%@_demo_test",[[NSBundle mainBundle] bundleIdentifier],  [[UIDevice currentDevice] identifierForVendor].UUIDString];
     // 1.初始化 StreamingSession 的运行环境
-    [PLStreamingEnv initEnv];
+    [PLStreamingEnv initEnvWithUserUID:userUid];
     // 2.设置日志 log 等级
     [PLStreamingEnv setLogLevel:PLStreamLogLevelDebug];
     // 3.开启写 SDK 的日志文件到沙盒

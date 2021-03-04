@@ -82,6 +82,19 @@ NS_ASSUME_NONNULL_BEGIN
 */
 - (AudioBuffer *)mediaStreamingSession:(PLMediaStreamingSession *)session microphoneSourceDidGetAudioBuffer:(AudioBuffer *)audioBuffer;
 
+
+/*!
+ @abstract   麦克风原数据时的回调
+
+ @discussion 需注意该回调在 AU Remote IO 线程，请不要做过于耗时的操作，否则可能阻塞该线程影响音频输出或其他未知问题。
+ 
+ @warning 注意 buffer 的采样率等信息，具体值可从 asbd 中获取。
+ 
+ @since      v3.0.3
+*/
+
+- (AudioBuffer *)mediaStreamingSession:(PLMediaStreamingSession *)session microphoneSourceDidGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd;
+
 @end
 
 #pragma mark - basic
@@ -443,6 +456,16 @@ NS_ASSUME_NONNULL_BEGIN
  @abstract 结束推流
  */
 - (void)stopStreaming;
+
+/*!
+ @abstract 重新加载音频推流配置
+
+ @param audioStreamingConfiguration 新的视频编码配置
+ 
+ @since      v3.0.3
+ */
+- (void)reloadAudioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration;
+
 
 /*!
  @abstract 重新加载视频推流配置
