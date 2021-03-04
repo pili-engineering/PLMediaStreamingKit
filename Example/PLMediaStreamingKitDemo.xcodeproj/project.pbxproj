@@ -421,6 +421,7 @@
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
 						DevelopmentTeam = W2TP34G2MM;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -699,6 +700,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
 				ENABLE_BITCODE = YES;
@@ -712,8 +715,9 @@
 				);
 				MARKETING_VERSION = 3.0.3;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo";
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -725,6 +729,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
 				ENABLE_BITCODE = YES;
@@ -739,8 +745,9 @@
 				MARKETING_VERSION = 3.0.3;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKit";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo";
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

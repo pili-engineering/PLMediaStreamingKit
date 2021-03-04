@@ -42,7 +42,7 @@ static NSString *AudioFileError[] = {
 };
 
 // PreferredExtension
-static NSString *PLPreferredExtension = @"com.qbox.PLMediaStreamingKitDemo.PLReplaykitExtension";
+static NSString *PLPreferredExtension = @"com.pili-engineering.PLMediaStreamingKitDemo.PLReplaykitExtension";
 
 @interface PLStreamViewController ()
 <
@@ -87,6 +87,7 @@ PLInputTextViewDelegate
 // 录制全屏时，不显示
 @property (nonatomic, strong) UIButton *startButton;
 @property (nonatomic, strong) UIButton *seiButton;
+@property (nonatomic, strong) UIButton *reloadButton;
 
 @property (nonatomic, assign) CGFloat topSpace;
 
@@ -172,9 +173,22 @@ PLInputTextViewDelegate
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (_mediaSession) {
+        _videoStreamConfiguration = _mediaSession.videoStreamingConfiguration;
+        _videoCaptureConfiguration = _mediaSession.videoCaptureConfiguration;
+        _audioStreamingConfiguration = _mediaSession.audioStreamingConfiguration;
+        _audioCaptureConfiguration = _mediaSession.audioCaptureConfiguration;
+    }
+    
+    if (_streamSession) {
+        _videoStreamConfiguration = _streamSession.videoStreamingConfiguration;
+        _audioStreamingConfiguration = _streamSession.audioStreamingConfiguration;
+    }
+    
     // UI 适配顶部
     CGFloat space = 24;
-    if (PL_iPhoneX || PL_iPhoneXR || PL_iPhoneXSMAX) {
+    if (PL_iPhoneX || PL_iPhoneXR || PL_iPhoneXSMAX ||
+        PL_iPhone12Min || PL_iPhone12Pro || PL_iPhone12PMax) {
         space = 44;
     }
     _topSpace = space + 4;
@@ -300,8 +314,8 @@ PLInputTextViewDelegate
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        weakSelf.statusLabel.text = [NSString stringWithFormat:@"video %.1f fps\naudio %.1f fps\ntotal bitrate %.1f kbps",status.videoFPS, status.audioFPS, status.totalBitrate/1000];
-        NSLog(@"[PLStreamViewController] PLStreamStatus 的信息: video FPS %.1f, audio FPS %.1f, total bitrate %.1f", status.videoFPS, status.audioFPS, status.totalBitrate);
+        weakSelf.statusLabel.text = [NSString stringWithFormat:@"video %.1f fps\naudio %.1f fps\nvideo %.1f bps\naudio %.1f bps\ntotal bitrate %.1f kbps",status.videoFPS, status.audioFPS, status.videoBitrate, status.audioBitrate, status.totalBitrate/1000];
+        NSLog(@"[PLStreamViewController] PLStreamStatus 的信息: video FPS %.1f, audio FPS %.1f, video Bps %.1f, audio Bps %.1f, total bitrate %.1f", status.videoFPS, status.audioFPS, status.videoBitrate, status.audioBitrate, status.totalBitrate);
     });
 }
 
@@ -337,9 +351,26 @@ PLInputTextViewDelegate
 }
 
 // 麦克风采集的数据回调
-- (AudioBuffer *)mediaStreamingSession:(PLMediaStreamingSession *)session microphoneSourceDidGetAudioBuffer:(AudioBuffer *)audioBuffer {
+- (AudioBuffer *)mediaStreamingSession:(PLMediaStreamingSession *)session microphoneSourceDidGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(nonnull const AudioStreamBasicDescription *)asbd {
+//    [self printASBD:*asbd tag:@"test"];
     return audioBuffer;
 }
+
+- (void)printASBD:(AudioStreamBasicDescription)asbd tag:(NSString *)tag{
+    char formatIDString[5];
+    UInt32 formatID = CFSwapInt32HostToBig (asbd.mFormatID);
+    bcopy (&formatID, formatIDString, 4);
+    formatIDString[4] = '\0';
+
+    NSLog (@"%@  Sample Rate:  %10.0f", tag, asbd.mSampleRate);
+    NSLog (@"%@  Format ID: %10s", tag, formatIDString);
+    NSLog (@"%@  Format Flags: %10x", tag, asbd.mFormatFlags);
+    NSLog (@"%@  Frames per Packet:   %10d", tag, asbd.mFramesPerPacket);
+    NSLog (@"%@  Bytes per Frame:     %10d", tag, asbd.mBytesPerFrame);
+    NSLog (@"%@  Channels per Frame:  %10d", tag, asbd.mChannelsPerFrame);
+    NSLog (@"%@  Bits per Channel:    %10d", tag, asbd.mBitsPerChannel);
+}
+
 
 #pragma mark - PLAudioPlayerDelegate
 // 音频播放发生错误的回调
@@ -392,17 +423,17 @@ PLInputTextViewDelegate
     [self.view addSubview:_streamLabel];
 
     // 流信息 label
-    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, _topSpace + 58, 150, 60)];
+    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, _topSpace + 58, 150, 110)];
     _statusLabel.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     _statusLabel.font = FONT_LIGHT(11);
     _statusLabel.textColor = [UIColor whiteColor];
     _statusLabel.textAlignment = NSTextAlignmentLeft;
     _statusLabel.numberOfLines = 0;
-    _statusLabel.text = @" video 0.0 fps\n audio 0.0 fps\n total bitrate 0.0kbps";
+    _statusLabel.text = @" video 0.0 fps\n audio 0.0 fps\n video 0.0 bps\n audio 0.0 bps\n total bitrate 0.0kbps";
     [self.view addSubview:_statusLabel];
     
     // SEI 按钮
-    _seiButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 130, 65, 26)];
+    _seiButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 180, 65, 26)];
     _seiButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [_seiButton setTitle:@"发送 SEI" forState:UIControlStateNormal];
     [_seiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -411,7 +442,7 @@ PLInputTextViewDelegate
     [self.view addSubview:_seiButton];
     
     // 开始/停止推流按钮
-    _startButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 168, 65, 26)];
+    _startButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 218, 65, 26)];
     _startButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [_startButton setTitle:@"开始推流" forState:UIControlStateNormal];
     [_startButton setTitle:@"停止推流" forState:UIControlStateSelected];
@@ -419,6 +450,15 @@ PLInputTextViewDelegate
     _startButton.titleLabel.font = FONT_MEDIUM(12.f);
     [_startButton addTarget:self action:@selector(startStream:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:_startButton];
+    
+    
+    _reloadButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 256, 65, 26)];
+    _reloadButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
+    [_reloadButton setTitle:@"刷新 VFPS" forState:UIControlStateNormal];
+    [_reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _reloadButton.titleLabel.font = FONT_MEDIUM(12.f);
+    [_reloadButton addTarget:self action:@selector(reloadVideoFPS:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:_reloadButton];
 }
 
 #pragma mark - UI 视图
@@ -789,6 +829,21 @@ PLInputTextViewDelegate
     _mediaSession.videoZoomFactor = slider.value;
 }
 
+// 刷新编码帧率，需要根据目标 expectedSourceVideoFrameRate 调整的，请按照如下实现方式
+- (void)reloadVideoFPS:(UIButton *)reload {
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = _videoStreamConfiguration;
+    videoStreamingConfiguration.expectedSourceVideoFrameRate = 15;
+    videoStreamingConfiguration.videoMaxKeyframeInterval = 45;
+    if (_mediaSession && _mediaSession.isStreamingRunning) {
+        [_mediaSession reloadVideoStreamingConfiguration:videoStreamingConfiguration];
+        _mediaSession.dynamicFrameEnable = YES;
+    }
+    if (_streamSession && _streamSession.isRunning) {
+        [_streamSession reloadVideoStreamingConfiguration:videoStreamingConfiguration];
+        _streamSession.dynamicFrameEnable = YES;
+    }
+}
+
 #pragma mark - PLInputTextViewDelegate
 
 - (void)inputTextView:(PLInputTextView *)inputTextView didClickIndex:(NSInteger)index text:(nonnull NSString *)text {
@@ -825,8 +880,8 @@ PLInputTextViewDelegate
 - (void)streamingSession:(PLStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        weakSelf.statusLabel.text = [NSString stringWithFormat:@" video %.1f fps\n audio %.1f fps\n total bitrate %.1f kbps",status.videoFPS, status.audioFPS, status.totalBitrate/1000];
-        NSLog(@"[PLStreamViewController] PLStreamStatus 的信息: video FPS %.1f, audio FPS %.1f, total bitrate %.1f", status.videoFPS, status.audioFPS, status.totalBitrate);
+        weakSelf.statusLabel.text = [NSString stringWithFormat:@" video %.1f fps\n audio %.1f fps\nvideo %.1f bps\naudio %.1f bps\ntotal bitrate %.1f kbps",status.videoFPS, status.audioFPS, status.videoBitrate, status.audioBitrate, status.totalBitrate/1000];
+        NSLog(@"[PLStreamViewController] PLStreamStatus 的信息: video FPS %.1f, audio FPS %.1f, video Bps %.1f, audio Bps %.1f, total bitrate %.1f", status.videoFPS, status.audioFPS, status.videoBitrate, status.audioBitrate, status.totalBitrate);
     });
 }
 
