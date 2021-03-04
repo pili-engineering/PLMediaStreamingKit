@@ -38,6 +38,24 @@
 @property (nonatomic, assign, readonly) double  audioFPS;
 
 /*!
+ @property   videoBitrate
+ @abstract   视频的码率。
+ 
+ @since      v3.0.3
+ */
+@property (nonatomic, assign, readonly) double  videoBitrate;
+
+/*!
+ @property   audioBitrate
+ @abstract   音频的码率。
+
+ @since      v3.0.3
+ */
+@property (nonatomic, assign, readonly) double  audioBitrate;
+
+
+
+/*!
  @property   totalBitrate
  @abstract   音频和视频总共的码率。
 
@@ -60,6 +78,8 @@
  */
 - (instancetype)initWithVideoFPS:(double)vfps
                         audioFPS:(double)afps
+                    videoBitrate:(double)vbps
+                    audioBitrate:(double)abps
                     totalBitrate:(double)totalBitrate;
 
 @end
