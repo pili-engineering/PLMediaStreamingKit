@@ -232,6 +232,16 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  */
 @property (nonatomic, assign) NSTimeInterval    statusUpdateInterval;
 
+/*!
+ @property   protocolModel
+ @abstract   传输协议
+
+ @discussion  指定内部传输协议，默认rtmp
+
+ @since      v3.0.4
+ */
+@property (nonatomic, assign) PLProtocolModel   protocolModel;
+
 ///----------------------
 /// @name 对象生命周期
 ///----------------------

@@ -18,9 +18,9 @@ PLMediaStreamingKit 为 iOS 开发者提供直播推流 SDK。
 
 ## 记录
 - 优化
-    - SEI 数据 payload size 支持大于 255 字节
+   - SEI 数据 payload size 支持大于 255 字节
 - 缺陷    
-    - 修复扩展录屏配置 kPLAudioChannelApp + kPLAudioChannelMic 在 iOS 13.1.1 上推流频繁断流的问题
+   - 修复扩展录屏配置 kPLAudioChannelApp + kPLAudioChannelMic 在 iOS 13.1.1 上推流频繁断流的问题
 
 ## 注意事项
 

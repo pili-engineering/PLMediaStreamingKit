@@ -543,6 +543,14 @@ typedef enum {
 } PLAudioPlayerFileError;
 
 /*!
+ @typedef    PLProtocolModel
+ @abstract   协议类型
+ */
+typedef NS_ENUM(NSInteger, PLProtocolModel) {
+    PLProtocolModelrtmp = 0,
+    PLProtocolModelsrt,
+};
+/*!
  @abstract 对音频数据进行处理的回调
  */
 typedef void (^PLAudioEffectCustomConfigurationBlock)(void *inRefCon,
