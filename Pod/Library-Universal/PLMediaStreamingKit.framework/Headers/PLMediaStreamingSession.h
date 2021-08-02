@@ -271,6 +271,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSTimeInterval statusUpdateInterval;
 
 /*!
+@property   protocolModel
+@abstract   传输协议
+
+@discussion  指定内部传输协议，默认rtmp
+
+@since      v3.0.4
+*/
+@property (nonatomic, assign) PLProtocolModel   protocolModel;
+
+/*!
  @abstract   流信息更新间隔。
 
  @discussion 默认为 0.5，可设置范围为 [0..1], 不可超出这个范围。
