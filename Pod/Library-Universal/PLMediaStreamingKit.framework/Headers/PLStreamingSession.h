@@ -232,6 +232,16 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  */
 @property (nonatomic, assign) NSTimeInterval    statusUpdateInterval;
 
+/*!
+ @property   protocolModel
+ @abstract   传输协议
+
+ @discussion  指定内部传输协议，默认rtmp
+
+ @since      v3.0.4
+ */
+@property (nonatomic, assign) PLProtocolModel   protocolModel;
+
 ///----------------------
 /// @name 对象生命周期
 ///----------------------
@@ -678,7 +688,8 @@ typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisRes
  @method     pushSEIMessage:repeat:
  @abstract   发送 SEI 消息
 
- @discussion 视频编码数据中规定的一种附加增强信息，平时一般不被使用，可以在其中加入一些自定义消息，这些消息会被直播 CDN 转发到观众端
+ @discussion 视频编码数据中规定的一种附加增强信息，平时一般不被使用，可以在其中加入一些自定义消息，这些消息会被直播 CDN 转发到观众端,。
+             注： 同一编码帧内，发送多条message，内部会自动拼接成一条message
 
  @warning 由于消息是直接被塞入视频数据中的，所以不能太大（几个字节比较合适）
  
