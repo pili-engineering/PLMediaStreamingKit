@@ -175,9 +175,11 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework"
   install_framework "${PODS_ROOT}/../../Pod/Library/HappyDNS.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework"
   install_framework "${PODS_ROOT}/../../Pod/Library/HappyDNS.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

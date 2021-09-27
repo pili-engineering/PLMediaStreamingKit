@@ -718,10 +718,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo-frameworks.sh",
+				"${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework",
 				"${PODS_ROOT}/../../Pod/Library/HappyDNS.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLMediaStreamingKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -894,7 +896,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.3;
+				MARKETING_VERSION = 3.0.6;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo";
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
@@ -923,7 +925,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.3;
+				MARKETING_VERSION = 3.0.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo";
