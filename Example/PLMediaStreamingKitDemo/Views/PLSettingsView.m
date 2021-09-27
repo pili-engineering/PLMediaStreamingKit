@@ -38,7 +38,7 @@ PLListArrayViewDelegate
 
 // PLMediaStreamingSession、PLStreamingSession 类型分栏
 @property (nonatomic, strong) UISegmentedControl *typeSegmentControl;
-
+@property (nonatomic, strong) UISegmentedControl *modleSegmentControl;
 // configuration 配置数组
 @property (nonatomic, strong) NSMutableArray *configurationArray;
 // session 配置数组
@@ -110,6 +110,22 @@ PLListArrayViewDelegate
         [_typeSegmentControl addTarget:self action:@selector(streamTypeSegmentAction:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:_typeSegmentControl];
         
+        // 协议类型
+        UILabel *streamModelLab = [[UILabel alloc]init];
+        streamModelLab.font = FONT_LIGHT(12.f);
+        streamModelLab.textColor = [UIColor blackColor];
+        streamModelLab.textAlignment = NSTextAlignmentLeft;
+        streamModelLab.text = @"协议类型：";
+        [self addSubview:streamModelLab];
+        
+        // 类型选择
+        _modleSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"RTMP", @"srt"]];
+        _modleSegmentControl.backgroundColor = [UIColor whiteColor];
+        _modleSegmentControl.tintColor = COLOR_RGB(16, 169, 235, 1);
+        _modleSegmentControl.selectedSegmentIndex = 0;
+        [_modleSegmentControl addTarget:self action:@selector(streamModelSegmentAction:) forControlEvents:UIControlEventValueChanged];
+        [self addSubview:_modleSegmentControl];
+        
         // 先确认分类
         _setSegmentControl = [[UISegmentedControl alloc] initWithItems:@[@"Configuration 配置", @"Session 配置"]];
         _setSegmentControl.backgroundColor = [UIColor whiteColor];
@@ -165,10 +181,23 @@ PLListArrayViewDelegate
             make.height.mas_equalTo(26);
         }];
         
+        [streamModelLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.mas_left).offset(PL_SETTING_X_SPACE);
+            make.top.mas_equalTo(streamTypeLab.mas_bottom).offset(14);
+            make.size.mas_equalTo(CGSizeMake(60, 26));
+        }];
+        
+        [_modleSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(streamModelLab.mas_right);
+            make.right.mas_equalTo(self.mas_right).offset(-PL_SETTING_X_SPACE);
+            make.top.mas_equalTo(streamModelLab.mas_top);
+            make.height.mas_equalTo(26);
+        }];
+        
         [_setSegmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.mas_left).offset(PL_SETTING_X_SPACE);
             make.right.mas_equalTo(self.mas_right).offset(-PL_SETTING_X_SPACE);
-            make.top.mas_equalTo(streamTypeLab.mas_bottom).offset(10);
+            make.top.mas_equalTo(streamModelLab.mas_bottom).offset(10);
             make.height.mas_equalTo(26);
         }];
         
@@ -209,15 +238,43 @@ PLListArrayViewDelegate
         NSString *streamString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSArray *urlArray = [streamString componentsSeparatedByString:@"?"];
         
-        // 更新推流的 URL
-        _streamURL = [NSURL URLWithString:urlArray[0]];
         dispatch_async(dispatch_get_main_queue(), ^{
-            _urlTextField.text = urlArray[0];
+            // 更新推流的 URL
+            NSString *urlStr = urlArray[0];
+            _streamURL = [NSURL URLWithString:urlStr];
+            if (_modleSegmentControl.selectedSegmentIndex == 1) {//srt
+                _urlTextField.text = [self urlRtmpToSrt:urlStr];
+            }else{
+                _urlTextField.text = urlStr;
+            }
+            
         });
     }];
 
     [task resume];
 }
+
+-(NSString *)urlRtmpToSrt:(NSString *)rtmp{
+    if(!rtmp || [rtmp isEqualToString:@""]) return nil;
+    NSArray*array = [rtmp componentsSeparatedByString:@"/"];
+    if (array.count < 3) {
+        NSLog(@"url domain get error");
+        return nil;
+    }
+    NSString *domain = array[2];
+    
+    NSArray*array1 = [rtmp componentsSeparatedByString:@"com/"];
+    if (array1.count < 2) {
+        NSLog(@"url h get error");
+        return nil;
+    }
+    NSString *hStr = array1[1];
+    NSString *urlStr = nil;
+    urlStr = [NSString stringWithFormat:@"srt://%@?streamid=#!::h=%@,m=publish",domain,hStr];
+    NSLog(@"srt url%@",urlStr);
+    return urlStr;
+}
+
 
 #pragma mark - 将 configuration 的相关配置转换成 model
 - (void)combineConfigurationSettings {
@@ -358,11 +415,46 @@ PLListArrayViewDelegate
         _streamSession = streamSession;
         _mediaSession = nil;
     }
-    
+    [self streamModelSegmentAction:_modleSegmentControl];
     if (self.delegate && [self.delegate respondsToSelector:@selector(settingsView:didChangedSession:streamSession:)]) {
-        [self.delegate settingsView:self didChangedSession:_mediaSession streamSession:_streamSession ];
+        [self.delegate settingsView:self didChangedSession:_mediaSession streamSession:_streamSession];
     }
 }
+
+- (void)streamModelSegmentAction:(UISegmentedControl *)segment {
+    NSInteger index = segment.selectedSegmentIndex;
+    switch (index) {
+        case PLProtocolModelsrt:
+            if (_streamSession) {
+                _streamSession.protocolModel = PLProtocolModelsrt;
+            }
+            if (_mediaSession) {
+                _mediaSession.protocolModel = PLProtocolModelsrt;
+            }
+            if (_modleSegmentControl.selectedSegmentIndex == 1) {//srt
+                _urlTextField.text = [self urlRtmpToSrt:_streamURL.absoluteString];
+            }
+            
+            break;
+        case PLProtocolModelrtmp:
+            if (_streamSession) {
+                _streamSession.protocolModel = PLProtocolModelrtmp;
+            }
+            if (_mediaSession) {
+                _mediaSession.protocolModel = PLProtocolModelrtmp;
+            }
+            if (_modleSegmentControl.selectedSegmentIndex == 0) {
+                _urlTextField.text = _streamURL.absoluteString;
+            }
+            
+            break;
+        default:
+            break;
+    }
+    
+}
+
+
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -682,7 +774,7 @@ PLListArrayViewDelegate
             
         // PLAudioStreamingConfiguration
         } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioStreamingConfiguration"]) {
-            PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+            PLAudioStreamingConfiguration *audioStreamingConfiguration = _mediaSession.audioStreamingConfiguration;
             if ([configureModel.configuraKey containsString:@"encodedAudioSampleRate"]) {
                 switch (index) {
                     case 0:

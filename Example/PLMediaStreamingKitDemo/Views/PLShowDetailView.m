@@ -18,7 +18,7 @@ PLPasterScrollViewDelegate,
 PLPasterViewDelegate
 >
 
-@property (nonatomic, strong) UIView *backView;
+@property (nonatomic, assign) UIView *backView;
 @property (nonatomic, assign) PLSetDetailViewType type;
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
@@ -83,6 +83,26 @@ PLPasterViewDelegate
     }
     return self;
 }
+
+
+
+-(void)setDelegate:(id<PLShowDetailViewDelegate>)delegate{
+    _delegate = delegate;
+    
+    if(!_delegate) return;
+    // 设置默认值
+    [self segmentAction:_beautyModeSegmentControl];
+    [self sliderAction:_beautySliderArray[0]];
+    [self.delegate showDetailView:self didClickIndex:_orientaionSegmentControl.selectedSegmentIndex currentType:PLSetDetailViewOrientaion];
+    [self.delegate showDetailView:self didClickIndex:_imgPushSegmentControl.selectedSegmentIndex currentType:PLSetDetailViewImagePush];
+    [self.delegate showDetailView:self didClickIndex:_watermarkSegmentControl.selectedSegmentIndex currentType:PLSetDetailViewWaterMark];
+    [self.delegate showDetailView:self didClickIndex:_audioEffectSegmentControl.selectedSegmentIndex currentType:PLSetDetailViewAudioEffect];
+    [self.delegate showDetailView:self didUpdateAudioPlayer:NO playBack:NO file:_musicFileString];
+    
+    [self volumeSliderAction:_volumeSlider];
+    [self progressSliderAction:_progressSlider];
+}
+
 
 #pragma mark - 旋转方向
 - (void)layoutOrientaionView {
@@ -503,7 +523,7 @@ PLPasterViewDelegate
 - (void)progressSliderAction:(UISlider *)slider {
     if (self.delegate && [self.delegate respondsToSelector:@selector(showDetailView:didUpdateAudioPlayProgress:)]) {
         [self.delegate showDetailView:self didUpdateAudioPlayProgress:slider.value];
-    }\
+    }
 }
 
 - (void)delegateUpdateStateAudioPlayer {

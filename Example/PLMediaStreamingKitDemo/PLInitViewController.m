@@ -94,7 +94,7 @@ UINavigationControllerDelegate
     
     // 根据音视频配置 初始化 PLMediaStreamingSession
     _mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:_videoCaptureConfiguration audioCaptureConfiguration:_audioCaptureConfiguration videoStreamingConfiguration:_videoStreamConfiguration audioStreamingConfiguration:_audioStreamingConfiguration stream:nil];
-    
+
     // 外部导入音视频配置 初始化 PLStreamingSession
     _streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:_videoStreamConfiguration audioStreamingConfiguration:_audioStreamingConfiguration stream:nil];
 }
@@ -259,10 +259,6 @@ UINavigationControllerDelegate
 
 // 进入推流程序
 - (void)nextStep {
-    if (_settingsView.urlTextField.text.length < 7 || _settingsView.urlTextField.text.length == 0) {
-        [self alertViewWithMessage:@"推流 URL 地址不可用！"];
-        return;
-    }
     if (_settingsView.streamType == 2) {
         // 外部导入数据 推流
         UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
