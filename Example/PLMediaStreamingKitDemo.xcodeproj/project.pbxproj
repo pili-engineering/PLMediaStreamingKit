@@ -67,6 +67,7 @@
 		AA90785424DD471800A7DF44 /* PLAssetReader.m in Sources */ = {isa = PBXBuildFile; fileRef = AA90785124DD471800A7DF44 /* PLAssetReader.m */; };
 		AA90785524DD471800A7DF44 /* NSString+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = AA90785224DD471800A7DF44 /* NSString+Random.m */; };
 		AA90785F24DD48BB00A7DF44 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA90785E24DD48BB00A7DF44 /* Launch Screen.storyboard */; };
+		AAA6632E279A8C3100BE55A5 /* PLSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA6632C279A8C3100BE55A5 /* PLSettings.m */; };
 		AAD08AAD25F0D6FC00AB98AA /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD08AAC25F0D6FC00AB98AA /* ReplayKit.framework */; };
 		AAD08AB125F0D6FC00AB98AA /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD08AB025F0D6FC00AB98AA /* SampleHandler.m */; };
 		AAD08AB825F0D6FC00AB98AA /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD08AAC25F0D6FC00AB98AA /* ReplayKit.framework */; };
@@ -197,6 +198,8 @@
 		AA90785224DD471800A7DF44 /* NSString+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Random.m"; sourceTree = "<group>"; };
 		AA90785824DD47B500A7DF44 /* PLMediaStreamingKitDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PLMediaStreamingKitDemo-Prefix.pch"; sourceTree = "<group>"; };
 		AA90785E24DD48BB00A7DF44 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		AAA6632C279A8C3100BE55A5 /* PLSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSettings.m; sourceTree = "<group>"; };
+		AAA6632D279A8C3100BE55A5 /* PLSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSettings.h; sourceTree = "<group>"; };
 		AAD08AAB25F0D6FC00AB98AA /* BroadcastUploadExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BroadcastUploadExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD08AAC25F0D6FC00AB98AA /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		AAD08AAF25F0D6FC00AB98AA /* SampleHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleHandler.h; sourceTree = "<group>"; };
@@ -397,6 +400,15 @@
 			path = Others;
 			sourceTree = "<group>";
 		};
+		AAA6632B279A8C3100BE55A5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AAA6632C279A8C3100BE55A5 /* PLSettings.m */,
+				AAA6632D279A8C3100BE55A5 /* PLSettings.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		AAD08AAE25F0D6FC00AB98AA /* BroadcastUploadExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,6 +443,7 @@
 				AA90784724DD43FA00A7DF44 /* PLStreamViewController.h */,
 				AA90784424DD43FA00A7DF44 /* PLStreamViewController.m */,
 				AA90785824DD47B500A7DF44 /* PLMediaStreamingKitDemo-Prefix.pch */,
+				AAA6632B279A8C3100BE55A5 /* Model */,
 				AA90784C24DD471800A7DF44 /* Others */,
 				0AA48E1F2101FDCB00EA31B7 /* PasterImage */,
 				AA90781524DD43C200A7DF44 /* Views */,
@@ -738,6 +751,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAA6632E279A8C3100BE55A5 /* PLSettings.m in Sources */,
 				AA90785424DD471800A7DF44 /* PLAssetReader.m in Sources */,
 				AA90785524DD471800A7DF44 /* NSString+Random.m in Sources */,
 				0AA48E442101FDCC00EA31B7 /* PLPasterScrollView.m in Sources */,
@@ -896,7 +910,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.6;
+				MARKETING_VERSION = 3.0.7;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo";
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
@@ -925,7 +939,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.6;
+				MARKETING_VERSION = 3.0.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo";

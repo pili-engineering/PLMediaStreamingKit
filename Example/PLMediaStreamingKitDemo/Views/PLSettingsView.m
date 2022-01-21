@@ -20,6 +20,7 @@
 static NSString *segmentIdentifier = @"segmentCell";
 static NSString *listIdentifier = @"listCell";
 
+
 @interface PLSettingsView()
 <
 UITableViewDelegate,
@@ -28,10 +29,6 @@ UITextFieldDelegate,
 // 自定义 view 代理
 PLListArrayViewDelegate
 >
-// 采集编码推流 sdk
-@property (nonatomic, strong) PLMediaStreamingSession *mediaSession;
-// 编码推流 sdk
-@property (nonatomic, strong) PLStreamingSession *streamSession;
 
 // configuration 和其他配置分栏
 @property (nonatomic, strong) UISegmentedControl *setSegmentControl;
@@ -62,11 +59,18 @@ PLListArrayViewDelegate
     NSLog(@"[PLSettingsView] dealloc !");
 }
 
-- (id)initWithFrame:(CGRect)frame mediaSession:(PLMediaStreamingSession *)mediaSession streamSession:(PLStreamingSession *)streamSession pushURL:(NSString *)pushURL {
+- (id)initWithFrame:(CGRect)frame pushURL:(NSString *)pushURL {
     if ([super initWithFrame:frame]) {
+        _mSettings = [[PLSettings alloc] init];
+        _mSettings.videoSettings = [[PLVideoSettings alloc] init];
+        _mSettings.videoSettings.videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+        _mSettings.audioSettings = [[PLAudioSettings alloc] init];
+        _mSettings.audioSettings.audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
+        _mSettings.streamType = PLStreamTypeAll;
+        _mSettings.videoStreamConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+        _mSettings.audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
         
         self.backgroundColor = [UIColor whiteColor];
-
         _urlTextField = [[UITextField alloc] init];
         _urlTextField.borderStyle = UITextBorderStyleRoundedRect;
         _urlTextField.font = FONT_LIGHT(11.f);
@@ -86,13 +90,8 @@ PLListArrayViewDelegate
         [_setButton addTarget:self action:@selector(requestPublishURL) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_setButton];
     
-        // 音视频/纯音频 采集推流
-        _mediaSession = mediaSession;
         
-        // 外部数据导入/录屏 源数据推流
-        _streamSession = streamSession;
         
-        _streamType = PLStreamTypeAll;
         
         // 推流类型
         UILabel *streamTypeLab = [[UILabel alloc]init];
@@ -279,9 +278,12 @@ PLListArrayViewDelegate
 #pragma mark - 将 configuration 的相关配置转换成 model
 - (void)combineConfigurationSettings {
     NSArray *configureArr;
+    PLVideoCaptureConfiguration *videoCaptureConfiguration = _mSettings.videoSettings.videoCaptureConfiguration;
+    
     
     // PLVideoCaptureConfiguration 相关属性
     NSDictionary *videoFrameRateDict = @{@"videoFrameRate - 帧率 ( Default：24fps )":@[@"5", @"15", @"20", @"24", @"30"], @"default":@3};
+    videoCaptureConfiguration.videoFrameRate = 24;
      
     NSDictionary *sessionPresetDict;
     if ([IOS_SYSTEM_STRING compare:@"9.0.0"] >= 0){
@@ -289,35 +291,65 @@ PLListArrayViewDelegate
     } else {
         sessionPresetDict = @{@"sessionPreset - 预览分辨率 ( Default：640x480 )":@[@"352x288", @"640x480", @"1280x720", @"1920x1080"], @"default":@1};
     }
+    videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset640x480;
     
     NSDictionary *previewMirrorFrontFacingDict = @{@"previewMirrorFrontFacing - 前置预览镜像 ( Default：YES )":@[@"NO", @"YES"], @"default":@1};
+    videoCaptureConfiguration.previewMirrorFrontFacing = YES;
+    
     NSDictionary *previewMirrorRearFacingDict = @{@"previewMirrorRearFacing - 后置预览镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+    videoCaptureConfiguration.previewMirrorRearFacing = NO;
+    
     NSDictionary *streamMirrorFrontFacingDict = @{@"streamMirrorFrontFacing - 前置编码镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+    videoCaptureConfiguration.streamMirrorFrontFacing = NO;
+    
     NSDictionary *streamMirrorRearFacingDict = @{@"streamMirrorRearFacing - 后置编码镜像 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+    videoCaptureConfiguration.streamMirrorRearFacing = NO;
+    
     NSDictionary *cameraPositionDict = @{@"cameraPositon - 摄像头采集位置 ( Default：Back )":@[@"Unspecified", @"Back", @"Front"], @"default":@1};
+    videoCaptureConfiguration.position = AVCaptureDevicePositionBack;
+    
     NSDictionary *videoOrientationDict = @{@"videoOrientation - 摄像头采集旋转方向 ( Default：Portrait )":@[@"Portrait", @"PortraitUpsideDown", @"LandscapeRight", @"LandscapeLeft"], @"default":@0};
+    videoCaptureConfiguration.videoOrientation = AVCaptureVideoOrientationPortrait;
      
     NSDictionary *videoCaptureDict = @{@"PLVideoCaptureConfiguration":@[videoFrameRateDict, sessionPresetDict, previewMirrorFrontFacingDict, previewMirrorRearFacingDict, streamMirrorFrontFacingDict, streamMirrorRearFacingDict, cameraPositionDict, videoOrientationDict]};
      
     // PLVideoStreamingConfiguration 相关属性
     NSDictionary *videoProfileLevelDict = @{@"videoProfileLevel - H264 编码等级 ( Default：H264Baseline31 )":@[@"H264Baseline30", @"H264Baseline31", @"H264Baseline41", @"H264BaselineAutoLevel", @"H264Main30", @"H264Main31", @"H264Main32", @"H264Main41", @"H264MainAutoLevel", @"H264High40", @"H264High41", @"H264HighAutoLevel"], @"default":@1};
+    _mSettings.videoStreamConfiguration.videoProfileLevel = AVVideoProfileLevelH264Baseline31;
+    
     NSDictionary *videoSizeDict = @{@"videoSize - 编码尺寸 ( Default：720x1280 )":@[@"272x480", @"368x640", @"400x720", @"540x960", @"720x1280", @"1080x1280"], @"default":@3};
+    _mSettings.videoStreamConfiguration.videoSize = CGSizeMake(540, 960);
+    
     NSDictionary *expectedSourceVideoFrameRateDict = @{@"expectedSourceVideoFrameRate - 预期视频源帧率 ( Default：24fps )":@[@"5", @"10", @"15", @"20", @"24", @"30"], @"default":@4};
+    _mSettings.videoStreamConfiguration.expectedSourceVideoFrameRate = 24;
+    
     NSDictionary *videoMaxKeyframeIntervalDict = @{@"videoMaxKeyframeInterval - 最大关键帧间隔 ( Default：72fps )":@[@"15", @"30", @"45", @"60", @"72", @"90"], @"default":@4};
-    NSDictionary *averageVideoBitRateDict = @{@"averageVideoBitRate - 平均编码码率 ( Default：768Kbps )":@[@"512Kbps", @"768Kbps", @"1024Kbps", @"1280Kbps", @"1536Kbps", @"2048Kbps"], @"default":@2};
+    _mSettings.videoStreamConfiguration.videoMaxKeyframeInterval = 72;
+    
+    NSDictionary *averageVideoBitRateDict = @{@"averageVideoBitRate - 平均编码码率 ( Default：768Kbps )":@[@"512Kbps", @"768Kbps", @"1024Kbps", @"1280Kbps", @"1536Kbps", @"2048Kbps"], @"default":@1};
+    _mSettings.videoStreamConfiguration.averageVideoBitRate = 768*1000;
+    
     NSDictionary *videoEncoderTypeDict = @{@"videoEncoderType - H.264 编码器类型 ( Default：AVFoundation )":@[@"AVFoundation", @"VideoToolbox"], @"default":@0};
+    _mSettings.videoStreamConfiguration.videoEncoderType = PLH264EncoderType_AVFoundation;
      
     NSDictionary *videoStreamingDict = @{@"PLVideoStreamingConfiguration":@[videoProfileLevelDict, videoSizeDict, expectedSourceVideoFrameRateDict, videoMaxKeyframeIntervalDict, averageVideoBitRateDict, videoEncoderTypeDict]};
-     
+    
     // PLAudioCaptureConfiguration 相关属性
     NSDictionary *audioCaptureDict = @{@"PLAudioCaptureConfiguration":@[@{@"channelsPerFrame - 采集音频声道数 ( Default：1 )":@[@"1", @"2"], @"default":@0}, @{@"acousticEchoCancellationEnable - 回声消除 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}]};
+    _mSettings.audioSettings.audioCaptureConfiguration.channelsPerFrame = 1;
+    _mSettings.audioSettings.audioCaptureConfiguration.acousticEchoCancellationEnable = NO;
      
     // PLAudioStreamingConfiguration 相关属性
     NSDictionary *audioStreamingDict = @{@"PLAudioStreamingConfiguration":@[@{@"encodedAudioSampleRate - 音频采样率 ( Default：48000Hz )":@[@"48000Hz",@"44100Hz",@"22050Hz", @"11025Hz"], @"default":@0}, @{@"audioBitRate - 音频编码码率 ( Default：96Kbps )":@[@"64Kbps", @"96Kbps", @"128Kbps"], @"default":@1}, @{@"encodedNumberOfChannels - 编码声道数 ( Default：1 )":@[@"1", @"2"], @"default":@0}, @{@"audioEncoderType - 编码类型 ( Default：iOS_AAC )":@[@"iOS_AAC", @"fdk_AAC_LC", @"fdk_AAC__HE_BSR"], @"default":@0}]};
+    _mSettings.audioStreamingConfiguration.encodedAudioSampleRate = PLStreamingAudioSampleRate_48000Hz;
+    _mSettings.audioStreamingConfiguration.audioBitRate = PLStreamingAudioBitRate_96Kbps;
+    _mSettings.audioStreamingConfiguration.encodedNumberOfChannels = 1;
+    _mSettings.audioStreamingConfiguration.audioEncoderType = PLAACEncoderType_iOS_AAC;
     
-    if (_streamType == PLStreamTypeAll) {
+    
+    if (_mSettings.streamType == PLStreamTypeAll) {
         configureArr = @[videoCaptureDict, videoStreamingDict, audioCaptureDict, audioStreamingDict];
-    } else if (_streamType == PLStreamTypeAudioOnly) {
+    } else if (_mSettings.streamType == PLStreamTypeAudioOnly) {
         configureArr = @[audioCaptureDict, audioStreamingDict];
     } else {
         configureArr = @[videoStreamingDict, audioStreamingDict];
@@ -331,33 +363,57 @@ PLListArrayViewDelegate
     NSArray *sessionArr;
     
     // PLMediaStreamingKit 相关的属性
-    NSDictionary *fillModeDict = @{@"fillMode - 画面填充模式（ Default：RatioAndFill ）":@[@"Stretch", @"AspectRatio", @"RatioAndFill"], @"default":@1};
+    NSDictionary *fillModeDict = @{@"fillMode - 画面填充模式（ Default：RatioAndFill ）":@[@"Stretch", @"AspectRatio", @"RatioAndFill"], @"default":@2};
     NSDictionary *PLSessionDict = @{@"PLMediaStreamingKit":@[fillModeDict]};
+    _mSettings.fillMode = PLVideoFillModePreserveAspectRatioAndFill;
 
     // PLStreamingKit 相关属性
     NSDictionary *quicDict = @{@"quicEnable - QUIC 协议推流（ Default：NO ）":@[@"NO", @"YES"], @"default":@0};
+    _mSettings.quicEnable = NO;
+    
     NSDictionary *dynamicFrameEnableDict = @{@"dynamicFrameEnable - 动态帧率 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+    _mSettings.dynamicFrameEnable = NO;
+    
     NSDictionary *adaptiveBitrateDict = @{@"adaptiveBitrate - 自适应码率 ( Default：disable )":@[@"disable", @"150kbps", @"200kbps", @"300kbps", @"500kbps"], @"default":@0};
+    _mSettings.minVideoBitRate = 0;
+    
     NSDictionary *autoReconnectEnableDict = @{@"autoReconnectEnable - 自动断线重连 ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+    _mSettings.autoReconnectEnable = NO;
+    
     NSDictionary *monitorNetworkStateEnableDict = @{@"monitorNetworkStateEnable - 网络切换监测  ( Default：NO )":@[@"NO", @"YES"], @"default":@0};
+    _mSettings.monitorNetworkStateEnable = NO;
+    
     NSDictionary *statusUpdateIntervalDict = @{@"statusUpdateInterval - 流状态更新间隔 ( Default：3s )":@[@"1", @"3", @"5", @"10", @"15", @"20", @"30"], @"default":@1};
-    NSDictionary *thresholdDict = @{@"threshold - 丢包策略的阀值 ( Default：0.5 )":@[@"0", @"0.5", @"0.25", @"0.75", @"1"], @"default":@0};
+    _mSettings.statusUpdateInterval = 3;
+    
+    NSDictionary *thresholdDict = @{@"threshold - 丢包策略的阀值 ( Default：0.5 )":@[@"0", @"0.5", @"0.25", @"0.75", @"1"], @"default":@1};
+    _mSettings.threshold = 0.5;
+    
     NSDictionary *maxCountDict = @{@"maxCount - 队列最大容纳包 ( Default：300 )":@[@"0", @"50", @"100", @"150", @"300", @"450", @"600"], @"default":@4};
+    _mSettings.maxCount = 300;
     
     NSDictionary *PLStreamingKitDict = @{@"PLStreamingKit":@[quicDict, dynamicFrameEnableDict, adaptiveBitrateDict, autoReconnectEnableDict, monitorNetworkStateEnableDict, statusUpdateIntervalDict, thresholdDict, maxCountDict]};
     
     // CameraSource 相关属性
     NSDictionary *cameraSourceDict = @{@"CameraSource": @[@{@"continuousAutofocusEnable - 连续自动对焦 ( Default：YES )":@[@"NO", @"YES"], @"default":@1}, @{@"touchToFocusEnable - 手动对焦 ( Default：YES )":@[@"NO", @"YES"], @"default":@1}, @{@"smoothAutoFocusEnabled - 减缓自动对焦抖动 ( Default：YES )":@[@"NO", @"YES"], @"default":@1}, @{@"torchOn - 手电筒 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}]};
+    _mSettings.videoSettings.continuousAutofocusEnable = YES;
+    _mSettings.videoSettings.touchToFocusEnable = YES;
+    _mSettings.videoSettings.smoothAutoFocusEnabled = YES;
+    _mSettings.videoSettings.torchOn = NO;
     
     // MicrophoneSource 相关属性
     NSDictionary *microphoneSourceDict = @{@"MicrophoneSource":@[@{@"playback - 返听功能 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}, @{@"inputGain - 麦克风采集的音量 ( Default：1 )":@[@"1", @"0.8", @"0.6", @"0.4", @"0.2"], @"default":@0}, @{@"allowAudioMixWithOthers - 允许在后台与其他App混音不被打断 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}]};
+    _mSettings.audioSettings.playback = NO;
+    _mSettings.audioSettings.inputGain = 1;
+    _mSettings.audioSettings.allowAudioMixWithOthers = NO;
     
     // Applictaion
     NSDictionary *applicationDict = @{@"Applictaion":@[@{@"idleTimerDisable - 是否关闭系统屏幕自动锁屏 ( Default：YES )":@[@"NO", @"YES"], @"default":@1}]};
+    _mSettings.idleTimerDisable = YES;
     
-    if (_streamType == PLStreamTypeAll) {
+    if (_mSettings.streamType == PLStreamTypeAll) {
         sessionArr = @[PLSessionDict, PLStreamingKitDict, cameraSourceDict, microphoneSourceDict, applicationDict];
-    } else if (_streamType == PLStreamTypeAudioOnly) {
+    } else if (_mSettings.streamType == PLStreamTypeAudioOnly) {
         sessionArr = @[PLStreamingKitDict, microphoneSourceDict, applicationDict];
     } else {
         sessionArr = @[PLStreamingKitDict, applicationDict];
@@ -380,7 +436,7 @@ PLListArrayViewDelegate
 
 - (void)streamTypeSegmentAction:(UISegmentedControl *)segment {
     NSInteger index = segment.selectedSegmentIndex;
-    _streamType = index;
+    _mSettings.streamType = index;
     
     // 重新选择流类型后，之前的配置将会被重置
     [self combineConfigurationSettings];
@@ -388,61 +444,23 @@ PLListArrayViewDelegate
     
     [_settingsTableView reloadData];
     
-    PLMediaStreamingSession *mediaSession;
-    PLStreamingSession *streamSession;
-    
-    switch (index) {
-        case PLStreamTypeAll:
-            mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:[PLVideoCaptureConfiguration defaultConfiguration] audioCaptureConfiguration:[PLAudioCaptureConfiguration defaultConfiguration] videoStreamingConfiguration:[PLVideoStreamingConfiguration defaultConfiguration] audioStreamingConfiguration:[PLAudioStreamingConfiguration defaultConfiguration] stream:nil];
-            break;
-        case PLStreamTypeAudioOnly:
-            mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:nil audioCaptureConfiguration:[PLAudioCaptureConfiguration defaultConfiguration] videoStreamingConfiguration:nil audioStreamingConfiguration:[PLAudioStreamingConfiguration defaultConfiguration] stream:nil];
-            break;
-        case PLStreamTypeImport:
-            streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:[PLVideoStreamingConfiguration defaultConfiguration] audioStreamingConfiguration:[PLAudioStreamingConfiguration defaultConfiguration] stream:nil];
-            break;
-        case PLStreamTypeScreen:
-            streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:[PLVideoStreamingConfiguration defaultConfiguration] audioStreamingConfiguration:[PLAudioStreamingConfiguration defaultConfiguration] stream:nil];
-            break;
-
-        default:
-            break;
-    }
-    if (mediaSession) {
-        _mediaSession = mediaSession;
-        _streamSession = nil;
-    } else{
-        _streamSession = streamSession;
-        _mediaSession = nil;
-    }
     [self streamModelSegmentAction:_modleSegmentControl];
     if (self.delegate && [self.delegate respondsToSelector:@selector(settingsView:didChangedSession:streamSession:)]) {
-        [self.delegate settingsView:self didChangedSession:_mediaSession streamSession:_streamSession];
+//        [self.delegate settingsView:self didChanged:_streamType];
     }
 }
 
 - (void)streamModelSegmentAction:(UISegmentedControl *)segment {
     NSInteger index = segment.selectedSegmentIndex;
+    _mSettings.protocolModel = index;
     switch (index) {
         case PLProtocolModelsrt:
-            if (_streamSession) {
-                _streamSession.protocolModel = PLProtocolModelsrt;
-            }
-            if (_mediaSession) {
-                _mediaSession.protocolModel = PLProtocolModelsrt;
-            }
             if (_modleSegmentControl.selectedSegmentIndex == 1) {//srt
                 _urlTextField.text = [self urlRtmpToSrt:_streamURL.absoluteString];
             }
             
             break;
         case PLProtocolModelrtmp:
-            if (_streamSession) {
-                _streamSession.protocolModel = PLProtocolModelrtmp;
-            }
-            if (_mediaSession) {
-                _mediaSession.protocolModel = PLProtocolModelrtmp;
-            }
             if (_modleSegmentControl.selectedSegmentIndex == 0) {
                 _urlTextField.text = _streamURL.absoluteString;
             }
@@ -626,24 +644,25 @@ PLListArrayViewDelegate
         // PLVideoCaptureConfiguration
         if ([categoryModel.categoryKey isEqualToString:@"PLVideoCaptureConfiguration"]) {
             if ([configureModel.configuraKey containsString:@"videoFrameRate"]) {
-                _mediaSession.videoFrameRate = [configureModel.configuraValue[index] integerValue];
+                
+                _mSettings.videoSettings.videoCaptureConfiguration.videoFrameRate = [configureModel.configuraValue[index] integerValue];
             } else if ([configureModel.configuraKey containsString:@"sessionPreset"]){
                 if ([IOS_SYSTEM_STRING compare:@"9.0.0"] >= 0){
                     switch (index) {
                         case 0:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset352x288;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset352x288;
                             break;
                         case 1:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset640x480;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset640x480;
                             break;
                         case 2:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset1280x720;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset1280x720;
                             break;
                         case 3:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset1920x1080;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset1920x1080;
                             break;
                         case 4:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset3840x2160;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset3840x2160;
                             break;
                         default:
                             break;
@@ -651,16 +670,16 @@ PLListArrayViewDelegate
                 } else {
                     switch (index) {
                         case 0:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset352x288;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset352x288;
                             break;
                         case 1:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset640x480;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset640x480;
                             break;
                         case 2:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset1280x720;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset1280x720;
                             break;
                         case 3:
-                            _mediaSession.sessionPreset = AVCaptureSessionPreset1920x1080;
+                            _mSettings.videoSettings.videoCaptureConfiguration.sessionPreset = AVCaptureSessionPreset1920x1080;
                             break;
                             break;
                         default:
@@ -668,27 +687,27 @@ PLListArrayViewDelegate
                     }
                 }
             } else if ([configureModel.configuraKey containsString:@"previewMirrorFrontFacing"]){
-                _mediaSession.previewMirrorFrontFacing = index;
+                _mSettings.videoSettings.videoCaptureConfiguration.previewMirrorFrontFacing = index;
 
             } else if ([configureModel.configuraKey containsString:@"previewMirrorRearFacing"]){
-                _mediaSession.previewMirrorRearFacing = index;
+                _mSettings.videoSettings.videoCaptureConfiguration.previewMirrorRearFacing = index;
 
             } else if ([configureModel.configuraKey containsString:@"streamMirrorFrontFacing"]){
-                _mediaSession.streamMirrorFrontFacing = index;
+                _mSettings.videoSettings.videoCaptureConfiguration.streamMirrorFrontFacing = index;
 
             } else if ([configureModel.configuraKey containsString:@"streamMirrorRearFacing"]){
-                _mediaSession.streamMirrorRearFacing = index;
+                _mSettings.videoSettings.videoCaptureConfiguration.streamMirrorRearFacing = index;
 
             } else if ([configureModel.configuraKey containsString:@"cameraPositon"]){
-                _mediaSession.captureDevicePosition = index;
+                _mSettings.videoSettings.videoCaptureConfiguration.position = index;
 
             } else if ([configureModel.configuraKey containsString:@"videoOrientation"]){
-                _mediaSession.videoOrientation = index + 1;
+                _mSettings.videoSettings.videoCaptureConfiguration.videoOrientation = index + 1;
             }
             
         // PLVideoStreamingConfiguration
         } else if ([categoryModel.categoryKey isEqualToString:@"PLVideoStreamingConfiguration"]) {
-            PLVideoStreamingConfiguration *videoStreamConfiguration = _mediaSession.videoStreamingConfiguration;
+            PLVideoStreamingConfiguration *videoStreamConfiguration = _mSettings.videoStreamConfiguration;
             if ([configureModel.configuraKey containsString:@"videoProfileLevel"]) {
                 switch (index) {
                     case 0:
@@ -742,7 +761,13 @@ PLListArrayViewDelegate
                         videoStreamConfiguration.videoSize = CGSizeMake(400, 720);
                         break;
                     case 3:
+                        videoStreamConfiguration.videoSize = CGSizeMake(540, 960);
+                        break;
+                    case 4:
                         videoStreamConfiguration.videoSize = CGSizeMake(720, 1280);
+                        break;
+                    case 5:
+                        videoStreamConfiguration.videoSize = CGSizeMake(1080, 1280);
                         break;
                     default:
                         break;
@@ -752,29 +777,25 @@ PLListArrayViewDelegate
             } else if ([configureModel.configuraKey containsString:@"videoMaxKeyframeInterval"]){
                 videoStreamConfiguration.videoMaxKeyframeInterval = [configureModel.configuraValue[index] integerValue];
             } else if ([configureModel.configuraKey containsString:@"averageVideoBitRate"]){
-                videoStreamConfiguration.averageVideoBitRate = [configureModel.configuraValue[index] integerValue];
+                videoStreamConfiguration.averageVideoBitRate = [configureModel.configuraValue[index] integerValue] * 1000;
             } else if ([configureModel.configuraKey containsString:@"videoEncoderType"]){
                 videoStreamConfiguration.videoEncoderType = index;
             }
-            if (_mediaSession) {
-                [_mediaSession reloadVideoStreamingConfiguration:videoStreamConfiguration];
-            }
-            if (_streamSession) {
-                [_streamSession reloadVideoStreamingConfiguration:videoStreamConfiguration];
-            }
-        
         // PLAudioCaptureConfiguration
         } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioCaptureConfiguration"]) {
+            
+            PLAudioCaptureConfiguration *captureConfiguration = _mSettings.audioSettings.audioCaptureConfiguration;
+            
             if ([configureModel.configuraKey containsString:@"channelsPerFrame"]) {
-                _mediaSession.audioCaptureConfiguration.channelsPerFrame = index + 1;
+                captureConfiguration.channelsPerFrame = index + 1;
 
             } else if ([configureModel.configuraKey containsString:@"acousticEchoCancellationEnable"]){
-                _mediaSession.audioCaptureConfiguration.acousticEchoCancellationEnable = index;
+                captureConfiguration.acousticEchoCancellationEnable = index;
             }
             
         // PLAudioStreamingConfiguration
         } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioStreamingConfiguration"]) {
-            PLAudioStreamingConfiguration *audioStreamingConfiguration = _mediaSession.audioStreamingConfiguration;
+            PLAudioStreamingConfiguration *audioStreamingConfiguration = _mSettings.audioStreamingConfiguration;
             if ([configureModel.configuraKey containsString:@"encodedAudioSampleRate"]) {
                 switch (index) {
                     case 0:
@@ -820,172 +841,97 @@ PLListArrayViewDelegate
             } else if ([configureModel.configuraKey containsString:@"audioEncoderType"]){
                 audioStreamingConfiguration.audioEncoderType = index;
             }
-            if (_mediaSession) {
-                [_mediaSession reloadAudioStreamingConfiguration:audioStreamingConfiguration];
-            }
-            if (_streamSession) {
-                [_streamSession reloadAudioStreamingConfiguration:audioStreamingConfiguration];
-            }
-
         }
     } else {
         // PLMediaStreamingKit
         if ([categoryModel.categoryKey isEqualToString:@"PLMediaStreamingKit"]) {
             if ([configureModel.configuraKey containsString:@"fillMode"]){
-                _mediaSession.fillMode = index;
+                _mSettings.fillMode = index;
             }
         
         // PLStreamingKit
         } else if ([categoryModel.categoryKey isEqualToString:@"PLStreamingKit"]) {
             if ([configureModel.configuraKey containsString:@"quicEnable"]){
-                if (_mediaSession) {
-                    _mediaSession.quicEnable = index;
-                } else{
-                    _streamSession.quicEnable = index;
-                }
-
+                    _mSettings.quicEnable = index;
             } else if ([configureModel.configuraKey containsString:@"dynamicFrameEnable"]){
-                if (_mediaSession) {
-                    _mediaSession.dynamicFrameEnable = index;
-                } else{
-                    _streamSession.dynamicFrameEnable = index;
-                }
-
+                    _mSettings.dynamicFrameEnable = index;
             } else if ([configureModel.configuraKey containsString:@"adaptiveBitrate"]){
-                if (_mediaSession) {
                     if (index == 0) {
-                        [_mediaSession disableAdaptiveBitrateControl];
+                        _mSettings.minVideoBitRate = 0;
                     } else{
                         switch (index) {
                             case 1:
-                                [_mediaSession enableAdaptiveBitrateControlWithMinVideoBitRate:150*1000];
+                                _mSettings.minVideoBitRate = 150*1000;
                                 break;
                             case 2:
-                                [_mediaSession enableAdaptiveBitrateControlWithMinVideoBitRate:200*1000];
+                                 _mSettings.minVideoBitRate = 200*1000;
                                 break;
                             case 3:
-                                [_mediaSession enableAdaptiveBitrateControlWithMinVideoBitRate:400*1000];
+                                _mSettings.minVideoBitRate = 400*1000;
                                 break;
                             case 4:
-                                [_mediaSession enableAdaptiveBitrateControlWithMinVideoBitRate:600*1000];
+                                _mSettings.minVideoBitRate = 600*1000;
                                 break;
                             case 5:
-                                [_mediaSession enableAdaptiveBitrateControlWithMinVideoBitRate:800*1000];
+                                _mSettings.minVideoBitRate = 800*1000;
                                 break;
                             case 6:
-                                [_mediaSession enableAdaptiveBitrateControlWithMinVideoBitRate:1000*1000];
+                                _mSettings.minVideoBitRate = 1000*1000;
                                 break;
                             default:
                                 break;
                         }
                     }
-                } else{
-                    if (index == 0) {
-                        [_streamSession disableAdaptiveBitrateControl];
-                    } else{
-                        switch (index) {
-                            case 1:
-                                [_streamSession enableAdaptiveBitrateControlWithMinVideoBitRate:150*1000];
-                                break;
-                            case 2:
-                                [_streamSession enableAdaptiveBitrateControlWithMinVideoBitRate:200*1000];
-                                break;
-                            case 3:
-                                [_streamSession enableAdaptiveBitrateControlWithMinVideoBitRate:400*1000];
-                                break;
-                            case 4:
-                                [_streamSession enableAdaptiveBitrateControlWithMinVideoBitRate:600*1000];
-                                break;
-                            case 5:
-                                [_streamSession enableAdaptiveBitrateControlWithMinVideoBitRate:800*1000];
-                                break;
-                            case 6:
-                                [_streamSession enableAdaptiveBitrateControlWithMinVideoBitRate:1000*1000];
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
             } else if ([configureModel.configuraKey containsString:@"autoReconnectEnable"]){
-                if (_mediaSession) {
-                    _mediaSession.autoReconnectEnable = index;
-                } else{
-                    _streamSession.autoReconnectEnable = index;
-                }
-
+                _mSettings.autoReconnectEnable = index;
             } else if ([configureModel.configuraKey containsString:@"monitorNetworkStateEnable"]){
-                if (_mediaSession) {
-                    _mediaSession.monitorNetworkStateEnable = index;
-                } else{
-                    _streamSession.monitorNetworkStateEnable = index;
-                }
-
+                _mSettings.monitorNetworkStateEnable = index;
             } else if ([configureModel.configuraKey containsString:@"statusUpdateInterval"]) {
-                if (_mediaSession) {
-                    _mediaSession.statusUpdateInterval = [configureModel.configuraValue[index] integerValue];
-                } else{
-                    _streamSession.statusUpdateInterval = [configureModel.configuraValue[index] integerValue];
-                }
-                
+                _mSettings.statusUpdateInterval = [configureModel.configuraValue[index] integerValue];
             } else if ([configureModel.configuraKey containsString:@"threshold"]){
-                if (_mediaSession) {
-                    _mediaSession.threshold = [configureModel.configuraValue[index] floatValue];
-                } else{
-                    _streamSession.threshold = [configureModel.configuraValue[index] floatValue];
-                }
-                
+                _mSettings.threshold = [configureModel.configuraValue[index] floatValue];
             } else if ([configureModel.configuraKey containsString:@"maxCount"]){
-                if (_mediaSession) {
-                    _mediaSession.maxCount = [configureModel.configuraValue[index] integerValue];
-                } else{
-                    _streamSession.maxCount =[configureModel.configuraValue[index] integerValue];
-                }
-                
+                _mSettings.maxCount = [configureModel.configuraValue[index] integerValue];
             }
         
         // CameraSource
         } else if ([categoryModel.categoryKey isEqualToString:@"CameraSource"]) {
             if ([configureModel.configuraKey containsString:@"continuousAutofocusEnable"]) {
-                _mediaSession.continuousAutofocusEnable = index;
+                _mSettings.videoSettings.continuousAutofocusEnable = index;
 
             } else if ([configureModel.configuraKey containsString:@"touchToFocusEnable"]){
-                _mediaSession.touchToFocusEnable = index;
+                _mSettings.videoSettings.touchToFocusEnable = index;
                 
             } else if ([configureModel.configuraKey containsString:@"smoothAutoFocusEnabled"]){
-                _mediaSession.smoothAutoFocusEnabled = index;
+                _mSettings.videoSettings.smoothAutoFocusEnabled = index;
 
             } else if ([configureModel.configuraKey containsString:@"torchOn"]){
-                _mediaSession.torchOn = index;
+                _mSettings.videoSettings.torchOn = index;
             }
         
         // MicrophoneSource
         } else if ([categoryModel.categoryKey isEqualToString:@"MicrophoneSource"]) {
             if ([configureModel.configuraKey containsString:@"playback"]) {
-                _mediaSession.playback = index;
+                _mSettings.audioSettings.playback = index;
 
             } else if ([configureModel.configuraKey containsString:@"inputGain"]){
-                _mediaSession.inputGain = [configureModel.configuraValue[index] floatValue];
+                _mSettings.audioSettings.inputGain = [configureModel.configuraValue[index] floatValue];
                 
             } else if ([configureModel.configuraKey containsString:@"allowAudioMixWithOthers"]){
-                _mediaSession.allowAudioMixWithOthers = index;
+                _mSettings.audioSettings.allowAudioMixWithOthers = index;
 
             }
             
         // Applictaion
         } else if ([categoryModel.categoryKey isEqualToString:@"Applictaion"]) {
             if ([configureModel.configuraKey containsString:@"idleTimerDisable"]) {
-                if (_mediaSession) {
-                    _mediaSession.idleTimerDisable = index;
-                } else{
-                    _streamSession.idleTimerDisable = index;
-                }
+                _mSettings.idleTimerDisable = index;
             }
         }
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(settingsView:didChangedSession:streamSession:)]) {
-        [self.delegate settingsView:self didChangedSession:_mediaSession streamSession:_streamSession ];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(settingsView:didChanged:)]) {
+        [self.delegate settingsView:self didChanged:_mSettings];
     }
 }
 

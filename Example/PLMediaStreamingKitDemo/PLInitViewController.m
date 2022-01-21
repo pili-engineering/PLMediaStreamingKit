@@ -14,7 +14,7 @@
 #import "PLScanViewController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
-
+#import <ReplayKit/ReplayKit.h>
 
 @interface PLInitViewController ()
 <
@@ -32,11 +32,6 @@ UINavigationControllerDelegate
 // 音频流配置
 @property (nonatomic, strong) PLAudioStreamingConfiguration *audioStreamingConfiguration;
 
-#warning PLMediamediaSession 音视频采集 推流核心类
-@property (nonatomic, strong) PLMediaStreamingSession *mediaSession;
-#warning PLStreamingSession 外部导入音视频 推流核心类
-@property (nonatomic, strong) PLStreamingSession *streamSession;
-
 
 // UI
 @property (nonatomic, strong) PLSettingsView *settingsView;
@@ -51,6 +46,7 @@ UINavigationControllerDelegate
 @implementation PLInitViewController
 
 - (void)dealloc {
+    [self removeObservers];
     NSLog(@"[PLInitViewController] dealloc !");
 }
 
@@ -70,11 +66,9 @@ UINavigationControllerDelegate
     // 默认配置
     [self defaultSettings];
     
-    // 推荐配置
-    _mediaSession.sessionPreset = AVCaptureSessionPreset1280x720;
-    _mediaSession.videoStreamingConfiguration.averageVideoBitRate = 1500 *1000;
-
     [self initUISettingView];
+    
+    [self addObservers];
 }
 
 #pragma mark - PLMediamediaSession 的默认配置
@@ -92,11 +86,6 @@ UINavigationControllerDelegate
     // 音频编码默认配置，设备采样率、单声道、码率 96kbps、编码类型硬编 AAC、音频流描述单路
     _audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
     
-    // 根据音视频配置 初始化 PLMediaStreamingSession
-    _mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:_videoCaptureConfiguration audioCaptureConfiguration:_audioCaptureConfiguration videoStreamingConfiguration:_videoStreamConfiguration audioStreamingConfiguration:_audioStreamingConfiguration stream:nil];
-
-    // 外部导入音视频配置 初始化 PLStreamingSession
-    _streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:_videoStreamConfiguration audioStreamingConfiguration:_audioStreamingConfiguration stream:nil];
 }
 
 - (void)initUISettingView {
@@ -181,7 +170,7 @@ UINavigationControllerDelegate
     if (KSCREEN_HEIGHT < 667) {
         setViewHeight = KSCREEN_HEIGHT - 116;
     }
-    _settingsView = [[PLSettingsView alloc] initWithFrame:CGRectMake(0, 0, 0, setViewHeight) mediaSession:_mediaSession streamSession:_streamSession pushURL:@"rtmp://"];
+    _settingsView = [[PLSettingsView alloc] initWithFrame:CGRectMake(0, 0, 0, setViewHeight) pushURL:@"rtmp://"];
     _settingsView.delegate = self;
     _settingsView.listSuperView = self.view;
     [self.view addSubview:_settingsView];
@@ -195,9 +184,8 @@ UINavigationControllerDelegate
 }
 
 #pragma mark - PLSettingsViewDelegate
-- (void)settingsView:(PLSettingsView *)settingsView didChangedSession:(PLMediaStreamingSession *)mediaSession streamSession:(PLStreamingSession *)streamSession {
-    _mediaSession = mediaSession;
-    _streamSession = streamSession;
+- (void)settingsView:(PLSettingsView *)settingsView didChanged:(nonnull PLSettings *)settings{
+    
 }
 
 #pragma mark - PLScanViewControllerDelegate
@@ -259,7 +247,7 @@ UINavigationControllerDelegate
 
 // 进入推流程序
 - (void)nextStep {
-    if (_settingsView.streamType == 2) {
+    if (_settingsView.mSettings.streamType == 2) {
         // 外部导入数据 推流
         UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
         pickerController.delegate = self;
@@ -277,16 +265,11 @@ UINavigationControllerDelegate
 - (void)enterPreviewStreamViewWithMedia:(NSURL *)mediaURL {
     PLStreamViewController *streamViewController = [[PLStreamViewController alloc] init];
     streamViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-    if (_mediaSession) {
-        streamViewController.mediaSession = _mediaSession;
-    } else{
-        streamViewController.streamSession = _streamSession;
-    }
-    streamViewController.type = _settingsView.streamType;
+
     streamViewController.pushURL = [NSURL URLWithString:_settingsView.urlTextField.text];
     streamViewController.mediaURL = mediaURL;
-    
-    if (_settingsView.streamType == 3) {
+    streamViewController.mSettings = _settingsView.mSettings;
+    if (_settingsView.mSettings.streamType == 3) {
         if (@available(iOS 10.0, *)) {
             [self presentViewController:streamViewController animated:YES completion:nil];
         } else{
@@ -316,6 +299,44 @@ UINavigationControllerDelegate
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
+}
+
+#pragma mark - 退前后台相关处理
+- (void)addObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    // 音频打断
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interruptionNotification:) name:AVAudioSessionInterruptionNotification object:nil];
+    // 系统录屏弹框打断
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignNotification:) name:UIApplicationWillResignActiveNotification object:nil];
+}
+- (void)removeObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object:nil];
+    // 系统录屏弹框打断
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
+}
+// 已经进入后台
+- (void)enterBackgroundNotification:(NSNotification *)info {
+//    [self alertViewWithMessage:@"已经进入后台！"];
+}
+// 即将回到前台
+- (void)willEnterForegroundNotification:(NSNotification *)info {
+//    [self alertViewWithMessage:@"即将回到前台！"];
+}
+// 音频打断
+- (void)interruptionNotification:(NSNotification *)info {
+    AVAudioSessionInterruptionType type =  [info.userInfo[AVAudioSessionInterruptionTypeKey] intValue];
+    if (type == AVAudioSessionInterruptionTypeEnded) {
+//        [self alertViewWithMessage:@"音频打断已结束！"];
+    } else if ( type == AVAudioSessionInterruptionTypeBegan) {
+        [self alertViewWithMessage:@"音频开始被打断！"];
+    }
+}
+// 系统录屏弹框打断
+- (void)willResignNotification:(NSNotification *)info {
+//    [self alertViewWithMessage:@"走了即将进入休眠！"];
 }
 
 #pragma mark - alert 提示框

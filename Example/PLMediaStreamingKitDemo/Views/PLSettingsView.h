@@ -7,15 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PLSettings.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
-
-typedef enum {
-    PLStreamTypeAll = 0,                 // 音视频
-    PLStreamTypeAudioOnly = 1,           // 纯音频
-    PLStreamTypeImport = 2,              // 外部导入
-    PLStreamTypeScreen = 3,              // 录屏
-} PLStreamType;
 
 @class PLSettingsView;
 
@@ -23,9 +18,11 @@ typedef enum {
 
 @optional
 
-- (void)settingsView:(PLSettingsView *)settingsView didChangedSession:(PLMediaStreamingSession *)mediaSession streamSession:(PLStreamingSession *)streamSession ;
+- (void)settingsView:(PLSettingsView *)settingsView didChanged:(PLSettings *)settings;
 
 @end
+
+
 
 
 @interface PLSettingsView : UIView
@@ -33,12 +30,14 @@ typedef enum {
 @property (nonatomic, assign) id<PLSettingsViewDelegate> delegate;
 // URL 输入框
 @property (nonatomic, strong) UITextField *urlTextField;
-// 流类型
-@property (nonatomic, assign) PLStreamType streamType;
+
 // 列表 view 的父视图
 @property (nonatomic, strong) UIView *listSuperView;
 
-- (id)initWithFrame:(CGRect)frame mediaSession:(PLMediaStreamingSession *)mediaSession streamSession:(PLStreamingSession *)streamSession pushURL:(NSString *)pushURL;
+@property (nonatomic,strong) PLSettings *mSettings;
+
+
+- (id)initWithFrame:(CGRect)frame pushURL:(NSString *)pushURL;
 
 @end
 
