@@ -28,16 +28,25 @@ extern const int kQNTypeCname;
  */
 extern const int kQNTypeTXT;
 
+/**
+ *  永久有效的 ttl
+ */
+extern const int kQNRecordForeverTTL;
+
 typedef NS_ENUM(NSUInteger, QNRecordSource) {
     QNRecordSourceUnknown,
-    QNRecordSourceDnspodFree,
+    QNRecordSourceCustom,
     QNRecordSourceDnspodEnterprise,
     QNRecordSourceSystem,
+    QNRecordSourceUdp,
+    QNRecordSourceDoh,
 };
+
 
 @interface QNRecord : NSObject
 
-@property (nonatomic, strong, readonly) NSString *value;
+@property (nonatomic,   copy, readonly) NSString *value;
+@property (nonatomic,   copy, readonly) NSString *server;
 @property (nonatomic, readonly) int ttl;
 @property (nonatomic, readonly) int type;
 @property (nonatomic, readonly) long long timeStamp;
@@ -46,6 +55,13 @@ typedef NS_ENUM(NSUInteger, QNRecordSource) {
 - (instancetype)init:(NSString *)value
                  ttl:(int)ttl
                 type:(int)type
+              source:(QNRecordSource)source;
+
+- (instancetype)init:(NSString *)value
+                 ttl:(int)ttl
+                type:(int)type
+           timeStamp:(long long)timeStamp
+              server:(NSString *)server
               source:(QNRecordSource)source;
 
 - (BOOL)expired:(long long)time;

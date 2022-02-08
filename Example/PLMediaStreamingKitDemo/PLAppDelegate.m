@@ -31,8 +31,6 @@
     [PLStreamingEnv setLogLevel:PLStreamLogLevelDebug];
     // 3.开启写 SDK 的日志文件到沙盒
     [PLStreamingEnv enableFileLogging];
-    // 4.可添加设备 id 作为标识
-    [PLStreamingEnv setDeviceID:@"deviceId"];
     
     PLInitViewController *initViewController = [[PLInitViewController alloc] init];
     

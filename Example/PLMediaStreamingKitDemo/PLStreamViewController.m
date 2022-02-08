@@ -65,14 +65,11 @@ PLShowDetailViewDelegate,
 PLInputTextViewDelegate
 >
 
-// 视频采集配置
-@property (nonatomic, strong) PLVideoCaptureConfiguration *videoCaptureConfiguration;
-// 视频流配置
-@property (nonatomic, strong) PLVideoStreamingConfiguration *videoStreamConfiguration;
-// 音频采集配置
-@property (nonatomic, strong) PLAudioCaptureConfiguration *audioCaptureConfiguration;
-// 音频流配置
-@property (nonatomic, strong) PLAudioStreamingConfiguration *audioStreamingConfiguration;
+#warning PLMediamediaSession 音视频采集 推流核心类
+@property (nonatomic, strong) PLMediaStreamingSession *mediaSession;
+#warning PLStreamingSession 外部导入音视频 推流核心类
+@property (nonatomic, strong) PLStreamingSession *streamSession;
+
 // 推流混音播放器
 @property (nonatomic, strong) PLAudioPlayer *audioPlayer;
 
@@ -82,6 +79,8 @@ PLInputTextViewDelegate
 @property (nonatomic, strong) UILabel *statusLabel;
 @property (nonatomic, strong) PLShowDetailView *detailView;
 @property (nonatomic, strong) UIImageView *pushImageView;
+@property (nonatomic, strong) UIImageView *watermarkImageView;
+@property (nonatomic, assign) CGPoint watermarkPoint;
 @property (nonatomic, strong) UISlider *zoomSlider;
 // 录制全屏时，不显示
 @property (nonatomic, strong) UIButton *startButton;
@@ -119,13 +118,7 @@ PLInputTextViewDelegate
     // 必须移除监听
     [self removeObservers];
     
-    // _mediaSession 退出不销毁，为保持下次进入 UI 保持一致，这里重置 default
-    [_pushImageView removeFromSuperview];
-    [_mediaSession clearWaterMark];
-    [_mediaSession setPushImage:nil];
-    _mediaSession.muted = NO;
     [_mediaSession removeAllOverlayViews];
-    [self showDetailView:nil didClickIndex:0 currentType:PLSetDetailViewOrientaion];
     [_mediaSession closeCurrentAudio];
     
     // 销毁 PLMediaStreamingSession
@@ -148,7 +141,7 @@ PLInputTextViewDelegate
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (_streamSession && _type == 3) {
+    if (_streamSession && _mSettings.streamType == 3) {
         // 弹框选择录屏类型
         [self selectedReplayType];
     }
@@ -158,11 +151,11 @@ PLInputTextViewDelegate
     [super viewDidDisappear:animated];
     
     // 停止导入
-    if (_type == 2) {
+    if (_mSettings.streamType == 2) {
         [self stopPushBuffer];
     }
     
-    if (_type == 3) {
+    if (_mSettings.streamType == 3) {
         // 销毁计时器，防止内存泄漏
         if (_timer) {
             [_timer invalidate];
@@ -178,20 +171,11 @@ PLInputTextViewDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setupStreamSession];
+    
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    if (_mediaSession) {
-        _videoStreamConfiguration = _mediaSession.videoStreamingConfiguration;
-        _videoCaptureConfiguration = _mediaSession.videoCaptureConfiguration;
-        _audioStreamingConfiguration = _mediaSession.audioStreamingConfiguration;
-        _audioCaptureConfiguration = _mediaSession.audioCaptureConfiguration;
-    }
-    
-    if (_streamSession) {
-        _videoStreamConfiguration = _streamSession.videoStreamingConfiguration;
-        _audioStreamingConfiguration = _streamSession.audioStreamingConfiguration;
-    }
     
     // UI 适配顶部
     CGFloat space = 24;
@@ -202,12 +186,12 @@ PLInputTextViewDelegate
     _topSpace = space + 4;
         
     // 音视频采集推流
-    if (_mediaSession && _type == 0) {
+    if (_mediaSession && _mSettings.streamType == 0) {
         [self configurateAVMediaStreamingSession];
         [self layoutButtonViewInterface];
         
     // 纯音频采集推流
-    } else if (_mediaSession && _type == 1) {
+    } else if (_mediaSession && _mSettings.streamType == 1) {
         // 遵守代理 PLMediaStreamingSessionDelegate
         _mediaSession.delegate = self;
 
@@ -220,7 +204,7 @@ PLInputTextViewDelegate
             make.left.right.top.bottom.mas_equalTo(self.view);
         }];
     // 外部数据导入推流
-    } else if (_streamSession && _type == 2) {
+    } else if (_streamSession && _mSettings.streamType == 2) {
         // 遵守代理 PLStreamingSessionDelegate
         _streamSession.delegate = self;
         
@@ -242,7 +226,7 @@ PLInputTextViewDelegate
             make.height.mas_equalTo(26);
         }];
     // 录屏推流
-    } else if (_streamSession && _type == 3) {
+    } else if (_streamSession && _mSettings.streamType == 3) {
         // 遵守代理 PLStreamingSessionDelegate
         _streamSession.delegate = self;
         
@@ -277,6 +261,113 @@ PLInputTextViewDelegate
     [self addObservers];
 }
 
+-(void)setupStreamSession{
+    //默认配置
+    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+    PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+    
+    //使用设置项
+    videoCaptureConfiguration = _mSettings.videoSettings.videoCaptureConfiguration;
+    audioCaptureConfiguration = _mSettings.audioSettings.audioCaptureConfiguration;
+    videoStreamingConfiguration  = _mSettings.videoStreamConfiguration;
+    audioStreamingConfiguration = _mSettings.audioStreamingConfiguration;
+    switch (_mSettings.streamType) {
+            case PLStreamTypeAll:
+                _mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+                break;
+            case PLStreamTypeAudioOnly:
+                _mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:nil audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:nil audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+                break;
+            case PLStreamTypeImport:
+                _streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+                break;
+            case PLStreamTypeScreen:
+                _streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+                break;
+
+            default:
+                break;
+        }
+    
+    if (_mSettings.streamType == PLStreamTypeAll || _mSettings.streamType == PLStreamTypeAudioOnly) {
+        [self resetMediaSessionSettings];
+    }else{
+        [self resetStreamSessionSettings];
+    }
+    
+    
+}
+
+-(void)resetMediaSessionSettings{
+    // 协议类型
+    _mediaSession.protocolModel = _mSettings.protocolModel;
+    // 画面填充模式
+    _mediaSession.fillMode = _mSettings.fillMode;
+    // QUIC 协议
+    _mediaSession.quicEnable = _mSettings.quicEnable;
+    // 自适应码率
+    _mediaSession.dynamicFrameEnable = _mSettings.dynamicFrameEnable;
+    // 开启自适应码率调节功能 最小平均码率
+    if (0 == _mSettings.minVideoBitRate) {
+        [_mediaSession disableAdaptiveBitrateControl];
+    }else{
+        [_mediaSession enableAdaptiveBitrateControlWithMinVideoBitRate:_mSettings.minVideoBitRate];
+    }
+    // 自动重连
+    _mediaSession.autoReconnectEnable = _mSettings.autoReconnectEnable;
+    // 开启网络切换监测
+    _mediaSession.monitorNetworkStateEnable = _mSettings.monitorNetworkStateEnable;
+    // 回调方法的调用间隔
+    _mediaSession.statusUpdateInterval = _mSettings.statusUpdateInterval;
+    // 流信息更新间隔
+    _mediaSession.threshold = _mSettings.threshold;
+    // 发送队列最大容纳包数量。
+    _mediaSession.maxCount = _mSettings.maxCount;
+    // 控制系统屏幕自动锁屏是否关闭。
+    _mediaSession.idleTimerDisable = _mSettings.idleTimerDisable;
+    
+    _mediaSession.continuousAutofocusEnable = _mSettings.videoSettings.continuousAutofocusEnable;
+    _mediaSession.touchToFocusEnable = _mSettings.videoSettings.touchToFocusEnable;
+    _mediaSession.smoothAutoFocusEnabled = _mSettings.videoSettings.smoothAutoFocusEnabled;
+    _mediaSession.torchOn = _mSettings.videoSettings.torchOn;
+
+    _mediaSession.playback = _mSettings.audioSettings.playback;
+    _mediaSession.inputGain = _mSettings.audioSettings.inputGain;
+    _mediaSession.allowAudioMixWithOthers = _mSettings.audioSettings.allowAudioMixWithOthers;
+
+}
+
+-(void)resetStreamSessionSettings{
+    // 协议类型
+    _streamSession.protocolModel = _mSettings.protocolModel;
+    // QUIC 协议
+    _streamSession.quicEnable = _mSettings.quicEnable;
+    // 自适应码率
+    _streamSession.dynamicFrameEnable = _mSettings.dynamicFrameEnable;
+    // 开启自适应码率调节功能 最小平均码率
+    if (0 == _mSettings.minVideoBitRate) {
+        [_streamSession disableAdaptiveBitrateControl];
+    }else{
+        [_streamSession enableAdaptiveBitrateControlWithMinVideoBitRate:_mSettings.minVideoBitRate];
+    }
+    // 自动重连
+    _streamSession.autoReconnectEnable = _mSettings.autoReconnectEnable;
+    // 开启网络切换监测
+    _streamSession.monitorNetworkStateEnable = _mSettings.monitorNetworkStateEnable;
+    // 回调方法的调用间隔
+    _streamSession.statusUpdateInterval = _mSettings.statusUpdateInterval;
+    // 流信息更新间隔
+    _streamSession.threshold = _mSettings.threshold;
+    // 发送队列最大容纳包数量。
+    _streamSession.maxCount = _mSettings.maxCount;
+    // 控制系统屏幕自动锁屏是否关闭。
+    _streamSession.idleTimerDisable = _mSettings.idleTimerDisable;
+    
+}
+
+
 #pragma mark - 音视频采集推流
 - (void)configurateAVMediaStreamingSession {
     // 添加预览视图到父视图
@@ -296,10 +387,21 @@ PLInputTextViewDelegate
     [_mediaSession setWhiten:0.5];
     [_mediaSession setRedden:0.5];
     
-    // 混音配置
-    _audioPlayer = [_mediaSession audioPlayerWithFilePath:[[NSBundle mainBundle] pathForResource:@"TestMusic1" ofType:@"m4a"]];
-    _audioPlayer.delegate = self;
-    _audioPlayer.volume = 0.5;
+    // 麦克风权限
+    [PLMediaStreamingSession requestMicrophoneAccessWithCompletionHandler:^(BOOL granted) {
+        PLAuthorizationStatus status = [PLMediaStreamingSession microphoneAuthorizationStatus];
+        if (granted) {
+            if (status == PLAuthorizationStatusAuthorized) {
+                // 混音配置
+                // 首次加载，在成功获取麦克风权限后，传递配置音乐文件才能成功
+                _audioPlayer = [_mediaSession audioPlayerWithFilePath:[[NSBundle mainBundle] pathForResource:@"TestMusic1" ofType:@"m4a"]];
+                _audioPlayer.delegate = self;
+                _audioPlayer.volume = 0.5;
+            }
+        } else{
+            [self presentViewAlert:@"麦克风权限异常！"];
+        }
+    }];
 }
 
 #pragma mark - PLMediaStreamingSessionDelegate
@@ -490,6 +592,11 @@ PLInputTextViewDelegate
     
     // 图片推流 覆盖卡住的预览视图
     _pushImageView = [[UIImageView alloc] init];
+    _pushImageView.userInteractionEnabled = YES;
+    
+    _watermarkImageView = [[UIImageView alloc] init];
+    _watermarkImageView.userInteractionEnabled = YES;
+    _watermarkPoint = CGPointZero;
     
     // 缩放的滑条
     CGFloat width = KSCREEN_WIDTH - 30;
@@ -602,17 +709,33 @@ PLInputTextViewDelegate
         NSString *imageStr = imageArray[index];
         
         if (imageStr.length != 0) {
+            
+            [_mediaSession.overlaySuperView removeFromSuperview];
+            
             UIImage *image = [UIImage imageNamed:imageStr];
             [_mediaSession setPushImage:image];
             
             _pushImageView.image = image;
+            [_pushImageView addSubview:_mediaSession.overlaySuperView];
             [_mediaSession.previewView addSubview:_pushImageView];
             [_pushImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.top.bottom.mas_equalTo(_mediaSession.previewView);
             }];
+            
+            if (_watermarkImageView.image) {
+                _watermarkImageView.frame = CGRectMake(_watermarkPoint.x, _watermarkPoint.y, _watermarkImageView.image.size.width, _watermarkImageView.image.size.height);
+                [_pushImageView addSubview:_watermarkImageView];
+            }
         } else {
             [_mediaSession setPushImage:nil];
+            if (_watermarkImageView.image) {
+                [_watermarkImageView removeFromSuperview];
+            }
+            [_mediaSession.overlaySuperView removeFromSuperview];
             [_pushImageView removeFromSuperview];
+            _pushImageView.image = nil;
+            
+            [_mediaSession.previewView addSubview:_mediaSession.overlaySuperView];
         }
     }
     // 水印
@@ -621,6 +744,7 @@ PLInputTextViewDelegate
         NSString *imageStr = imageArray[index];
         if (imageStr.length != 0) {
             UIImage *image = [UIImage imageNamed:imageStr];
+            _watermarkImageView.image = image;
             CGPoint point = CGPointZero;
             // 根据实际分辨率，显示水印位置
             if ([_mediaSession.sessionPreset isEqualToString:AVCaptureSessionPreset352x288]) {
@@ -638,8 +762,20 @@ PLInputTextViewDelegate
             if ([_mediaSession.sessionPreset isEqualToString:AVCaptureSessionPreset3840x2160]) {
                 point = CGPointMake(1080 - image.size.width/2, 2560 - image.size.height/3*2);
             }
+            _watermarkPoint = point;
+            
+            if (_pushImageView.image) {
+                _watermarkImageView.frame = CGRectMake(_watermarkPoint.x, _watermarkPoint.y, _watermarkImageView.image.size.width, _watermarkImageView.image.size.height);
+                [_pushImageView addSubview:_watermarkImageView];
+            }
             [_mediaSession setWaterMarkWithImage:image position:point];
         } else {
+            _watermarkImageView.image = nil;
+            _watermarkPoint = CGPointZero;
+            
+            if (_watermarkImageView.image) {
+                [_watermarkImageView removeFromSuperview];
+            }
             [_mediaSession clearWaterMark];
         }
     }
@@ -678,7 +814,6 @@ PLInputTextViewDelegate
     CGFloat width = _mediaSession.videoStreamingConfiguration.videoSize.width;
     CGFloat height = _mediaSession.videoStreamingConfiguration.videoSize.height;
     _mediaSession.overlaySuperView.frame = CGRectMake(0, CGRectGetHeight(self.view.frame)/2 - height/width*CGRectGetWidth(self.view.frame)/2, CGRectGetWidth(self.view.frame), height/width*CGRectGetWidth(self.view.frame));
-    [_mediaSession.previewView addSubview:_mediaSession.overlaySuperView];
     [_mediaSession addOverlayView:stickerView];
 }
 // 移除贴纸
@@ -717,7 +852,7 @@ PLInputTextViewDelegate
 - (void)adjustInterfaceAndDeviceIndex:(NSInteger)index {
     // 摄像头采集方向数组
     NSArray *videoOrientationArray = @[@(AVCaptureVideoOrientationPortrait), @(AVCaptureVideoOrientationPortraitUpsideDown), @(AVCaptureVideoOrientationLandscapeRight), @(AVCaptureVideoOrientationLandscapeLeft)];
-    NSArray *interfaceOrientationArray = @[@(UIInterfaceOrientationUnknown), @(UIInterfaceOrientationPortrait), @(UIInterfaceOrientationPortraitUpsideDown), @(UIInterfaceOrientationLandscapeRight), @(UIInterfaceOrientationLandscapeLeft)];
+    NSArray *interfaceOrientationArray = @[@(UIInterfaceOrientationPortrait), @(UIInterfaceOrientationPortraitUpsideDown), @(UIInterfaceOrientationLandscapeRight), @(UIInterfaceOrientationLandscapeLeft)];
     NSInteger orientation = [videoOrientationArray[index] integerValue];
 
     CGFloat width = _mediaSession.videoStreamingConfiguration.videoSize.width;
@@ -737,7 +872,7 @@ PLInputTextViewDelegate
         }
     }
 
-    [[UIDevice currentDevice] setValue:interfaceOrientationArray[index + 1] forKey:@"orientation"];
+    [[UIDevice currentDevice] setValue:interfaceOrientationArray[index] forKey:@"orientation"];
     _mediaSession.videoOrientation = orientation;
 
     if (!CGSizeEqualToSize(videoSize,_mediaSession.videoStreamingConfiguration.videoSize)) {
@@ -763,7 +898,7 @@ PLInputTextViewDelegate
 - (void)startStream:(UIButton *)button {
 
     // PLMediaStreamingSession
-    if (_type == 0 || _type == 1) {
+    if (_mSettings.streamType == 0 || _mSettings.streamType == 1) {
         // 开始/停止 推流
         if (!button.selected) {
             __weak typeof(self) weakSelf = self;
@@ -783,7 +918,7 @@ PLInputTextViewDelegate
     }
     
     // PLStreamingSession
-    if (_type == 2 || _type == 3) {
+    if (_mSettings.streamType == 2 || _mSettings.streamType == 3) {
         // 开始/停止 推流
         if (!button.selected) {
             // 开始外部数据导入
@@ -841,7 +976,7 @@ PLInputTextViewDelegate
 
 // 刷新编码帧率，需要根据目标 expectedSourceVideoFrameRate 调整的，请按照如下实现方式
 - (void)reloadVideoFPS:(UIButton *)reload {
-    PLVideoStreamingConfiguration *videoStreamingConfiguration = _videoStreamConfiguration;
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = _mSettings.videoStreamConfiguration;
     videoStreamingConfiguration.expectedSourceVideoFrameRate = 15;
     videoStreamingConfiguration.videoMaxKeyframeInterval = 45;
     if (_mediaSession && _mediaSession.isStreamingRunning) {
@@ -1203,28 +1338,53 @@ PLInputTextViewDelegate
 - (void)addObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    // 音频打断
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interruptionNotification:) name:AVAudioSessionInterruptionNotification object:nil];
+    // 系统录屏弹框打断
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignNotification:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
+
 }
 - (void)removeObservers {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object:nil];
+    // 系统录屏弹框打断
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
-// 进入后台
+// 已经进入后台
 - (void)enterBackgroundNotification:(NSNotification *)info {
-    if (_type == 2) {
+    if (_mSettings.streamType == 2) {
         // AssetReader 使用了硬解
         // 需要在进入后台的时候，停止推流
         [self stopPushBuffer];
     }
 }
-// 即将进入后台
+// 即将回到前台
 - (void)willEnterForegroundNotification:(NSNotification *)info {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (_type == 2 && _streamSession.isRunning) {
+        if (_mSettings.streamType == 2 && _streamSession.isRunning) {
             [self startPushBuffer];
         }
     });
 }
-
+// 音频打断
+- (void)interruptionNotification:(NSNotification *)info {
+    AVAudioSessionInterruptionType type =  [info.userInfo[AVAudioSessionInterruptionTypeKey] intValue];
+    if (type == AVAudioSessionInterruptionTypeEnded) {
+//        [self presentViewAlert:@"音频打断已结束！"];
+    } else if ( type == AVAudioSessionInterruptionTypeBegan) {
+        [self presentViewAlert:@"音频开始被打断！"];
+    }
+}
+// 系统录屏弹框打断
+- (void)willResignNotification:(NSNotification *)info {
+//    [self presentViewAlert:@"走了即将进入休眠！"];
+}
+- (void)didActiveNotification:(NSNotification *)info {
+//    [self presentViewAlert:@"已经恢复活跃！"];
+}
 #pragma mark - 录屏选择
 - (void)selectedReplayType {
     // 录制 App 内容，进行推流：
