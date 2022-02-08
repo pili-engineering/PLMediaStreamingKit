@@ -470,12 +470,23 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  @abstract 重新加载音频推流配置
 
- @param audioStreamingConfiguration 新的视频编码配置
+ @param audioStreamingConfiguration 新的音频编码配置
  
  @since      v3.0.3
  */
 - (void)reloadAudioStreamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration;
 
+
+/*!
+ @abstract 重新加载音频推流配置 和  采集配置
+
+ @param audioCaptureConfiguration 新的音频采集配置
+ 
+ @param audioStreamingConfiguration 新的音频编码配置
+ 
+ @since      v3.0.6
+ */
+- (void)reloadAudioCaptureConfiguration:(PLAudioCaptureConfiguration *)audioCaptureConfiguration streamingConfiguration:(PLAudioStreamingConfiguration *)audioStreamingConfiguration;
 
 /*!
  @abstract 重新加载视频推流配置
