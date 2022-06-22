@@ -24,6 +24,10 @@ Pod::Spec.new do |s|
   s.subspec "universal" do |ss1|
     ss1.vendored_frameworks = ['Pod/Library-Universal/PLMediaStreamingKit.framework', 'Pod/Library-Universal/HappyDNS.framework']
   end
+  
+  s.subspec "ex-HappyDNS" do |ss2|
+    ss2.vendored_frameworks = ['Pod/Library-Universal/PLMediaStreamingKit.framework']
+  end
  
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']
   s.libraries = 'z', 'c++', 'icucore', 'sqlite3'
