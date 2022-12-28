@@ -43,6 +43,8 @@ PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，可高度
 - [x] 支持后台推图片功能
 - [x] 支持 QUIC 推流功能
 - [x] 支持推流 SEI 功能
+- [x] 支持动态设置 userUID 功能 
+- [x] 支持编码时设置图像填充方式
 
 ## 系统要求
 

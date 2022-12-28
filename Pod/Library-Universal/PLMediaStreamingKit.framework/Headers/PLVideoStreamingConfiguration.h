@@ -38,8 +38,7 @@
  @property   videoSize
  @abstract   编码时的视频分辨率。
 
- @discussion 需要注意的是，这个参数影响的是视频编码时的分辨率，而非摄像头采集到数据的预览大小，传递给编码器的图像尺寸与此尺寸不同时，会按照 AVVideoScalingModeResizeAspectFill
-             对图像做剪切，从而确保图像不会出现压缩的现象。
+ @discussion 需要注意的是，这个参数影响的是视频编码时的分辨率，而非摄像头采集到数据的预览大小，传递给编码器的图像尺寸与此尺寸不同时，在 PLH264EncoderType_AVFoundation 模式下，会根据 videoEncoderFill 决定，是否按照 AVVideoScalingModeResizeAspectFill 对图像做剪切，确保图像不会出现压缩。
 
  @since      v1.0.0
  */
@@ -84,6 +83,16 @@
  @since      v2.1.4
  */
 @property (nonatomic, assign) PLH264EncoderType videoEncoderType;
+
+/*!
+ @property   videoEncoderFill
+ @abstract   编码时是否按照 AVVideoScalingModeResizeAspectFill 对图像做剪切，确保图像不会出现压缩。
+ 
+ @discussion 默认为 YES，即使用 AVVideoScalingModeResizeAspectFill，否则使用 AVVideoScalingModeResizeAspect，此配置仅在                         PLH264EncoderType_AVFoundation 编码方式下可用
+   
+ @since      v3.0.8
+ */
+@property (nonatomic, assign) BOOL videoEncoderFill;
 
 /*!
  @method     defaultConfiguration

@@ -57,6 +57,6 @@
 
 // 推流 SDK
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
-#define PL_MEDIA_STREAM_VERSION @"v3.0.7"
+#define PL_MEDIA_STREAM_VERSION @"v3.0.8"
 
 #endif
