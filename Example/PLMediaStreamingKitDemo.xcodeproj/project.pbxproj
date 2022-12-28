@@ -542,7 +542,7 @@
 				ORGANIZATIONNAME = 0dayZh;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
-						DevelopmentTeam = GDFHW66V92;
+						DevelopmentTeam = W2TP34G2MM;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -552,12 +552,12 @@
 					};
 					AAD08AAA25F0D6FC00AB98AA = {
 						CreatedOnToolsVersion = 12.2;
-						DevelopmentTeam = GDFHW66V92;
+						DevelopmentTeam = W2TP34G2MM;
 						ProvisioningStyle = Automatic;
 					};
 					AAD08AB625F0D6FC00AB98AA = {
 						CreatedOnToolsVersion = 12.2;
-						DevelopmentTeam = GDFHW66V92;
+						DevelopmentTeam = W2TP34G2MM;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -900,8 +900,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GDFHW66V92;
-				ENABLE_BITCODE = YES;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PLMediaStreamingKitDemo/PLMediaStreamingKitDemo-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
@@ -910,9 +910,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.7;
+				MARKETING_VERSION = 3.0.8;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qbox.PLMediaStreamingKitDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo;
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -929,8 +929,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GDFHW66V92;
-				ENABLE_BITCODE = YES;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PLMediaStreamingKitDemo/PLMediaStreamingKitDemo-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
@@ -939,10 +939,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.7;
+				MARKETING_VERSION = 3.0.8;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qbox.PLMediaStreamingKitDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo;
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -975,7 +975,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = GDFHW66V92;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -984,7 +985,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qbox.PLMediaStreamingKitDemo.PLReplaykitExtensionSetupUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo.PLReplaykitExtensionSetupUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1016,7 +1017,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = GDFHW66V92;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1025,7 +1027,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qbox.PLMediaStreamingKitDemo.PLReplaykitExtensionSetupUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo.PLReplaykitExtensionSetupUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1057,7 +1059,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = GDFHW66V92;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1066,7 +1069,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qbox.PLMediaStreamingKitDemo.PLReplaykitExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo.PLReplaykitExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1098,7 +1101,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = GDFHW66V92;
+				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1107,7 +1111,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qbox.PLMediaStreamingKitDemo.PLReplaykitExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo.PLReplaykitExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
