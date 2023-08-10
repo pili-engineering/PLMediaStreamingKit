@@ -22,13 +22,13 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-
-  s.subspec "iphoneos" do |ss1|
-    ss1.vendored_frameworks = ['Pod/Library/PLMediaStreamingKit.framework', 'Pod/Library/HappyDNS.framework']
-  end
  
-  s.subspec "ex-HappyDNS" do |ss2|
-    ss2.vendored_frameworks = ['Pod/Library/PLMediaStreamingKit.framework']
+  s.subspec "ex-HappyDNS" do |ss1|
+    ss1.vendored_frameworks = ['Pod/Library/PLMediaStreamingKit.framework']
+  end
+  
+  s.subspec "HappyDNS" do |ss2|
+    ss2.vendored_frameworks = ['Pod/Library/HappyDNS.framework']
   end
   
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']
