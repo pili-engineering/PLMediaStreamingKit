@@ -148,7 +148,7 @@ typedef NS_ENUM(NSUInteger, PLStreamLogLevel){
  @constant   PLStreamErrorNoSSLOrTLSSupport             没有 SSL 或者 TLS 支持
  @constant   PLStreamErrorDNSResolveFailed              DNS 解析失败
  @constant   PLStreamErrorRTMPPublishStreamFailed       rtmp 发布失败
- 
+ @constant   PLStreamErrorEncoderEncodeFailed     编码器编码过程中失败。HEVC 编码过程中失败，会停止推流。
  @since      v1.0.0
  */
 typedef enum {
@@ -192,7 +192,12 @@ typedef enum {
     PLCameraErroTryReconnectFailed = -1501,
     
     // Authorization error
-    PLStreamErrorAuthenticationFailed = -1600
+    PLStreamErrorAuthenticationFailed = -1600,
+    
+    /*!
+     @abstract 编码器编码过程中失败
+     */
+    PLStreamErrorEncoderEncodeFailed = -1700
 } PLStreamError;
 
 #pragma mark - Video Streaming Quality
@@ -338,6 +343,14 @@ extern NSString *PLAudioComponentFailedToCreateNotification;
 typedef NS_ENUM(NSUInteger, PLH264EncoderType) {
     PLH264EncoderType_AVFoundation,    // AVFoundation 编码器
     PLH264EncoderType_VideoToolbox     // iOS 8 及以上系统版本可用 VideoToolbox 编码器，编码效率更优
+};
+
+/*!
+  @abstract 视频编码器类型
+ */
+typedef NS_ENUM(NSUInteger, PLVideoCodecType) {
+    PLVideoCodecType_H264 = 0,
+    PLVideoCodecType_HEVC = 1 // (H265)。仅支持 iOS 11 及以上的系统和 iPhone 7 及以上的设备
 };
 
 /*!

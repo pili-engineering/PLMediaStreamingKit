@@ -58,7 +58,7 @@ UINavigationControllerDelegate
     // 适配顶部
     CGFloat space = 24;
     if (PL_iPhoneX || PL_iPhoneXR || PL_iPhoneXSMAX ||
-        PL_iPhone12Min || PL_iPhone12Pro || PL_iPhone12PMax) {
+        PL_iPhone12Min || PL_iPhone12Pro || PL_iPhone12PMax || PL_iPhone14PMax) {
         space = 44;
     }
     _topSpace = space + 4;
