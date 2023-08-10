@@ -215,7 +215,7 @@
 		B6FC33901D93C301004EEE29 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B6FC33B21D93C470004EEE29 /* PLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAppDelegate.h; sourceTree = "<group>"; };
 		B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAppDelegate.m; sourceTree = "<group>"; };
-		B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PLMediaStreamingKit.podspec; path = ../PLMediaStreamingKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PLMediaStreamingKit.podspec; path = ../PLMediaStreamingKit.podspec; sourceTree = "<group>"; };
 		BE66EB89300B2711005819E0 /* Pods-BroadcastUploadExtensionSetupUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BroadcastUploadExtensionSetupUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BroadcastUploadExtensionSetupUI/Pods-BroadcastUploadExtensionSetupUI.debug.xcconfig"; sourceTree = "<group>"; };
 		C84F5E2AD19F1CCCE4AA7DD6 /* libPods-BroadcastUploadExtensionSetupUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BroadcastUploadExtensionSetupUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F444AD22AE92F8FC574B218F /* Pods-BroadcastUploadExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BroadcastUploadExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-BroadcastUploadExtension/Pods-BroadcastUploadExtension.release.xcconfig"; sourceTree = "<group>"; };
@@ -731,13 +731,13 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo-frameworks.sh",
-				"${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework",
 				"${PODS_ROOT}/../../Pod/Library/HappyDNS.framework",
+				"${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLMediaStreamingKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLMediaStreamingKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -910,7 +910,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.8;
+				MARKETING_VERSION = 3.1.0;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo;
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
@@ -939,7 +939,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.8;
+				MARKETING_VERSION = 3.1.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo;

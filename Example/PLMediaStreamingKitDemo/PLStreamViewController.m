@@ -86,6 +86,7 @@ PLInputTextViewDelegate
 @property (nonatomic, strong) UIButton *startButton;
 @property (nonatomic, strong) UIButton *seiButton;
 @property (nonatomic, strong) UIButton *reloadButton;
+@property (nonatomic, strong) UIButton *userUIDButton;
 
 @property (nonatomic, assign) CGFloat topSpace;
 
@@ -109,6 +110,9 @@ PLInputTextViewDelegate
 @property (nonatomic, assign) BOOL needRecordSystem;
 
 @property (nonatomic, strong) NSString *systemVersion;
+
+@property (nonatomic, assign) BOOL isLandscape;
+@property (nonatomic, strong) PLRotatePixelBufferProcessor *rotatePixelBufferProcessor;
 
 @end
 
@@ -138,6 +142,47 @@ PLInputTextViewDelegate
     NSLog(@"[PLStreamViewController] dealloc !");
 }
 
+/**屏幕旋转的通知回调*/
+- (void)orientChange:(NSNotification *)noti {
+    UIDeviceOrientation orient = [UIDevice currentDevice].orientation;
+    switch (orient) {
+        case UIDeviceOrientationPortrait:{
+            _isLandscape = NO;
+            NSLog(@"竖直屏幕");
+        }
+            break;
+        case UIDeviceOrientationLandscapeLeft:{
+            _isLandscape = YES;
+            NSLog(@"手机左转");
+        }
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:{
+            _isLandscape = NO;
+            NSLog(@"手机竖直");
+        }
+            break;
+        case UIDeviceOrientationLandscapeRight:{
+            _isLandscape = YES;
+            NSLog(@"手机右转");
+        }
+            break;
+        case UIDeviceOrientationUnknown:{
+            NSLog(@"未知");
+        }
+            break;
+        case UIDeviceOrientationFaceUp:{
+            NSLog(@"手机屏幕朝上");
+        }
+            break;
+        case UIDeviceOrientationFaceDown:{
+            NSLog(@"手机屏幕朝下");
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -145,6 +190,12 @@ PLInputTextViewDelegate
         // 弹框选择录屏类型
         [self selectedReplayType];
     }
+    
+    //开始生成 设备旋转 通知
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    
+    //添加 设备旋转 通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientChange:)  name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -166,6 +217,15 @@ PLInputTextViewDelegate
         [self stopReplayLive];
         [self stopScreenRecorder];
     }
+    
+    //销毁 设备旋转 通知
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIDeviceOrientationDidChangeNotification
+                                                  object:nil
+     ];
+
+    //结束 设备旋转通知
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
 }
 
 
@@ -180,7 +240,7 @@ PLInputTextViewDelegate
     // UI 适配顶部
     CGFloat space = 24;
     if (PL_iPhoneX || PL_iPhoneXR || PL_iPhoneXSMAX ||
-        PL_iPhone12Min || PL_iPhone12Pro || PL_iPhone12PMax) {
+        PL_iPhone12Min || PL_iPhone12Pro || PL_iPhone12PMax || PL_iPhone14PMax) {
         space = 44;
     }
     _topSpace = space + 4;
@@ -261,7 +321,7 @@ PLInputTextViewDelegate
     [self addObservers];
 }
 
--(void)setupStreamSession{
+- (void)setupStreamSession {
     //默认配置
     PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
     PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
@@ -274,33 +334,30 @@ PLInputTextViewDelegate
     videoStreamingConfiguration  = _mSettings.videoStreamConfiguration;
     audioStreamingConfiguration = _mSettings.audioStreamingConfiguration;
     switch (_mSettings.streamType) {
-            case PLStreamTypeAll:
-                _mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
-                break;
-            case PLStreamTypeAudioOnly:
-                _mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:nil audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:nil audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
-                break;
-            case PLStreamTypeImport:
-                _streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
-                break;
-            case PLStreamTypeScreen:
-                _streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
-                break;
-
-            default:
-                break;
-        }
+        case PLStreamTypeAll:
+            _mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+            break;
+        case PLStreamTypeAudioOnly:
+            _mediaSession = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:nil audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:nil audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+            break;
+        case PLStreamTypeImport:
+            _streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+            break;
+        case PLStreamTypeScreen:
+            _streamSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+            break;
+        default:
+            break;
+    }
     
     if (_mSettings.streamType == PLStreamTypeAll || _mSettings.streamType == PLStreamTypeAudioOnly) {
         [self resetMediaSessionSettings];
-    }else{
+    } else{
         [self resetStreamSessionSettings];
     }
-    
-    
 }
 
--(void)resetMediaSessionSettings{
+- (void)resetMediaSessionSettings{
     // 协议类型
     _mediaSession.protocolModel = _mSettings.protocolModel;
     // 画面填充模式
@@ -309,6 +366,7 @@ PLInputTextViewDelegate
     _mediaSession.quicEnable = _mSettings.quicEnable;
     // 自适应码率
     _mediaSession.dynamicFrameEnable = _mSettings.dynamicFrameEnable;
+
     // 开启自适应码率调节功能 最小平均码率
     if (0 == _mSettings.minVideoBitRate) {
         [_mediaSession disableAdaptiveBitrateControl];
@@ -336,7 +394,6 @@ PLInputTextViewDelegate
     _mediaSession.playback = _mSettings.audioSettings.playback;
     _mediaSession.inputGain = _mSettings.audioSettings.inputGain;
     _mediaSession.allowAudioMixWithOthers = _mSettings.audioSettings.allowAudioMixWithOthers;
-
 }
 
 -(void)resetStreamSessionSettings{
@@ -364,7 +421,6 @@ PLInputTextViewDelegate
     _streamSession.maxCount = _mSettings.maxCount;
     // 控制系统屏幕自动锁屏是否关闭。
     _streamSession.idleTimerDisable = _mSettings.idleTimerDisable;
-    
 }
 
 
@@ -426,6 +482,12 @@ PLInputTextViewDelegate
     dispatch_async(dispatch_get_main_queue(), ^{
         weakSelf.statusLabel.text = [NSString stringWithFormat:@"video %.1f fps\naudio %.1f fps\nvideo %.1f bps\naudio %.1f bps\ntotal bitrate %.1f kbps",status.videoFPS, status.audioFPS, status.videoBitrate, status.audioBitrate, status.totalBitrate/1000];
         NSLog(@"[PLStreamViewController] PLStreamStatus 的信息: video FPS %.1f, audio FPS %.1f, video Bps %.1f, audio Bps %.1f, total bitrate %.1f", status.videoFPS, status.audioFPS, status.videoBitrate, status.audioBitrate, status.totalBitrate);
+    });
+}
+
+- (void)streamingSession:(PLStreamingSession *)session videoCodecDidChange:(PLVideoCodecType)codecType {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"videoCodecDidChange: %lu", codecType);
     });
 }
 
@@ -543,7 +605,7 @@ PLInputTextViewDelegate
     [self.view addSubview:_statusLabel];
     
     // SEI 按钮
-    _seiButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 180, 65, 26)];
+    _seiButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 180, 75, 26)];
     _seiButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [_seiButton setTitle:@"发送 SEI" forState:UIControlStateNormal];
     [_seiButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -552,7 +614,7 @@ PLInputTextViewDelegate
     [self.view addSubview:_seiButton];
     
     // 开始/停止推流按钮
-    _startButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 218, 65, 26)];
+    _startButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 218, 75, 26)];
     _startButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [_startButton setTitle:@"开始推流" forState:UIControlStateNormal];
     [_startButton setTitle:@"停止推流" forState:UIControlStateSelected];
@@ -562,13 +624,21 @@ PLInputTextViewDelegate
     [self.view addSubview:_startButton];
     
     
-    _reloadButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 256, 65, 26)];
+    _reloadButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 256, 75, 26)];
     _reloadButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
     [_reloadButton setTitle:@"刷新 VFPS" forState:UIControlStateNormal];
     [_reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _reloadButton.titleLabel.font = FONT_MEDIUM(12.f);
     [_reloadButton addTarget:self action:@selector(reloadVideoFPS:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:_reloadButton];
+    
+    _userUIDButton = [[UIButton alloc] initWithFrame:CGRectMake(15, _topSpace + 294, 75, 26)];
+    _userUIDButton.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
+    [_userUIDButton setTitle:@"更新 UserUID" forState:UIControlStateNormal];
+    [_userUIDButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _userUIDButton.titleLabel.font = FONT_MEDIUM(12.f);
+    [_userUIDButton addTarget:self action:@selector(updateUserUID:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:_userUIDButton];
 }
 
 #pragma mark - UI 视图
@@ -876,12 +946,18 @@ PLInputTextViewDelegate
     _mediaSession.videoOrientation = orientation;
 
     if (!CGSizeEqualToSize(videoSize,_mediaSession.videoStreamingConfiguration.videoSize)) {
-        PLVideoStreamingConfiguration *videoStreamingConfiguration = [[PLVideoStreamingConfiguration alloc] initWithVideoSize:videoSize expectedSourceVideoFrameRate:_mediaSession.videoStreamingConfiguration.expectedSourceVideoFrameRate
-            videoMaxKeyframeInterval:_mediaSession.videoStreamingConfiguration.videoMaxKeyframeInterval
-            averageVideoBitRate:_mediaSession.videoStreamingConfiguration.averageVideoBitRate
-            videoProfileLevel:_mediaSession.videoStreamingConfiguration.videoProfileLevel
-            videoEncoderType:_mediaSession.videoStreamingConfiguration.videoEncoderType];
-        [self.mediaSession reloadVideoStreamingConfiguration:videoStreamingConfiguration];
+        if (_mediaSession.videoStreamingConfiguration.videoCodecType == PLVideoCodecType_HEVC) {
+            PLVideoStreamingConfiguration *videoStreamingConfiguration = [[PLVideoStreamingConfiguration alloc] initWithVideoSize:videoSize expectedSourceVideoFrameRate:_mediaSession.videoStreamingConfiguration.expectedSourceVideoFrameRate videoMaxKeyframeInterval:_mediaSession.videoStreamingConfiguration.videoMaxKeyframeInterval averageVideoBitRate:_mediaSession.videoStreamingConfiguration.averageVideoBitRate videoCodecType:_mediaSession.videoStreamingConfiguration.videoCodecType];
+            [self.mediaSession reloadVideoStreamingConfiguration:videoStreamingConfiguration];
+        } else {
+            PLVideoStreamingConfiguration *videoStreamingConfiguration = [[PLVideoStreamingConfiguration alloc] initWithVideoSize:videoSize expectedSourceVideoFrameRate:_mediaSession.videoStreamingConfiguration.expectedSourceVideoFrameRate
+                videoMaxKeyframeInterval:_mediaSession.videoStreamingConfiguration.videoMaxKeyframeInterval
+                averageVideoBitRate:_mediaSession.videoStreamingConfiguration.averageVideoBitRate
+                videoProfileLevel:_mediaSession.videoStreamingConfiguration.videoProfileLevel
+                videoEncoderType:_mediaSession.videoStreamingConfiguration.videoEncoderType];
+            [self.mediaSession reloadVideoStreamingConfiguration:videoStreamingConfiguration];
+        }
+
     }
 }
 
@@ -987,6 +1063,13 @@ PLInputTextViewDelegate
         [_streamSession reloadVideoStreamingConfiguration:videoStreamingConfiguration];
         _streamSession.dynamicFrameEnable = YES;
     }
+}
+
+- (void)updateUserUID:(UIButton *)update {
+    // 设计用户唯一标识
+    NSString *userUid = [NSString stringWithFormat:@"%@_%@_demo_test", [[NSBundle mainBundle] bundleIdentifier], @"geng-gai-zhi-hou"];
+    [PLStreamingEnv setUserUID:userUid];
+    [self presentViewAlert:userUid];
 }
 
 #pragma mark - PLInputTextViewDelegate
@@ -1165,7 +1248,28 @@ PLInputTextViewDelegate
                 } else {
                     if (bufferType == RPSampleBufferTypeVideo) {
                         // 这里选择了推 App 的画面内容，也可使用系统相机采集数据去推
-                        [weakSelf.streamSession pushVideoSampleBuffer:sampleBuffer];
+//                        [weakSelf.streamSession pushVideoSampleBuffer:sampleBuffer];
+                        // 持续接收视频帧
+                        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+                        // 旋转视频帧类的初始化
+                        if (_isLandscape && !self.rotatePixelBufferProcessor) {
+                            size_t srcFrameWidth = CVPixelBufferGetWidth(pixelBuffer); // 比如 srcFrameWidth = 1080
+                            size_t srcFrameHeight = CVPixelBufferGetHeight(pixelBuffer); // 比如 srcFrameHeight = 1920
+                               
+                            CGRect sourceRect = CGRectMake(0, 0, srcFrameWidth, srcFrameHeight);
+                               
+                            CGRect destRect = CGRectMake(0, 0, srcFrameWidth, srcFrameHeight);
+                            CGSize destFrameSize = CGSizeMake(srcFrameWidth, srcFrameHeight);
+                            PLVideoFillModeType aspectMode = PLVideoFillModePreserveAspectRatio;
+                               
+                            self.rotatePixelBufferProcessor = [[PLRotatePixelBufferProcessor alloc] initWithSourceRect:sourceRect destRect:destRect destFrameSize:destFrameSize aspectMode:aspectMode];
+                            self.rotatePixelBufferProcessor.rotateMode = PLRotateModeDegree90;
+                        }
+                        if (_isLandscape) {
+                            // 执行视频帧旋转
+                            pixelBuffer = [self.rotatePixelBufferProcessor processPixelBuffer:pixelBuffer]; // 比如经旋转 PLRotateModeDegree90 处理后的 pixelBuffer 的 size 为 (1280, 720)
+                        }
+                        [weakSelf.streamSession pushPixelBuffer:pixelBuffer];
                     }
                     // 音频推 2 路的话，需要配置 PLAudioStreamingConfiguration 的 inputAudioChannelDescriptions 为 @[kPLAudioChannelApp, kPLAudioChannelMic]
 //                    if (bufferType == RPSampleBufferTypeAudioApp) {

@@ -331,8 +331,14 @@ PLListArrayViewDelegate
     
     NSDictionary *videoEncoderTypeDict = @{@"videoEncoderType - H.264 编码器类型 ( Default：AVFoundation )":@[@"AVFoundation", @"VideoToolbox"], @"default":@0};
     _mSettings.videoStreamConfiguration.videoEncoderType = PLH264EncoderType_AVFoundation;
+    
+    NSDictionary *videoEncoderFillDict = @{@"videoEncoderFill - 编码画面是否比例剪切 ( Default：YES )":@[@"NO", @"YES"], @"default":@1};
+    _mSettings.videoStreamConfiguration.videoEncoderFill = YES;
+    
+    NSDictionary *videoCodecTypeDict = @{@"videoCodecType - 编码器类型 ( Default：H264 )":@[@"H264", @"HEVC"], @"default":@0};
+    _mSettings.videoStreamConfiguration.videoCodecType = PLVideoCodecType_H264;
      
-    NSDictionary *videoStreamingDict = @{@"PLVideoStreamingConfiguration":@[videoProfileLevelDict, videoSizeDict, expectedSourceVideoFrameRateDict, videoMaxKeyframeIntervalDict, averageVideoBitRateDict, videoEncoderTypeDict]};
+    NSDictionary *videoStreamingDict = @{@"PLVideoStreamingConfiguration":@[videoProfileLevelDict, videoSizeDict, expectedSourceVideoFrameRateDict, videoMaxKeyframeIntervalDict, averageVideoBitRateDict, videoEncoderTypeDict, videoEncoderFillDict, videoCodecTypeDict]};
     
     // PLAudioCaptureConfiguration 相关属性
     NSDictionary *audioCaptureDict = @{@"PLAudioCaptureConfiguration":@[@{@"channelsPerFrame - 采集音频声道数 ( Default：1 )":@[@"1", @"2"], @"default":@0}, @{@"acousticEchoCancellationEnable - 回声消除 ( Default：NO )":@[@"NO", @"YES"], @"default":@0}]};
@@ -780,6 +786,10 @@ PLListArrayViewDelegate
                 videoStreamConfiguration.averageVideoBitRate = [configureModel.configuraValue[index] integerValue] * 1000;
             } else if ([configureModel.configuraKey containsString:@"videoEncoderType"]){
                 videoStreamConfiguration.videoEncoderType = index;
+            } else if ([configureModel.configuraKey containsString:@"videoEncoderFill"]){
+                videoStreamConfiguration.videoEncoderFill = index;
+            } else if ([configureModel.configuraKey containsString:@"videoCodecType"]) {
+                videoStreamConfiguration.videoCodecType = index;
             }
         // PLAudioCaptureConfiguration
         } else if ([categoryModel.categoryKey isEqualToString:@"PLAudioCaptureConfiguration"]) {

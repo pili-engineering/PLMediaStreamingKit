@@ -123,7 +123,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		005FA86F9D4C0B8156B70270CC3CEA70 /* PLMediaStreamingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLMediaStreamingKit.framework; path = Pod/Library/PLMediaStreamingKit.framework; sourceTree = "<group>"; };
 		0C652C8BC66D4C413DE82AE89565D38B /* Pods-BroadcastUploadExtensionSetupUI-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BroadcastUploadExtensionSetupUI-dummy.m"; sourceTree = "<group>"; };
 		15EAEB2FDC543254202AF4F426CE320B /* CLSLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSLogging.h; path = iOS/Crashlytics.framework/Headers/CLSLogging.h; sourceTree = "<group>"; };
 		1738C17A23FED30CF08F3E0C694C8ED3 /* Masonry-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Masonry-prefix.pch"; sourceTree = "<group>"; };
@@ -135,27 +134,28 @@
 		2483E85D3840CDBC0ECF3EBC4BB8A5B2 /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+MASShorthandAdditions.h"; path = "Masonry/NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		24B4BB122C8553C66E0489C2F4962925 /* MASLayoutConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASLayoutConstraint.m; path = Masonry/MASLayoutConstraint.m; sourceTree = "<group>"; };
 		259550860C78C2039096E2FAF5AA1C9D /* MASUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASUtilities.h; path = Masonry/MASUtilities.h; sourceTree = "<group>"; };
-		2717B83372F9C2786CF7B66C84D0F98C /* PLMediaStreamingKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PLMediaStreamingKit.release.xcconfig; sourceTree = "<group>"; };
 		2A7CEB470AAD5A2E7F36BDBAF91FB9C6 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ViewController+MASAdditions.m"; path = "Masonry/ViewController+MASAdditions.m"; sourceTree = "<group>"; };
+		2E26ABD34D7BE5B5FFE23CADF767885E /* PLMediaStreamingKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PLMediaStreamingKit.release.xcconfig; sourceTree = "<group>"; };
 		31D0B90ADB2F6F59296A6678A76475AD /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+MASAdditions.h"; path = "Masonry/NSArray+MASAdditions.h"; sourceTree = "<group>"; };
 		366CC06A04CDA763D93F77787C3DB1A3 /* Pods-PLMediaStreamingKitDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PLMediaStreamingKitDemo-dummy.m"; sourceTree = "<group>"; };
 		3727C4E9BADD19E53878F18CD0806B25 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = iOS/Crashlytics.framework; sourceTree = "<group>"; };
 		3888435BA5C1218BD12A9BAAF7F3CF2C /* FABAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABAttributes.h; path = iOS/Fabric.framework/Headers/FABAttributes.h; sourceTree = "<group>"; };
 		38BB83807F2AC0D06F3503FB98FDE670 /* MASConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASConstraint.h; path = Masonry/MASConstraint.h; sourceTree = "<group>"; };
 		427748ACE9C76D9A0FF783960C575F3C /* Answers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Answers.h; path = iOS/Crashlytics.framework/Headers/Answers.h; sourceTree = "<group>"; };
+		46FE66AF5E780C5D3CDB748AA114EEC3 /* PLMediaStreamingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLMediaStreamingKit.framework; path = Pod/Library/PLMediaStreamingKit.framework; sourceTree = "<group>"; };
 		47B7085D7740B9FDBAA213839C2E5DD8 /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MASAdditions.m"; path = "Masonry/NSArray+MASAdditions.m"; sourceTree = "<group>"; };
 		4AF780B3EACED605A0920C4E14F33D61 /* MASConstraint+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "MASConstraint+Private.h"; path = "Masonry/MASConstraint+Private.h"; sourceTree = "<group>"; };
-		52CB56B1E6683CC3C4CA73C03ECDEA53 /* HappyDNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HappyDNS.framework; path = Pod/Library/HappyDNS.framework; sourceTree = "<group>"; };
 		53FEDAEACFEE74A65111BD0F3BE00AD6 /* Pods-BroadcastUploadExtensionSetupUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BroadcastUploadExtensionSetupUI.debug.xcconfig"; sourceTree = "<group>"; };
 		57A54A0D374B9879573216487AE8116F /* Pods-BroadcastUploadExtensionSetupUI-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BroadcastUploadExtensionSetupUI-acknowledgements.markdown"; sourceTree = "<group>"; };
 		595B37ABF2D2DA6F6790B3155D1D19B2 /* CLSStackFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSStackFrame.h; path = iOS/Crashlytics.framework/Headers/CLSStackFrame.h; sourceTree = "<group>"; };
+		5A94642D36CDB7622858CDCE5133566A /* HappyDNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HappyDNS.framework; path = Pod/Library/HappyDNS.framework; sourceTree = "<group>"; };
 		5C833164102B54A423C7586A5FA67269 /* Pods-BroadcastUploadExtensionSetupUI-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BroadcastUploadExtensionSetupUI-acknowledgements.plist"; sourceTree = "<group>"; };
 		5CBF4A83DEC7381030A9C26089266DDC /* Pods-PLMediaStreamingKitDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PLMediaStreamingKitDemo-acknowledgements.plist"; sourceTree = "<group>"; };
 		5F0AEC7C3BEE90F7938DD6C529C02B1C /* Pods-BroadcastUploadExtensionSetupUI */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-BroadcastUploadExtensionSetupUI"; path = "libPods-BroadcastUploadExtensionSetupUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FE0A0171F46DB855957F187ED9F397F /* Pods-BroadcastUploadExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BroadcastUploadExtension.release.xcconfig"; sourceTree = "<group>"; };
 		60DF498B066B45A7D6CB5AA638AA69ED /* MASConstraintMaker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASConstraintMaker.m; path = Masonry/MASConstraintMaker.m; sourceTree = "<group>"; };
+		652ECF31AF30F99657BA222C6725E5BB /* PLMediaStreamingKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PLMediaStreamingKit.debug.xcconfig; sourceTree = "<group>"; };
 		66BCA6C62A462F791D0B0D9591248265 /* MASConstraintMaker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASConstraintMaker.h; path = Masonry/MASConstraintMaker.h; sourceTree = "<group>"; };
-		6CDF9FC4798C6CF4E295E9C7DC180286 /* PLMediaStreamingKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PLMediaStreamingKit.debug.xcconfig; sourceTree = "<group>"; };
 		6DEBFA61A600D9E33977901199F58D84 /* Masonry-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Masonry-dummy.m"; sourceTree = "<group>"; };
 		76FFFA4EF678123666718E61C8559DD8 /* View+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "View+MASAdditions.m"; path = "Masonry/View+MASAdditions.m"; sourceTree = "<group>"; };
 		7A7D929ED05F558CA42E16E6BB63B99D /* Pods-PLMediaStreamingKitDemo */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-PLMediaStreamingKitDemo"; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,21 +177,21 @@
 		ABB031D40A89E8671B79EF079C70BD9E /* ANSCompatibility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ANSCompatibility.h; path = iOS/Crashlytics.framework/Headers/ANSCompatibility.h; sourceTree = "<group>"; };
 		B1B866D7B97173B311E6AC009EF644AC /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+MASDebugAdditions.m"; path = "Masonry/NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
 		B31FE25B9C505A290CBE40EF0EA14BA5 /* Crashlytics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Crashlytics.h; path = iOS/Crashlytics.framework/Headers/Crashlytics.h; sourceTree = "<group>"; };
+		B684287724C2492262663AEF032A9ACA /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = PLMediaStreamingKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BA873CEBE31AE95BC9B2E0749FFB774C /* Pods-PLMediaStreamingKitDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PLMediaStreamingKitDemo-frameworks.sh"; sourceTree = "<group>"; };
 		BD1FA37217C61E31BFD79A870DDEDC0A /* MASViewConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewConstraint.h; path = Masonry/MASViewConstraint.h; sourceTree = "<group>"; };
 		BFB7E98C498362088117F8736286A52B /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+MASDebugAdditions.h"; path = "Masonry/NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
 		C1784464C77E5FCCAD8A6FD212709982 /* Pods-BroadcastUploadExtensionSetupUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BroadcastUploadExtensionSetupUI.release.xcconfig"; sourceTree = "<group>"; };
 		C2FEEB371E1706C5D67FCFBF0E3DAD8D /* Masonry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Masonry.h; path = Masonry/Masonry.h; sourceTree = "<group>"; };
+		C4FA71857D686C3AC55FAFB5C6D004A8 /* PLMediaStreamingKit-copy-dsyms.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "PLMediaStreamingKit-copy-dsyms.sh"; sourceTree = "<group>"; };
 		D2A2A5018F672381CCB676327BCD9B6D /* CLSAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSAttributes.h; path = iOS/Crashlytics.framework/Headers/CLSAttributes.h; sourceTree = "<group>"; };
 		D4D039CBA9EF4EA1D01A51BAB86B7C10 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASCompositeConstraint.m; path = Masonry/MASCompositeConstraint.m; sourceTree = "<group>"; };
 		D95476D62A4F43322EC8E21928058557 /* MASConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASConstraint.m; path = Masonry/MASConstraint.m; sourceTree = "<group>"; };
 		DC8F1C63FD4A7398D76494395C44A51D /* Masonry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Masonry.debug.xcconfig; sourceTree = "<group>"; };
 		DDCE22741906A2FD1B46524DB460242A /* MASViewAttribute.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewAttribute.h; path = Masonry/MASViewAttribute.h; sourceTree = "<group>"; };
-		DFAC82317B527E25D12E4FFE4FEF1851 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = PLMediaStreamingKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E32507C2AD9726BD8E165A6E609B4E33 /* Fabric.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Fabric.h; path = iOS/Fabric.framework/Headers/Fabric.h; sourceTree = "<group>"; };
 		E5071496D31C9B7AC6B8E92D735F445B /* MASCompositeConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASCompositeConstraint.h; path = Masonry/MASCompositeConstraint.h; sourceTree = "<group>"; };
 		EB283863330054309763AD139DB3FC63 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ViewController+MASAdditions.h"; path = "Masonry/ViewController+MASAdditions.h"; sourceTree = "<group>"; };
-		EFDC72EF89AC8F7ED6DAD019E3AAB424 /* PLMediaStreamingKit-copy-dsyms.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "PLMediaStreamingKit-copy-dsyms.sh"; sourceTree = "<group>"; };
 		EFDCB5AD257F7265B28C1E0EFD136596 /* Pods-BroadcastUploadExtension-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BroadcastUploadExtension-acknowledgements.markdown"; sourceTree = "<group>"; };
 		FBA0D268AE6126D5F296B54B6D48FA85 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASLayoutConstraint.h; path = Masonry/MASLayoutConstraint.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -264,7 +264,7 @@
 		1643DBC82913C8B0210B0DC509070530 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				860B8C2FE21E0F625E571C4ECF1B2619 /* PLMediaStreamingKit */,
+				E4A63B00EBCD71556D0F9CCB529C0381 /* PLMediaStreamingKit */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -281,14 +281,6 @@
 			);
 			name = "Pods-PLMediaStreamingKitDemo";
 			path = "Target Support Files/Pods-PLMediaStreamingKitDemo";
-			sourceTree = "<group>";
-		};
-		31FB2650D3C571707F00F5081CAF8698 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				005FA86F9D4C0B8156B70270CC3CEA70 /* PLMediaStreamingKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		32FBCDEE371832AD58CEC34A90C84B32 /* Pods-BroadcastUploadExtensionSetupUI */ = {
@@ -326,40 +318,20 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		6DF9411651428C37E351BE8D0D10ED4D /* Frameworks */ = {
+		67508337E770C59DA190D7EB082460B2 /* HappyDNS */ = {
 			isa = PBXGroup;
 			children = (
-				52CB56B1E6683CC3C4CA73C03ECDEA53 /* HappyDNS.framework */,
+				F214C212F6CC4DAB315524A1401E36BE /* Frameworks */,
 			);
-			name = Frameworks;
+			name = HappyDNS;
 			sourceTree = "<group>";
 		};
-		73A34B11A21D3E0803E363B454E4D51A /* iphoneos */ = {
+		6D068470D93387117690751862EE287B /* ex-HappyDNS */ = {
 			isa = PBXGroup;
 			children = (
-				6DF9411651428C37E351BE8D0D10ED4D /* Frameworks */,
+				E8568801DB999BBE6CE2270B54ACDD1A /* Frameworks */,
 			);
-			name = iphoneos;
-			sourceTree = "<group>";
-		};
-		77116516CF0FDE75C138B589362119C4 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				DFAC82317B527E25D12E4FFE4FEF1851 /* PLMediaStreamingKit.podspec */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
-		860B8C2FE21E0F625E571C4ECF1B2619 /* PLMediaStreamingKit */ = {
-			isa = PBXGroup;
-			children = (
-				A73C79976DBB0309B2F1CB426B0DCA08 /* ex-HappyDNS */,
-				73A34B11A21D3E0803E363B454E4D51A /* iphoneos */,
-				77116516CF0FDE75C138B589362119C4 /* Pod */,
-				DD56DB577D8F53E40E94D8D0CAE82586 /* Support Files */,
-			);
-			name = PLMediaStreamingKit;
-			path = ../..;
+			name = "ex-HappyDNS";
 			sourceTree = "<group>";
 		};
 		86C5C78A3CB1AC7A87B9FBC18FF3ED03 /* Fabric */ = {
@@ -384,12 +356,12 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		A73C79976DBB0309B2F1CB426B0DCA08 /* ex-HappyDNS */ = {
+		96234C7CF4987196B0DEA68F61482201 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				31FB2650D3C571707F00F5081CAF8698 /* Frameworks */,
+				B684287724C2492262663AEF032A9ACA /* PLMediaStreamingKit.podspec */,
 			);
-			name = "ex-HappyDNS";
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		BF9570D1743C755279DB43F28E18E7A1 /* Frameworks */ = {
@@ -428,6 +400,17 @@
 			path = Crashlytics;
 			sourceTree = "<group>";
 		};
+		CA9D956772BAC23541A7273A7A132ADF /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C4FA71857D686C3AC55FAFB5C6D004A8 /* PLMediaStreamingKit-copy-dsyms.sh */,
+				652ECF31AF30F99657BA222C6725E5BB /* PLMediaStreamingKit.debug.xcconfig */,
+				2E26ABD34D7BE5B5FFE23CADF767885E /* PLMediaStreamingKit.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/PLMediaStreamingKit";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
@@ -455,15 +438,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DD56DB577D8F53E40E94D8D0CAE82586 /* Support Files */ = {
+		E4A63B00EBCD71556D0F9CCB529C0381 /* PLMediaStreamingKit */ = {
 			isa = PBXGroup;
 			children = (
-				EFDC72EF89AC8F7ED6DAD019E3AAB424 /* PLMediaStreamingKit-copy-dsyms.sh */,
-				6CDF9FC4798C6CF4E295E9C7DC180286 /* PLMediaStreamingKit.debug.xcconfig */,
-				2717B83372F9C2786CF7B66C84D0F98C /* PLMediaStreamingKit.release.xcconfig */,
+				6D068470D93387117690751862EE287B /* ex-HappyDNS */,
+				67508337E770C59DA190D7EB082460B2 /* HappyDNS */,
+				96234C7CF4987196B0DEA68F61482201 /* Pod */,
+				CA9D956772BAC23541A7273A7A132ADF /* Support Files */,
 			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/PLMediaStreamingKit";
+			name = PLMediaStreamingKit;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		E8568801DB999BBE6CE2270B54ACDD1A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				46FE66AF5E780C5D3CDB748AA114EEC3 /* PLMediaStreamingKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E944B688ED5E77DF9C149CD046FC417D /* Masonry */ = {
@@ -498,6 +490,14 @@
 			);
 			name = Masonry;
 			path = Masonry;
+			sourceTree = "<group>";
+		};
+		F214C212F6CC4DAB315524A1401E36BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5A94642D36CDB7622858CDCE5133566A /* HappyDNS.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -629,8 +629,8 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1240;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -769,7 +769,7 @@
 /* Begin XCBuildConfiguration section */
 		2795E304960353CBDF58D8A8D558EF4F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6CDF9FC4798C6CF4E295E9C7DC180286 /* PLMediaStreamingKit.debug.xcconfig */;
+			baseConfigurationReference = 652ECF31AF30F99657BA222C6725E5BB /* PLMediaStreamingKit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1006,7 +1006,7 @@
 		};
 		C1E3AB7DF18A76AAFCD15D823387FB81 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2717B83372F9C2786CF7B66C84D0F98C /* PLMediaStreamingKit.release.xcconfig */;
+			baseConfigurationReference = 2E26ABD34D7BE5B5FFE23CADF767885E /* PLMediaStreamingKit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
