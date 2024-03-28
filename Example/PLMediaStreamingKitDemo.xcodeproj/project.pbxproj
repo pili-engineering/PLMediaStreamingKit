@@ -67,6 +67,7 @@
 		AA90785424DD471800A7DF44 /* PLAssetReader.m in Sources */ = {isa = PBXBuildFile; fileRef = AA90785124DD471800A7DF44 /* PLAssetReader.m */; };
 		AA90785524DD471800A7DF44 /* NSString+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = AA90785224DD471800A7DF44 /* NSString+Random.m */; };
 		AA90785F24DD48BB00A7DF44 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA90785E24DD48BB00A7DF44 /* Launch Screen.storyboard */; };
+		AAA6632E279A8C3100BE55A5 /* PLSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA6632C279A8C3100BE55A5 /* PLSettings.m */; };
 		AAD08AAD25F0D6FC00AB98AA /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD08AAC25F0D6FC00AB98AA /* ReplayKit.framework */; };
 		AAD08AB125F0D6FC00AB98AA /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD08AB025F0D6FC00AB98AA /* SampleHandler.m */; };
 		AAD08AB825F0D6FC00AB98AA /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD08AAC25F0D6FC00AB98AA /* ReplayKit.framework */; };
@@ -197,6 +198,8 @@
 		AA90785224DD471800A7DF44 /* NSString+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Random.m"; sourceTree = "<group>"; };
 		AA90785824DD47B500A7DF44 /* PLMediaStreamingKitDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PLMediaStreamingKitDemo-Prefix.pch"; sourceTree = "<group>"; };
 		AA90785E24DD48BB00A7DF44 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		AAA6632C279A8C3100BE55A5 /* PLSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSettings.m; sourceTree = "<group>"; };
+		AAA6632D279A8C3100BE55A5 /* PLSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSettings.h; sourceTree = "<group>"; };
 		AAD08AAB25F0D6FC00AB98AA /* BroadcastUploadExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BroadcastUploadExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD08AAC25F0D6FC00AB98AA /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		AAD08AAF25F0D6FC00AB98AA /* SampleHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleHandler.h; sourceTree = "<group>"; };
@@ -212,7 +215,7 @@
 		B6FC33901D93C301004EEE29 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B6FC33B21D93C470004EEE29 /* PLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAppDelegate.h; sourceTree = "<group>"; };
 		B6FC33B31D93C470004EEE29 /* PLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAppDelegate.m; sourceTree = "<group>"; };
-		B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PLMediaStreamingKit.podspec; path = ../PLMediaStreamingKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B6FC33B51D93C603004EEE29 /* PLMediaStreamingKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PLMediaStreamingKit.podspec; path = ../PLMediaStreamingKit.podspec; sourceTree = "<group>"; };
 		BE66EB89300B2711005819E0 /* Pods-BroadcastUploadExtensionSetupUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BroadcastUploadExtensionSetupUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BroadcastUploadExtensionSetupUI/Pods-BroadcastUploadExtensionSetupUI.debug.xcconfig"; sourceTree = "<group>"; };
 		C84F5E2AD19F1CCCE4AA7DD6 /* libPods-BroadcastUploadExtensionSetupUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BroadcastUploadExtensionSetupUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F444AD22AE92F8FC574B218F /* Pods-BroadcastUploadExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BroadcastUploadExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-BroadcastUploadExtension/Pods-BroadcastUploadExtension.release.xcconfig"; sourceTree = "<group>"; };
@@ -397,6 +400,15 @@
 			path = Others;
 			sourceTree = "<group>";
 		};
+		AAA6632B279A8C3100BE55A5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AAA6632C279A8C3100BE55A5 /* PLSettings.m */,
+				AAA6632D279A8C3100BE55A5 /* PLSettings.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		AAD08AAE25F0D6FC00AB98AA /* BroadcastUploadExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,6 +443,7 @@
 				AA90784724DD43FA00A7DF44 /* PLStreamViewController.h */,
 				AA90784424DD43FA00A7DF44 /* PLStreamViewController.m */,
 				AA90785824DD47B500A7DF44 /* PLMediaStreamingKitDemo-Prefix.pch */,
+				AAA6632B279A8C3100BE55A5 /* Model */,
 				AA90784C24DD471800A7DF44 /* Others */,
 				0AA48E1F2101FDCB00EA31B7 /* PasterImage */,
 				AA90781524DD43C200A7DF44 /* Views */,
@@ -718,13 +731,13 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo-frameworks.sh",
-				"${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework",
 				"${PODS_ROOT}/../../Pod/Library/HappyDNS.framework",
+				"${PODS_ROOT}/../../Pod/Library/PLMediaStreamingKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLMediaStreamingKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLMediaStreamingKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -738,6 +751,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAA6632E279A8C3100BE55A5 /* PLSettings.m in Sources */,
 				AA90785424DD471800A7DF44 /* PLAssetReader.m in Sources */,
 				AA90785524DD471800A7DF44 /* NSString+Random.m in Sources */,
 				0AA48E442101FDCC00EA31B7 /* PLPasterScrollView.m in Sources */,
@@ -887,7 +901,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PLMediaStreamingKitDemo/PLMediaStreamingKitDemo-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
@@ -896,9 +910,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.6;
+				MARKETING_VERSION = 3.1.0;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo;
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -916,7 +930,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PLMediaStreamingKitDemo/PLMediaStreamingKitDemo-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/PLMediaStreamingKitDemo/Supporting Files/PLMediaStreamingKitDemo-Info.plist";
@@ -925,10 +939,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PLMediaStreamingKitDemo/Weixin",
 				);
-				MARKETING_VERSION = 3.0.6;
+				MARKETING_VERSION = 3.1.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo;
 				PRODUCT_NAME = PLMediaStreamingKitDemo;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -962,6 +976,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -970,7 +985,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo.BroadcastUploadExtensionSetupUI";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo.PLReplaykitExtensionSetupUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1003,6 +1018,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1011,7 +1027,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo.BroadcastUploadExtensionSetupUI";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo.PLReplaykitExtensionSetupUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1044,6 +1060,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1052,7 +1069,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo.BroadcastUploadExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo.PLReplaykitExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1085,6 +1102,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = W2TP34G2MM;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1093,7 +1111,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pili-engineering.PLMediaStreamingKitDemo.BroadcastUploadExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PLMediaStreamingKitDemo.PLReplaykitExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

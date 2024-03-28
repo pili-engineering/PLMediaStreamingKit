@@ -9,20 +9,24 @@
 
 Pod::Spec.new do |s|
   s.name             = "PLMediaStreamingKit"
-  s.version          = "3.0.6"
+  s.version          = "3.1.0"
   s.summary          = "Pili iOS media streaming framework via RTMP."
   s.homepage         = "https://github.com/pili-engineering/PLMediaStreamingKit"
   s.license          = 'Apache License, Version 2.0'
   s.author           = { "pili" => "pili@qiniu.com" }
-  s.source           = { :http => "https://sdk-release.qnsdk.com/PLMediaStreamingKit-v3.0.6-universal.zip"}
+  s.source           = { :http => "https://sdk-release.qnsdk.com/PLMediaStreamingKit-v3.1.0-universal.zip"}
 
   s.platform     = :ios
   s.ios.deployment_target = '8.0'
 
   s.requires_arc = true
 
-  s.subspec "universal" do |ss1|
-    ss1.vendored_frameworks = ['Pod/Library-Universal/PLMediaStreamingKit.framework', 'Pod/Library-Universal/HappyDNS.framework']
+  s.subspec "ex-HappyDNS" do |ss1|
+    ss1.vendored_frameworks = ['Pod/Library-Universal/PLMediaStreamingKit.framework']
+  end
+  
+  s.subspec "HappyDNS" do |ss2|
+    ss2.vendored_frameworks = ['Pod/Library-Universal/HappyDNS.framework']
   end
  
   s.frameworks = ['UIKit', 'AVFoundation', 'CoreGraphics', 'CFNetwork', 'AudioToolbox', 'CoreMedia', 'VideoToolbox']

@@ -21,7 +21,7 @@
 /*!
  @abstract 初始化 StreamingSession 的运行环境，需要在 -application:didFinishLaunchingWithOptions: 方法下调用该方法，
  
- @param UID 每个用户的唯一标识
+ @param UID 每个用户的唯一标识，若传空，则默认使用 App bundle id 与设备 UUID 拼接组合自动生成
  
  @since v3.0.3
  
@@ -73,6 +73,8 @@
 
 /*!
  @abstract   设置设备 ID。
+ 
+ @warning    不能为空，且在已传递使用自定义 userUID 的情况下，设置该参数无效
 */
 + (void)setDeviceID:(NSString *)deviceID;
 
@@ -82,5 +84,14 @@
  @since v3.0.3
  */
 + (NSString *)userUID;
+
+/*!
+ @abstract   更新用户唯一标识。
+ 
+ @warning    不能为空
+ 
+ @since v3.0.8
+*/
++ (void)setUserUID:(NSString *)userUID;
 
 @end

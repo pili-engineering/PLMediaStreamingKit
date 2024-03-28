@@ -38,8 +38,7 @@
  @property   videoSize
  @abstract   编码时的视频分辨率。
 
- @discussion 需要注意的是，这个参数影响的是视频编码时的分辨率，而非摄像头采集到数据的预览大小，传递给编码器的图像尺寸与此尺寸不同时，会按照 AVVideoScalingModeResizeAspectFill
-             对图像做剪切，从而确保图像不会出现压缩的现象。
+ @discussion 需要注意的是，这个参数影响的是视频编码时的分辨率，而非摄像头采集到数据的预览大小，传递给编码器的图像尺寸与此尺寸不同时，在 PLH264EncoderType_AVFoundation 模式下，会根据 videoEncoderFill 决定，是否按照 AVVideoScalingModeResizeAspectFill 对图像做剪切，确保图像不会出现压缩。
 
  @since      v1.0.0
  */
@@ -86,6 +85,26 @@
 @property (nonatomic, assign) PLH264EncoderType videoEncoderType;
 
 /*!
+ @property   videoCodecType
+ @abstract   视频编码器类型
+ 
+ @discussion 默认采用 PLCodecType_H264 编码方式。
+   
+ @since      v3.1.0
+ */
+@property (nonatomic, assign) PLVideoCodecType videoCodecType;
+
+/*!
+ @property   videoEncoderFill
+ @abstract   编码时是否按照 AVVideoScalingModeResizeAspectFill 对图像做剪切，确保图像不会出现压缩。
+ 
+ @discussion 默认为 YES，即使用 AVVideoScalingModeResizeAspectFill，否则使用 AVVideoScalingModeResizeAspect，此配置仅在                         PLH264EncoderType_AVFoundation 编码方式下可用
+   
+ @since      v3.0.8
+ */
+@property (nonatomic, assign) BOOL videoEncoderFill;
+
+/*!
  @method     defaultConfiguration
  @abstract   生成一个默认的视频编码推流配置对象。
     
@@ -111,6 +130,32 @@
  @since      v1.0.0
  */
 + (instancetype)configurationWithVideoQuality:(NSString *)quality;
+
+/*!
+  @method     initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoCodecType:
+  @abstract   初始化一个 PLVideoStreamingConfiguration 对象。
+     
+  @param      videoSize 编码分辨率
+  @param      expectedSourceVideoFrameRate 预期采集源视频码率
+  @param      videoMaxKeyframeInterval 视频最大关键帧间隔
+  @param      averageVideoBitRate 平均视频码率
+  @param      videoCodecType  编码所采用的编码器类型
+     
+  @warning    如果指定的参数不合理，在 -validate 时失败，会抛出异常。在HEVC 情况下，maxWidth 为 1920，maxHeight 为 1088，maxVideoFrameRate 为 30，maxVideoBitRate 为 50 Mbps，当参数值超过最大值时会抛出异常。
+ 
+ 
+  @discussion 由于 HEVC VideoToolbox 编码只在 iOS 11 及以上系统版本，和 iPhone 7 及以上设备支持。若 videoCodecType 采用 PLCodecType_HEVC，在 iOS 11 以下的系统和 iPhone7 以下设备，会自动回退采用 h264 编码
+     
+  @see        defaultConfiguration
+  @see        configurationWithVideoSize:videoQuality:
+     
+  @since      v3.1.0
+ */
+- (instancetype)initWithVideoSize:(CGSize)videoSize
+     expectedSourceVideoFrameRate:(NSUInteger)expectedSourceVideoFrameRate
+         videoMaxKeyframeInterval:(NSUInteger)videoMaxKeyframeInterval
+              averageVideoBitRate:(NSUInteger)averageVideoBitRate
+                 videoCodecType:(PLVideoCodecType)videoCodecType NS_DESIGNATED_INITIALIZER;
 
 /*!
   @method     initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:videoEncoderType:

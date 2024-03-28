@@ -1,11 +1,13 @@
 PODS:
-  - Crashlytics (3.13.1):
-    - Fabric (~> 1.10.1)
-  - Fabric (1.10.1)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
   - Masonry (1.1.0)
-  - PLMediaStreamingKit (3.0.6):
-    - PLMediaStreamingKit/iphoneos (= 3.0.6)
-  - PLMediaStreamingKit/iphoneos (3.0.6)
+  - PLMediaStreamingKit (3.1.0):
+    - PLMediaStreamingKit/ex-HappyDNS (= 3.1.0)
+    - PLMediaStreamingKit/HappyDNS (= 3.1.0)
+  - PLMediaStreamingKit/ex-HappyDNS (3.1.0)
+  - PLMediaStreamingKit/HappyDNS (3.1.0)
 
 DEPENDENCIES:
   - Crashlytics
@@ -24,11 +26,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Crashlytics: 666da4380b70d38c80426754fa9d5dfca0e5fd43
-  Fabric: 58508b243fa6053c03bd04b9e0ada772f317d5b4
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  PLMediaStreamingKit: f0aaeca813ca60be64636dadc39545d0d42f1dc0
+  PLMediaStreamingKit: a0bd94a5465d0afd3b55af41fca08f87c89f1a42
 
 PODFILE CHECKSUM: 01b839d9eedb8dc4ae7438d2253f169c3d8deb5b
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.12.1

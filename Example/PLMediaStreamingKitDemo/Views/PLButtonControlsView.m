@@ -65,7 +65,7 @@
     for (NSInteger i = 0; i < titleArray.count; i++) {
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 40 * i, viewWidth, 28)];
         button.backgroundColor = COLOR_RGB(0, 0, 0, 0.3);
-        button.tag = 1000 + i;
+        button.tag = 2000 + i;
         [button addTarget:self action:@selector(buttonViewAction:) forControlEvents:UIControlEventTouchDown];
         [button setTitle:titleArray[i] forState:UIControlStateNormal];
         [button setTitle:selectedTitleArray[i] forState:UIControlStateSelected];
@@ -82,7 +82,7 @@
 }
 
 - (void)buttonViewAction:(UIButton *)button {
-    NSInteger index = button.tag - 1000;
+    NSInteger index = button.tag - 2000;
     button.selected = !button.selected;
     
     for (UIButton *currentButton in _buttonView.subviews) {

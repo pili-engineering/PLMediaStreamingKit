@@ -1,6 +1,6 @@
 {
   "name": "PLMediaStreamingKit",
-  "version": "3.0.6",
+  "version": "3.1.0",
   "summary": "Pili iOS media streaming framework via RTMP.",
   "homepage": "https://github.com/pili-engineering/PLMediaStreamingKit",
   "license": "Apache License, Version 2.0",
@@ -8,7 +8,7 @@
     "pili": "pili@qiniu.com"
   },
   "source": {
-    "http": "https://sdk-release.qnsdk.com/PLMediaStreamingKit-v3.0.6-iphoneos.zip"
+    "http": "https://sdk-release.qnsdk.com/PLMediaStreamingKit-v3.1.0-iphoneos.zip"
   },
   "platforms": {
     "ios": "8.0"
@@ -37,9 +37,14 @@
   ],
   "subspecs": [
     {
-      "name": "iphoneos",
+      "name": "ex-HappyDNS",
       "vendored_frameworks": [
-        "Pod/Library/PLMediaStreamingKit.framework",
+        "Pod/Library/PLMediaStreamingKit.framework"
+      ]
+    },
+    {
+      "name": "HappyDNS",
+      "vendored_frameworks": [
         "Pod/Library/HappyDNS.framework"
       ]
     }

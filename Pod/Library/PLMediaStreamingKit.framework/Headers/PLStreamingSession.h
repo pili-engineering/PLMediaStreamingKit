@@ -86,6 +86,22 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)streamingSession:(PLStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status;
 
+/*!
+ @method     streamingSession:videoCodecDidChange:
+ @abstract   推流使用的编码器类型
+
+ @param      session 调用该代理方法的 PLStreamingSession 对象
+ @param      codecType 编码器类型
+
+ @discussion 该方法会在启动编码器的时候触发。会根据设置的编码器类型参数和设备系统支持的的情况返回编码器类型
+
+ @see        statusUpdateInterval
+ @see        PLVideoCodecType
+
+ @since      v3.1.0
+ */
+- (void)streamingSession:(PLStreamingSession *)session videoCodecDidChange:(PLVideoCodecType)codecType;
+
 @end
 
 /*!
