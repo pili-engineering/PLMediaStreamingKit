@@ -45,6 +45,7 @@
 #define PL_iPhone12Pro ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1170, 2532), [[UIScreen mainScreen] currentMode].size) : NO)
 #define PL_iPhone12PMax ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1284, 2778), [[UIScreen mainScreen] currentMode].size) : NO)
 #define PL_iPhone14PMax ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1290, 2796), [[UIScreen mainScreen] currentMode].size) : NO)
+#define PL_iPhone14 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1179, 2556), [[UIScreen mainScreen] currentMode].size) : NO)
 
 
 // 自定义 model
@@ -58,6 +59,6 @@
 
 // 推流 SDK
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
-#define PL_MEDIA_STREAM_VERSION @"v3.1.0"
+#define PL_MEDIA_STREAM_VERSION @"v3.1.1"
 
 #endif
