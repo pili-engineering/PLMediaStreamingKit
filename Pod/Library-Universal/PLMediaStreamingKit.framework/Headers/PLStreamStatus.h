@@ -53,7 +53,13 @@
  */
 @property (nonatomic, assign, readonly) double  audioBitrate;
 
+/*!
+ @property   dropedVideoFrames
+ @abstract   视频间隔时间内的总丢帧数。
 
+ @since      v3.0.9
+ */
+@property (nonatomic, assign, readonly) double  dropedVideoFrames;
 
 /*!
  @property   totalBitrate
@@ -81,5 +87,23 @@
                     videoBitrate:(double)vbps
                     audioBitrate:(double)abps
                     totalBitrate:(double)totalBitrate;
+
+/*!
+ @method     initWithVideoFPS:audioFPS:totalBitrate:dropedVideoFrames:
+ @abstract   初始化 PLStreamStatus 对象。
+ 
+ @discussion 一般你不需要自己创建或初始化 PLStreamStatus 对象，该类的实例都是在创建并初始化好后通过  PLStreamingSessionDelegate 代理的
+                -streamingSession:streamStatusDidUpdate: 方法回调给开发者。
+ 
+ @see        PLStreamingSessionDelegate
+ 
+ @since      v3.0.9
+ */
+- (instancetype)initWithVideoFPS:(double)vfps
+                        audioFPS:(double)afps
+                    videoBitrate:(double)vbps
+                    audioBitrate:(double)abps
+                    totalBitrate:(double)totalBitrate
+               dropedVideoFrames:(double)dropedVideoFrames;
 
 @end

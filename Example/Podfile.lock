@@ -3,11 +3,11 @@ PODS:
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
   - Masonry (1.1.0)
-  - PLMediaStreamingKit (3.1.0):
-    - PLMediaStreamingKit/ex-HappyDNS (= 3.1.0)
-    - PLMediaStreamingKit/HappyDNS (= 3.1.0)
-  - PLMediaStreamingKit/ex-HappyDNS (3.1.0)
-  - PLMediaStreamingKit/HappyDNS (3.1.0)
+  - PLMediaStreamingKit (3.1.1):
+    - PLMediaStreamingKit/ex-HappyDNS (= 3.1.1)
+    - PLMediaStreamingKit/HappyDNS (= 3.1.1)
+  - PLMediaStreamingKit/ex-HappyDNS (3.1.1)
+  - PLMediaStreamingKit/HappyDNS (3.1.1)
 
 DEPENDENCIES:
   - Crashlytics
@@ -29,7 +29,7 @@ SPEC CHECKSUMS:
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  PLMediaStreamingKit: a0bd94a5465d0afd3b55af41fca08f87c89f1a42
+  PLMediaStreamingKit: c9189aefaef1b8f90a53a93df1f961eddcb5c778
 
 PODFILE CHECKSUM: 01b839d9eedb8dc4ae7438d2253f169c3d8deb5b
 

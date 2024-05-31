@@ -87,6 +87,21 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)streamingSession:(PLStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status;
 
 /*!
+ @method      streamingSession:didGetStreamNodeIP:
+ @abstract    告知代理对象推流地址解析后的 IP。
+
+ @param       session 调用该代理方法的 PLStreamingSession 对象
+ @param       streamNodeIP 推流地址解析后的 IP
+
+ @discussion  该代理方法会在调用开始推流之后触发回调推流地址解析后的 IP
+
+ @see         streamingSession:didGetStreamNodeIP:
+
+ @since       v3.0.9
+ */
+- (void)streamingSession:(PLStreamingSession *)session didGetStreamNodeIP:(NSString *)streamNodeIP;
+
+/*!
  @method     streamingSession:videoCodecDidChange:
  @abstract   推流使用的编码器类型
 

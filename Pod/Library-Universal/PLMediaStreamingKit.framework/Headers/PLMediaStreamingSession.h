@@ -44,6 +44,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mediaStreamingSession:(PLMediaStreamingSession *)session streamStatusDidUpdate:(PLStreamStatus *)status;
 
 /*!
+ @abstract    告知代理对象推流地址解析后的 IP。
+
+ @discussion  该代理方法会在调用开始推流之后触发回调推流地址解析后的 IP
+
+ @since       v3.0.9
+ */
+- (void)mediaStreamingSession:(PLMediaStreamingSession *)session didGetStreamNodeIP:(NSString *)streamNodeIP;
+
+
+/*!
  @abstract   摄像头授权状态发生变化的回调
 
  @discussion 建议在初始化配置 PLMediaStreamingSession 前，就使用系统 API 主动发起获取摄像头授权的请求。
@@ -494,6 +504,15 @@ NS_ASSUME_NONNULL_BEGIN
  @param videoStreamingConfiguration 新的视频编码配置
  */
 - (void)reloadVideoStreamingConfiguration:(PLVideoStreamingConfiguration *)videoStreamingConfiguration;
+
+/*!
+ @abstract 重新加载视频采集配置，目前仅支持 fps 修改
+ 
+ @param videoCaptureConfiguration 新的音频采集配置
+ 
+ @since      v3.1.1
+ */
+- (void)reloadVideoCaptureConfiguration:(PLVideoCaptureConfiguration *)videoCaptureConfiguration;
 
 /*!
  @abstract   人工报障
